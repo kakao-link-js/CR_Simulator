@@ -1,22 +1,22 @@
 package Model;
 
 public class LectureVO {
-	public String openUniv = null; //°³¼³´ëÇĞ
-	public String major = null; //°³¼³ÇĞ°úÀü°ø
-	public String courseNum = null; //ÇĞ¼ö¹øÈ£
-	public String classNum = null; //ºĞ¹İ
-	public String className = null; //±³°ú¸ñ¸í
-	public String completion = null; //ÀÌ¼ö±¸ºĞ
-	public int grade; //ÇĞ³â
-	public int score; //ÇĞÁ¡
-	public String time = null; // ¿äÀÏ ¹× °­ÀÇ½Ã°£
-	public String classRoom = null; //°­ÀÇ½Ç
-	public String professor = null; //±³¼ö
-	
+	public String openUniv = null; //ê°œì„¤ëŒ€í•™
+	public String major = null; //ê°œì„¤í•™ê³¼ì „ê³µ
+	public String courseNum = null; //í•™ìˆ˜ë²ˆí˜¸
+	public String classNum = null; //ë¶„ë°˜
+	public String className = null; //êµê³¼ëª©ëª…
+	public String completion = null; //ì´ìˆ˜êµ¬ë¶„
+	public int grade; //í•™ë…„
+	public int score; //í•™ì 
+	public String time = null; // ìš”ì¼ ë° ê°•ì˜ì‹œê°„
+	public String classRoom = null; //ê°•ì˜ì‹¤
+	public String professor = null; //êµìˆ˜
+
 	public LectureVO() {
-		
+
 	}
-	
+
 	public LectureVO(String openUniv,String major,String courseNum,String classNum, String className, String completion,String grade,String score,String time, String classRoom, String professor) {
 		this.openUniv = openUniv;
 		this.major = major;
