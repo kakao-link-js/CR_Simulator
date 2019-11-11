@@ -2,27 +2,27 @@ package Model;
 
 import java.util.*;
 
-// ½Ì±ÛÅÏ ±â¹ıÀ» À§ÇÑ ClassManagement
+// ì‹±ê¸€í„´ ê¸°ë²•ì„ ìœ„í•œ ClassManagement
 public class ClassManagement {
-	//¸ğµç °÷¿¡¼­ °°Àº °´Ã¼¸¦ °øÀ¯ÇØ¾ß ÇÒ °æ¿ì¿¡´Â ¿©±â´Ù°¡ °´Ã¼¸¦ ¸¸µé¾î ³Ö°í »ç¿ëÇÏ¸é µË´Ï´Ù.
-    //°´Ã¼¸¦ ºÒ·¯¿Ã¶§¿¡´Â ClassManagement.GetInstance().~~~
-	
-	private static ClassManagement s_instance;
-	private ArrayList<LectureVO> m_interestedList;
-	private ArrayList<LectureVO> m_realList;
-	
-	public static ClassManagement getInstance() {
-		if (s_instance == null) s_instance = new ClassManagement();
-		return s_instance;
-	}
-	
-	public ArrayList<LectureVO> getInterested(){
-		if(m_interestedList == null) m_interestedList = new ArrayList<LectureVO>();
-		return m_interestedList;
-	}
-	
-	public ArrayList<LectureVO> getReal(){
-		if(m_realList == null) m_realList = new ArrayList<LectureVO>();
-		return m_realList;
-	}
+    //ëª¨ë“  ê³³ì—ì„œ ê°™ì€ ê°ì²´ë¥¼ ê³µìœ í•´ì•¼ í•  ê²½ìš°ì—ëŠ” ì—¬ê¸°ë‹¤ê°€ ê°ì²´ë¥¼ ë§Œë“¤ì–´ ë„£ê³  ì‚¬ìš©í•˜ë©´ ë©ë‹ˆë‹¤.
+    //ê°ì²´ë¥¼ ë¶ˆëŸ¬ì˜¬ë•Œì—ëŠ” ClassManagement.GetInstance().~~~
+
+    private static ClassManagement s_instance;
+    private ArrayList<LectureVO> m_interestedList;
+    private ArrayList<LectureVO> m_realList;
+
+    public static ClassManagement getInstance() {
+        if (s_instance == null) s_instance = new ClassManagement();
+        return s_instance;
+    }
+
+    public ArrayList<LectureVO> getInterested(){
+        if(m_interestedList == null) m_interestedList = new ArrayList<LectureVO>();
+        return m_interestedList;
+    }
+
+    public ArrayList<LectureVO> getReal(){
+        if(m_realList == null) m_realList = new ArrayList<LectureVO>();
+        return m_realList;
+    }
 }
