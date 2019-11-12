@@ -1,17 +1,19 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class LectureVO {
-	public String openUniv = null; //°³¼³´ëÇĞ
-	public String major = null; //°³¼³ÇĞ°úÀü°ø
-	public String courseNum = null; //ÇĞ¼ö¹øÈ£
-	public String classNum = null; //ºĞ¹İ
-	public String className = null; //±³°ú¸ñ¸í
-	public String completion = null; //ÀÌ¼ö±¸ºĞ
-	public int grade; //ÇĞ³â
-	public int score; //ÇĞÁ¡
-	public String time = null; // ¿äÀÏ ¹× °­ÀÇ½Ã°£
-	public String classRoom = null; //°­ÀÇ½Ç
-	public String professor = null; //±³¼ö
+	public String openUniv = null; //ê°œì„¤ëŒ€í•™
+	public String major = null; //ê°œì„¤í•™ê³¼ì „ê³µ
+	public String courseNum = null; //í•™ìˆ˜ë²ˆí˜¸
+	public String classNum = null; //ë¶„ë°˜
+	public String className = null; //êµê³¼ëª©ëª…
+	public String completion = null; //ì´ìˆ˜êµ¬ë¶„
+	public int grade; //í•™ë…„
+	public int score; //í•™ì 
+	public String time = null; // ìš”ì¼ ë° ê°•ì˜ì‹œê°„
+	public String classRoom = null; //ê°•ì˜ì‹¤
+	public String professor = null; //êµìˆ˜
 	
 	public LectureVO() {
 		
@@ -29,5 +31,22 @@ public class LectureVO {
 		this.time = time;
 		this.classRoom = classRoom;
 		this.professor = professor;
+	}
+	
+	// ë¬¸ì¥ ë°°ì—´ë¡œ ë°˜í™˜í•˜ëŠ” ë©”ì†Œë“œ 
+	public String[] makeStringArray(){
+		String output[] = new String[12];
+		output[0] = openUniv;
+		output[1] = major;
+		output[2] = courseNum;
+		output[3] = classNum;
+		output[4] = className;
+		output[5] = completion;
+		output[6] = Integer.toString(grade);
+		output[7] = Integer.toString(score);
+		output[8] = time;
+		output[9] = classRoom;
+		output[10] = professor;
+		return output;
 	}
 }

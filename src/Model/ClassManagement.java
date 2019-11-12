@@ -2,10 +2,10 @@ package Model;
 
 import java.util.*;
 
-// ½Ì±ÛÅÏ ±â¹ıÀ» À§ÇÑ ClassManagement
+// ì‹±ê¸€í„´ ê¸°ë²•ì„ ìœ„í•œ ClassManagement
 public class ClassManagement {
-	//¸ğµç °÷¿¡¼­ °°Àº °´Ã¼¸¦ °øÀ¯ÇØ¾ß ÇÒ °æ¿ì¿¡´Â ¿©±â´Ù°¡ °´Ã¼¸¦ ¸¸µé¾î ³Ö°í »ç¿ëÇÏ¸é µË´Ï´Ù.
-    //°´Ã¼¸¦ ºÒ·¯¿Ã¶§¿¡´Â ClassManagement.GetInstance().~~~
+	//ëª¨ë“  ê³³ì—ì„œ ê°™ì€ ê°ì²´ë¥¼ ê³µìœ í•´ì•¼ í•  ê²½ìš°ì—ëŠ” ì—¬ê¸°ë‹¤ê°€ ê°ì²´ë¥¼ ë§Œë“¤ì–´ ë„£ê³  ì‚¬ìš©í•˜ë©´ ë©ë‹ˆë‹¤.
+    //ê°ì²´ë¥¼ ë¶ˆëŸ¬ì˜¬ë•Œì—ëŠ” ClassManagement.GetInstance().~~~
 	
 	private static ClassManagement s_instance;
 	private ArrayList<LectureVO> m_interestedList;
