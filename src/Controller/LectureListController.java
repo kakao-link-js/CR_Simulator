@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
+import Model.ClassManagement;
+import Model.LectureVO;
 import View.LectureListView;
 
 public class LectureListController {
@@ -44,14 +46,17 @@ public class LectureListController {
          
         //flag 1은 신청 2는 취소
         public TableCell(String text,int flag) {
-            // TODO Auto-generated constructor stub
             jb = new JButton(text);
             jb.addActionListener(e -> {
             	if(flag == 2) {
             		System.out.println("취소 " + LLV.getMyLectureTable().getSelectedRow() + "  " + LLV.getMyLectureTable().getRowCount());
-            		if(LLV.getMyLectureTable().getSelectedRow() >= 0 
+            		if(LLV.getMyLectureTable().getSelectedRow() >= 0 //잘 선택이 되었다면.
             				&& LLV.getMyLectureTable().getSelectedRow() < LLV.getMyLectureTable().getRowCount()) {
-            			LLV.getMyLectureDTM().removeRow(LLV.getMyLectureTable().getSelectedRow());
+            			for(int i = 0; i < ClassManagement.getInstance().getInterested().size(); i++)
+            				if(ClassManagement.getInstance().getInterested().get(i).courseNum  //학수번호를 들고온다.
+            						== LLV.getMyLectureDTM().getValueAt(LLV.getMyLectureTable().getSelectedRow(),3))
+            					ClassManagement.getInstance().getInterested().remove(i); //배열에서 지운다.
+            			LLV.getMyLectureDTM().removeRow(LLV.getMyLectureTable().getSelectedRow()); //테이블에서 지운다.
             			SetScore();
             		}
             	}
@@ -59,10 +64,11 @@ public class LectureListController {
             		System.out.println("신청 " + LLV.getSearchListTable().getSelectedRow() + "  " + LLV.getSearchListTable().getRowCount());
             		if(LLV.getSearchListTable().getSelectedRow() >= 0 
             				&& LLV.getSearchListTable().getSelectedRow() < LLV.getSearchListTable().getRowCount()) {
-            			Object news [] = new Object[11];
-            			for(int i = 0 ; i < 11; i++)
+            			Object news [] = new Object[12];
+            			for(int i = 0 ; i < 12; i++)
             				news[i] = LLV.getSearchListDTM().getValueAt(LLV.getSearchListTable().getSelectedRow(), i);
             			LLV.getMyLectureDTM().addRow(news);
+            			ClassManagement.getInstance().getInterested().add(new LectureVO(news));
             			SetScore();
             		}
             	}

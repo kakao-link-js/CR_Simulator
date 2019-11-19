@@ -15,9 +15,21 @@ public class LectureVO {
 	public String classRoom = null; //강의실
 	public String professor = null; //교수
 	
-	public LectureVO() {
-		
-	}
+	//1.constructor
+	
+	public LectureVO(Object[] obj) {
+		this.openUniv = obj[1].toString();
+		this.major  = obj[2].toString();
+		this.courseNum = obj[3].toString();
+		this.classNum  = obj[4].toString();
+		this.className  = obj[5].toString();
+		this.completion  = obj[6].toString();
+		this.grade  = Integer.parseInt(obj[7].toString());
+		this.score  = Integer.parseInt(obj[8].toString());
+		this.time  = obj[9].toString();
+		this.classRoom  = obj[10].toString();
+		this.professor = obj[11].toString();	
+	} //public LectureVO(Object[] obj)
 	
 	public LectureVO(String openUniv,String major,String courseNum,String classNum, String className, String completion,String grade,String score,String time, String classRoom, String professor) {
 		this.openUniv = openUniv;
@@ -31,7 +43,7 @@ public class LectureVO {
 		this.time = time;
 		this.classRoom = classRoom;
 		this.professor = professor;
-	}
+	}//public LectureVO(String things)
 	
 	// 문장 배열로 반환하는 메소드 
 	public String[] makeStringArray(){
@@ -49,5 +61,5 @@ public class LectureVO {
 		output[10] = classRoom;
 		output[11] = professor;
 		return output;
-	}
+	} //public String[] makeStringArray()
 }
