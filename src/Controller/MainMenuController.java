@@ -15,10 +15,10 @@ public class MainMenuController {
 		
 		addTestData();
 		
-		LectureListView LLV = new LectureListView(true);
+		LectureListController LLC = new LectureListController();
 		
 
-		frame.getContentPane().add(LLV);
+		frame.getContentPane().add(LLC.showLLV());
 		
 		frame.pack();
 		frame.setVisible(true);

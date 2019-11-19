@@ -36,17 +36,18 @@ public class LectureVO {
 	// 문장 배열로 반환하는 메소드 
 	public String[] makeStringArray(){
 		String output[] = new String[12];
-		output[0] = openUniv;
-		output[1] = major;
-		output[2] = courseNum;
-		output[3] = classNum;
-		output[4] = className;
-		output[5] = completion;
-		output[6] = Integer.toString(grade);
-		output[7] = Integer.toString(score);
-		output[8] = time;
-		output[9] = classRoom;
-		output[10] = professor;
+		output[0] = "";
+		output[1] = openUniv;
+		output[2] = major;
+		output[3] = courseNum;
+		output[4] = classNum;
+		output[5] = className;
+		output[6] = completion;
+		output[7] = Integer.toString(grade);
+		output[8] = Integer.toString(score);
+		output[9] = time;
+		output[10] = classRoom;
+		output[11] = professor;
 		return output;
 	}
 }
