@@ -1,6 +1,8 @@
 package Controller;
 
 import java.awt.Component;
+import java.util.*;
+import java.util.regex.Pattern;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
@@ -11,6 +13,7 @@ import javax.swing.table.TableCellRenderer;
 
 import Model.ClassManagement;
 import Model.LectureVO;
+import Model.TimeDTO;
 import View.LectureListView;
 
 public class LectureListController {
@@ -40,6 +43,126 @@ public class LectureListController {
 		LLV.setScore(Integer.toString(sums));;
 	} //SetScore()
 	
+	
+	//강의를 들을 수 있는 강의인지 확인하는 메소드 Object로 넣을 강의정보를 받는다. flag = 1 은 진짜 수강신청  flag = 2 는 관심과목 신청
+	public boolean canInsertLecture(Object[] inserted,int flag) {
+		ArrayList<LectureVO> myData;
+		switch(flag) {
+		case 1: //진짜 수강신청
+			myData = ClassManagement.getInstance().getReal();
+			return isCanInsert(myData,inserted);
+		case 2: //관심과목 수강신청
+			myData = ClassManagement.getInstance().getInterested();
+			return isCanInsert(myData,inserted);
+		}
+		return true;
+	} //public boolean CanInsertLecture(Object[] inserted)
+	
+	//리스트로받아 비교한다.
+	public boolean isCanInsert(ArrayList<LectureVO> myData,Object[] inserted) {
+		System.out.println(inserted[5]+ " : My Data size : "+myData.size());
+		for(int i = 0 ; i < myData.size();i++) {
+			if(myData.get(i).courseNum == inserted[3]) { //학수번호가 같다면.
+				System.out.println(inserted[5]+ " already inserted CourseNum");
+				return false;
+			}
+			if(isClassOverLap(myData.get(i).time,inserted[9].toString())) {
+				System.out.println(inserted[5]+ " already inserted time");
+				return false;
+			}
+		}
+		return true;
+	} //public boolean isCanInsert(ArrayList<LectureVO> myData,Object[] inserted)
+	
+	
+	//시간이 겹치지 않는지 확인한다.    
+    public boolean isClassOverLap(String data1,String data2){
+    	ArrayList<TimeDTO> times1 = getTimeList(data2);
+		ArrayList<TimeDTO> times2 = getTimeList(data1);
+        for (int index1 = 0; index1 < times1.size(); index1++){
+            TimeDTO time1 = times1.get(index1);
+            for (int index2 = 0; index2 < times2.size(); index2++){
+                TimeDTO time2 = times2.get(index2);
+                boolean isDayOverLap = time1.Day.equals(time2.Day);
+                if (isDayOverLap && isTimeOverlap(time1, time2)){
+                    return true;  // 요일과 시간이 모두 겹치는 경우 true 반환
+                }
+            }
+        }
+        return false;
+    } //public boolean isClassOverLap(ArrayList<TimeDTO> times1, ArrayList<TimeDTO> times2)
+	
+    //시간이 겹치는지 비교하는 메소드
+    public boolean isTimeOverlap(TimeDTO class1, TimeDTO class2){
+        boolean isStartTime = true;    
+        int class1StartTime = class1.ToMinute(isStartTime);
+        int class2StartTime = class2.ToMinute(isStartTime);
+
+        // 이전 수업의 시작 시간 <= 다음 수업의 시작 시간 < 이전 수업의 종료시간
+        // 위의 식을 만족할 경우 겹치는 수업임
+        if(class1StartTime < class2StartTime)  { 
+            // class1이 먼저 시작하는 경우
+            int class1EndTime = class1.ToMinute(!isStartTime);
+            return (class1StartTime <= class2StartTime) && (class2StartTime < class1EndTime);
+        }
+        // class2가 먼저 시작하는 경우
+        int class2EndTime = class2.ToMinute(!isStartTime);
+        return (class2StartTime <= class1StartTime) && (class1StartTime < class2EndTime);
+    } //public boolean isTimeOverlap(TimeDTO class1, TimeDTO class2)
+	
+	// 요일및 시간이 적힌 문자열을 Time 객체들의 리스트로 만들어 반환
+		public ArrayList<TimeDTO> getTimeList(String timeString){
+	        ArrayList<TimeDTO> times = new ArrayList<TimeDTO>();
+	        String[] splitComma = timeString.split(",");    // 콤마로 분리    
+	        int timeIndex = 0; // 시간 정보를 넣기 시작해야하는 객체의 index
+	        for(String text : splitComma){
+	            String[] splitSpace = text.split(" "); // 스페이스로 분리해 단어 단위로 저장
+	            timeIndex = splitDay(times, splitSpace, timeIndex);
+	        }
+	        return times;
+	    } //public ArrayList<TimeDTO> getTimeList(String timeString)
+	
+	
+    // 요일 및 시간 string에서 요일을 분리해냄
+    public int splitDay(ArrayList<TimeDTO> times, String[] splitSpace, int timeIndex){
+        for(String word : splitSpace){
+            if (word.length() == 0)
+                continue;   // 빈 문자열이면 통과
+            if (Pattern.matches("^[가-힣]*$", word)){ //한글인지 아닌지.
+                TimeDTO time = new TimeDTO();
+                time.Day = word;
+                times.add(time);    // time 객체를 리스트에 추가
+            }
+            else{
+                timeIndex = splitTime(times, word, timeIndex);
+            }
+        }
+        return timeIndex;
+    } //public int splitDay(ArrayList<TimeDTO> times, String[] splitSpace, int timeIndex)
+    
+	
+    // 요일 및 시간 string에서 시간을 분리해냄
+    public int splitTime(ArrayList<TimeDTO> times, String word, int timeIndex){
+        String[] splitTime = word.split("~");   // 시작 시간, 끝시간 분리
+       
+        for (int index = timeIndex; index < times.size(); index++){
+            TimeDTO time = times.get(index);
+            // 시작 시간 저장
+            String[] startTime = splitTime[0].split(":");    // 시와 분 분리
+            times.get(index).startHour = Integer.parseInt(startTime[0]);
+            time.startMinute = Integer.parseInt(startTime[1]);
+
+            // 끝 시간 저장
+            String[] endTime = splitTime[1].split(":");    // 시와 분 분리
+            time.endHour = Integer.parseInt(endTime[0]);
+            time.endMinute = Integer.parseInt(endTime[1]);
+        }
+        return times.size();
+    }//public int splitTime(List<TimeDTO> times, String word, int timeIndex)
+	
+	
+	
+	//View를 조종할 리스너.
 	class TableCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer{
 		 
         JButton jb;
@@ -67,6 +190,9 @@ public class LectureListController {
             			Object news [] = new Object[12];
             			for(int i = 0 ; i < 12; i++)
             				news[i] = LLV.getSearchListDTM().getValueAt(LLV.getSearchListTable().getSelectedRow(), i);
+            			if(!canInsertLecture(news,2))//신청이 불가능한 경우
+            				return;
+            			System.out.println("신청완료. " + news[5]);
             			LLV.getMyLectureDTM().addRow(news);
             			ClassManagement.getInstance().getInterested().add(new LectureVO(news));
             			SetScore();
@@ -77,21 +203,10 @@ public class LectureListController {
         }
          
         @Override
-        public Object getCellEditorValue() {
-            // TODO Auto-generated method stub
-            return null;
-        }
+        public Object getCellEditorValue() { return null;}
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            // TODO Auto-generated method stub
-            return jb;
-        }
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {return jb;}
         @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-                int column) {
-            // TODO Auto-generated method stub
-            return jb;
-        }  
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {return jb;}  
     }
 }
