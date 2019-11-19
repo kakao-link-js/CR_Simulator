@@ -26,26 +26,26 @@ public class MainMenuController {
 	
 	//테스트 데이터 생성용
 		public static void addTestData() {
-			LectureVO new1 = new LectureVO("0","0","0","0","0","0","0","1","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new1);
-			LectureVO new2 = new LectureVO("0","0","0","0","0","0","0","2","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new2);
-			LectureVO new3 = new LectureVO("0","0","0","0","0","0","0","3","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new3);
-			LectureVO new4 = new LectureVO("0","0","0","0","0","0","0","4","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new4);
-			LectureVO new5 = new LectureVO("0","0","0","0","0","0","0","5","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new5);
-			LectureVO new6 = new LectureVO("0","0","0","0","0","0","0","6","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new6);
-			LectureVO new7 = new LectureVO("0","0","0","0","0","0","0","7","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new7);
-			LectureVO new8 = new LectureVO("0","0","0","0","0","0","0","8","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new8);
-			LectureVO new9 = new LectureVO("0","0","0","0","0","0","0","9","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new9);
-			LectureVO new10 = new LectureVO("0","0","0","0","0","0","0","0","0","0","0");
-			ClassManagement.getInstance().getInterested().add(new10);
+			LectureVO new1 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new1);
+			LectureVO new2 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new2);
+			LectureVO new3 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new3);
+			LectureVO new4 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new4);
+			LectureVO new5 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new5);
+			LectureVO new6 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new6);
+			LectureVO new7 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new7);
+			LectureVO new8 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new8);
+			LectureVO new9 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new9);
+			LectureVO new10 = new LectureVO("개설대학","개설학과전공","학수번호","분반","글쓰기와춤추기","이수구분","1","3","월 09:00~11:00","광101","홍길동");
+			ClassManagement.getInstance().getLecture().add(new10);
 		}
 
 }

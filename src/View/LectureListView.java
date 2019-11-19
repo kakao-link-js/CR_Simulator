@@ -80,11 +80,12 @@ public class LectureListView extends JPanel {
 		searchListPanel.setLayout(null);
 		add(searchListPanel);
 		
-		searchListDTM = new DefaultTableModel(makeInsertData(ClassManagement.getInstance().getInterested()),header);
+		searchListDTM = new DefaultTableModel(makeInsertData(ClassManagement.getInstance().getLecture()),header);
 		
 		searchListTable = new JTable(searchListDTM);
 		searchListPane = new JScrollPane(searchListTable);
 		searchListPane.setBounds(0,0,searchListPanel.getWidth(),searchListPanel.getHeight());
+		setColumnSize(searchListTable);
 		
 		//버튼을 연결한다.
 		searchListTable.getColumnModel().getColumn(0).setCellRenderer(LLC.connectTableCell("신청",1));
@@ -123,6 +124,7 @@ public class LectureListView extends JPanel {
 		myLectureTable = new JTable(myLectureDTM);
 		myLecturePane = new JScrollPane(myLectureTable);
 		myLecturePane.setBounds(0,0,myLecturePanel.getWidth(),myLecturePanel.getHeight());
+		setColumnSize(myLectureTable);
 		
 		//버튼을 연결한다.
 		myLectureTable.getColumnModel().getColumn(0).setCellRenderer(LLC.connectTableCell("취소",2));
@@ -130,6 +132,16 @@ public class LectureListView extends JPanel {
 
 		myLecturePanel.add(myLecturePane);
 	} //setMyLecturePanel()
+	
+	public void setColumnSize(JTable table) {
+		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
+		celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
+		int sizes[] = {30,50,50,50,3,100,5,5,5,100,50,50};
+		for(int i = 0 ; i < 12; i ++) {
+			table.getColumn(header[i]).setPreferredWidth(sizes[i]);
+			table.getColumn(header[i]).setCellRenderer(celAlignCenter);
+		}
+	}
 	
 	public void setScore(String data) {
 		lblScore.setText("My Score : " + data);
