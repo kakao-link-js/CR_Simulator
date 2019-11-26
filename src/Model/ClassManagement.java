@@ -10,6 +10,7 @@ public class ClassManagement {
     private static ClassManagement s_instance;
     private ArrayList<LectureVO> m_interestedList;
     private ArrayList<LectureVO> m_realList;
+    private ArrayList<LectureVO> m_lectureList;
 
     public static ClassManagement getInstance() {
         if (s_instance == null) s_instance = new ClassManagement();
@@ -24,5 +25,9 @@ public class ClassManagement {
     public ArrayList<LectureVO> getReal(){
         if(m_realList == null) m_realList = new ArrayList<LectureVO>();
         return m_realList;
+    }
+    public ArrayList<LectureVO> getLecture(){
+        if(m_lectureList == null) m_lectureList = new ArrayList<LectureVO>();
+        return m_lectureList;
     }
 }
