@@ -1,68 +1,93 @@
 package Controller;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import Model.ClassManagement;
+import Model.LectureVO;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-public class TimetableParser {
+class TimetableParser {
     private String strXlsxFilePath;
-    private File file;
 
-    public TimetableParser() {
+    TimetableParser() {
         this.strXlsxFilePath = "";
-        this.file = null;
     } // Constructor
 
-    public TimetableParser(String strXlsxFilePath) throws XlsxParseException {
-        this.file = new File(strXlsxFilePath);
-
-        // 파일 존재 유무 검사
-        if (!file.isFile())
-            throw new XlsxParseException(ExceptionType.FILE_NOT_FOUND);
-
-        // 파일 확장자 검사
-        if (!file.getName().endsWith(".xlsx"))
-            throw new XlsxParseException(ExceptionType.FILE_IS_NOT_XLSX);
-
+    TimetableParser(String strXlsxFilePath) {
         this.strXlsxFilePath = strXlsxFilePath;
     } // Constructor
 
-    public void parseXlsxFile() throws XlsxParseException, IOException {
+    void parseXlsxFile() throws XlsxParseException {
 
-        // 파일 경로 설정 유무 검사
+        // 파일 경로 설정 여부 검사
         if (this.strXlsxFilePath.isEmpty())
             throw new XlsxParseException(ExceptionType.EMPTY_FILE_PATH);
 
-        if (file == null)
-            this.file = new File(strXlsxFilePath);
-
-        // 파일 존재 유무 검사
-        if (!file.isFile())
-            throw new XlsxParseException(ExceptionType.FILE_NOT_FOUND);
-
         // 파일 확장자 검사
-        if (!file.getName().endsWith(".xlsx"))
+        if (!this.strXlsxFilePath.endsWith(".xlsx"))
             throw new XlsxParseException(ExceptionType.FILE_IS_NOT_XLSX);
 
-        HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file.getAbsolutePath()));
-        HSSFSheet sheet = workbook.getSheetAt(0);
+        XSSFWorkbook workbook;
 
-        int rows = sheet.getPhysicalNumberOfRows();
+        // 파일 존재 여부 검사
+        try {
+            workbook = new XSSFWorkbook(new FileInputStream(this.strXlsxFilePath));
+        } catch (IOException e) {
+            throw new XlsxParseException(ExceptionType.FILE_NOT_FOUND);
+        }
 
-        // TODO : Parse timetable
+        XSSFSheet sheet = workbook.getSheetAt(0);
 
-    }
+        Iterator<Row> rowIterator = sheet.rowIterator();
+        Row row = rowIterator.next();
 
+        ArrayList<Integer> dataColumnIndexArrayList = getDataColumnIndexes(row);
+        ArrayList<String> lectureDataArrayList = new ArrayList<>();
 
+        while (rowIterator.hasNext()) {
+            row = rowIterator.next();
 
-    public String getStrXlsxFilePath() {
+            for (Integer dataColumnIndex : dataColumnIndexArrayList)
+                lectureDataArrayList.add(row.getCell(dataColumnIndex).getStringCellValue());
+
+            ClassManagement.getInstance().getLecture().add(new LectureVO(lectureDataArrayList));
+
+            lectureDataArrayList.clear();
+        }
+    } // parseXlsxFile()
+
+    private ArrayList<Integer> getDataColumnIndexes(Row firstRow) {
+        Iterator<Cell> cellIterator = firstRow.cellIterator();
+        ArrayList<Integer> dataColumnIndexArrayList = new ArrayList<>();
+
+        while (cellIterator.hasNext()) {
+            Cell cell = cellIterator.next();
+
+            if (cell.getCellType() != CellType.STRING)
+                continue;
+
+            if (!TimetableParserConstants.isExists(cell.getStringCellValue()))
+                continue;
+
+            System.out.println(cell.getStringCellValue());
+
+            dataColumnIndexArrayList.add(cell.getColumnIndex());
+        } // while
+
+        return dataColumnIndexArrayList;
+    } // getDataColumnIndexes()
+
+    String getStrXlsxFilePath() {
         return strXlsxFilePath;
     }
-    public void setStrXlsxFilePath(String strXlsxFilePath) {
+    void setStrXlsxFilePath(String strXlsxFilePath) {
         this.strXlsxFilePath = strXlsxFilePath;
     }
 } // TimetableParser Class

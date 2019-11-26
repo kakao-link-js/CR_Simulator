@@ -1,11 +1,13 @@
 package Controller;
 
-public class XlsxParseException extends RuntimeException {
+import java.io.IOException;
+
+public class XlsxParseException extends IOException {
 
     private final ExceptionType ERR_TYPE;
 
-    public XlsxParseException(ExceptionType errType) {
-        super(errCode.getMsg());
+    XlsxParseException(ExceptionType errType) {
+        super(errType.getMsg());
         ERR_TYPE = errType;
     } // Constructor
 
