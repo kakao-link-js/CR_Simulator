@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.ClassManagement;
+import Model.ClassManager;
 import Model.LectureVO;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -57,7 +57,7 @@ class TimetableParser {
             for (Integer dataColumnIndex : dataColumnIndexArrayList)
                 lectureDataArrayList.add(row.getCell(dataColumnIndex).getStringCellValue());
 
-            ClassManagement.getInstance().getLecture().add(new LectureVO(lectureDataArrayList));
+            ClassManager.getInstance().getLecture().add(new LectureVO(lectureDataArrayList));
 
             lectureDataArrayList.clear();
         }

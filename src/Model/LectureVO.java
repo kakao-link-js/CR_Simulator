@@ -3,6 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 public class LectureVO {
+
 	public String openUniv;		//개설대학
 	public String major;		//개설학과전공
 	public String courseNum;	//학수번호
@@ -62,7 +63,6 @@ public class LectureVO {
 	// 문장 배열로 반환하는 메소드
 	public String[] makeStringArray() {
 		String output[] = new String[12];
-
 		output[0] = "";
 		output[1] = openUniv;
 		output[2] = major;
@@ -75,7 +75,6 @@ public class LectureVO {
 		output[9] = time;
 		output[10] = classRoom;
 		output[11] = professor;
-
 		return output;
 	} // public String[] makeStringArray()
 }
