@@ -26,15 +26,18 @@ public class LectureListView extends JPanel {
 	private DefaultTableModel myLectureDTM;
 	
 	JLabel lblScore;
+	JButton btnExit;
 	
 	
 	private int width = 1000; //동적 사이즈 조절을 위한 사이즈 변수
-	private int height = 700;
+	private int height = (int)(width * 0.7);
 	private int margin = (int)(height * 0.01);
+	
+	public boolean isFavorite;
 	
 	String header[] = {"신청/취소","개설대학","개설학과전공","학수번호","분반","교과목명","이수구분","학년","학점","요일 및 강의시간","강의실","교수"};
 	
-	public LectureListView(boolean flag,LectureListController LLC) {
+	public LectureListView(LectureListController LLC) {
 		this.LLC = LLC;
 		
 		initPrimaryPanel();
@@ -65,8 +68,18 @@ public class LectureListView extends JPanel {
 		int X = margin,Y = margin,height = (int)(this.height*0.05),width = this.width-margin*2;
 		infoPanel = new JPanel();
 		infoPanel.setBounds(X,Y,width,height);
-		infoPanel.setBackground(Color.BLUE);
+		infoPanel.setBackground(Color.white);
 		infoPanel.setLayout(null);
+		
+		btnExit = new JButton("exit");
+		btnExit.setBounds(0,0, 50, infoPanel.getHeight());
+		btnExit.addActionListener(LLC.getActionListener());
+		infoPanel.add(btnExit);
+		
+		JLabel title = new JLabel("Sugang SinChung");
+		title.setFont(new Font("Verdana",Font.BOLD,20));
+		title.setBounds(infoPanel.getWidth()/3,0,200,infoPanel.getHeight());
+		infoPanel.add(title);
 		add(infoPanel);
 		
 	} //public void setInfoPanel()
@@ -80,7 +93,7 @@ public class LectureListView extends JPanel {
 		searchListPanel.setLayout(null);
 		add(searchListPanel);
 		
-		searchListDTM = new DefaultTableModel(makeInsertData(ClassManagement.getInstance().getLecture()),header);
+		searchListDTM = new DefaultTableModel(null,header);
 		
 		searchListTable = new JTable(searchListDTM);
 		searchListPane = new JScrollPane(searchListTable);
@@ -119,7 +132,7 @@ public class LectureListView extends JPanel {
 		myLecturePanel.setLayout(null);
 		add(myLecturePanel);
 		
-		myLectureDTM = new DefaultTableModel(makeInsertData(ClassManagement.getInstance().getInterested()),header);
+		myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getInterested()),header);
 		
 		myLectureTable = new JTable(myLectureDTM);
 		myLecturePane = new JScrollPane(myLectureTable);
