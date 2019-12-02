@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
@@ -57,9 +58,15 @@ public class MyTimetableView extends JFrame {
         tblTimeTable.setBackground(Color.WHITE);
         tblTimeTable.getColumnModel().getColumn(0).setPreferredWidth(5);
         tblTimeTable.setRowHeight(25);
-        tblTimeTable.getTableHeader().setReorderingAllowed(false);
         tblTimeTable.setEnabled(false);
+
+        DefaultTableCellRenderer dtrTimetable = new DefaultTableCellRenderer();
+        dtrTimetable.setHorizontalAlignment(SwingConstants.CENTER);
+        tblTimeTable.setDefaultRenderer(String.class, dtrTimetable);
+
+        tblTimeTable.getTableHeader().setReorderingAllowed(false);
         tblTimeTable.getTableHeader().setFont(new Font("Verdana", Font.BOLD, 11));
+        tblTimeTable.getTableHeader().setBackground(Color.WHITE);
 
         timetablePanel = new JScrollPane(tblTimeTable);
         timetablePanel.setPreferredSize(new Dimension(500, 596));
