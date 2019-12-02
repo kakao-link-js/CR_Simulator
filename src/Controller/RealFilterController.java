@@ -148,6 +148,8 @@ public class RealFilterController {
                 // 관심과목만
             } else {
                 filteredLecture();
+                ClassManager.getInstance().getLectureListController().setSearchListatLectureListView(realFilter.filteredLectureList);
+				ClassManager.getInstance().getMainMenuController().changePanel(ClassManager.getInstance().getLectureListView(true));
             } // if... else
 
         }// actionPerformed
@@ -158,7 +160,6 @@ public class RealFilterController {
     private class ExitButtonListener implements ActionListener { // 나가기 버튼
         @Override
         public void actionPerformed(ActionEvent e) {
-        	System.out.println("123");
             ClassManager.getInstance().getMainMenuController().comeToMain();
         } // actionPerformed
     } // ExitButtonListener
