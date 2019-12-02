@@ -4,21 +4,23 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 import java.awt.*;
 
-public class MyTimetableView extends JFrame {
+public class MyTimetableView extends JPanel {
 
-    private JPanel titlePanel = new JPanel();
+    private JPanel titlePanel;
     private JScrollPane timetablePanel;
 
     private JButton btnBack;
     private JLabel lblTitle;
 
-    private JTable tblTimeTable;
-    private DefaultTableModel dtmTimetable;
+    private JTable timetable;
+    private DefaultTableModel timetableModel;
 
     private final String[] HEADER = {"", "월", "화", "수", "목", "금"};
-    private String[][] ROW_TIME = {{"9"}, {""}, {"10"}, {""},
+    private final String[][] ROW_TIME = {{"9"}, {""}, {"10"}, {""},
                                         {"11"}, {""}, {"12"}, {""},
                                         {"1"}, {""}, {"2"}, {""},
                                         {"3"}, {""}, {"4"}, {""},
@@ -26,14 +28,16 @@ public class MyTimetableView extends JFrame {
                                         {"7"}, {""}, {"8"}};
 
     public MyTimetableView () {
-
-        super("MY TIMETABLE");
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setLocationRelativeTo(null);
-//        setResizable(false); // 크기 조정 안함
 
-        // Title Panel Setting
+        setTitlePanel();
+        setTimetablePanel();
+
+        setVisible(true);
+    }
+
+    private void setTitlePanel() {
+        titlePanel = new JPanel();
         titlePanel.setBackground(Color.WHITE);
         titlePanel.setPreferredSize(new Dimension(500, 80));
         titlePanel.setLayout(new BorderLayout());
@@ -45,35 +49,43 @@ public class MyTimetableView extends JFrame {
 
         lblTitle = new JLabel("TIME TABLE");
         lblTitle.setFont(new Font("Verdana", Font.BOLD, 25));
-        lblTitle.setHorizontalAlignment(JLabel.CENTER);
+        lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
         titlePanel.add(lblTitle, BorderLayout.CENTER);
 
         add(titlePanel, BorderLayout.NORTH);
+    }
 
-        // Timetable Panel Setting
-        dtmTimetable = new DefaultTableModel(ROW_TIME, HEADER);
+    private void setTimetablePanel() {
+        timetableModel = new DefaultTableModel(ROW_TIME, HEADER);
 
-        tblTimeTable = new JTable(dtmTimetable);
-        tblTimeTable.setGridColor(Color.BLACK);
-        tblTimeTable.setBackground(Color.WHITE);
-        tblTimeTable.getColumnModel().getColumn(0).setPreferredWidth(5);
-        tblTimeTable.setRowHeight(25);
-        tblTimeTable.setEnabled(false);
+        timetable = new JTable(timetableModel);
+        timetable.setGridColor(Color.BLACK);
+        timetable.setBackground(Color.WHITE);
+        timetable.getColumnModel().getColumn(0).setPreferredWidth(5);
+        timetable.setRowHeight(25);
+        timetable.setEnabled(false);
 
-        DefaultTableCellRenderer dtrTimetable = new DefaultTableCellRenderer();
-        dtrTimetable.setHorizontalAlignment(SwingConstants.CENTER);
-        tblTimeTable.setDefaultRenderer(String.class, dtrTimetable);
+        setCellsAlignment(SwingConstants.CENTER);
 
-        tblTimeTable.getTableHeader().setReorderingAllowed(false);
-        tblTimeTable.getTableHeader().setFont(new Font("Verdana", Font.BOLD, 11));
-        tblTimeTable.getTableHeader().setBackground(Color.WHITE);
+        timetable.getTableHeader().setReorderingAllowed(false);
+        timetable.getTableHeader().setFont(new Font("Verdana", Font.BOLD, 11));
+        timetable.getTableHeader().setBackground(Color.WHITE);
 
-        timetablePanel = new JScrollPane(tblTimeTable);
+        timetablePanel = new JScrollPane(timetable);
         timetablePanel.setPreferredSize(new Dimension(500, 596));
 
         add(timetablePanel, BorderLayout.WEST);
+    }
 
-        pack();
-        setVisible(true);
+    private void setCellsAlignment(int alignment) {
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer)timetable.getTableHeader().getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(alignment);
+        timetable.getTableHeader().setDefaultRenderer(headerRenderer);
+
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(alignment);
+
+        for (int columnIndex = 0; columnIndex < timetableModel.getColumnCount(); ++columnIndex)
+            timetable.getColumnModel().getColumn(columnIndex).setCellRenderer(cellRenderer);
     }
 }
