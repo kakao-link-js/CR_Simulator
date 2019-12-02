@@ -49,8 +49,8 @@ public class MainMenuController {
 							break;
 						case 2: //시간표
 							break;
-						case 3:
-							// 학점 계산기 창으로 이동
+						case 3: // 학점 계산기 창으로 이동
+							changePanel(ClassManager.getInstance().getCalculatorController().getCalculatorPanelView());
 							break;
 						case 4:
 							System.exit(0);

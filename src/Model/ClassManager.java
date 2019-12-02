@@ -19,6 +19,7 @@ public class ClassManager {
 	private MainMenuController m_MainMenuController;
 	private RealFilterController m_RealFilterController;
 	private InterestedFilterController m_InterestedFilterController;
+	private CalculatorController m_CalculatorController;
 	
 
 	public static ClassManager getInstance() {
@@ -69,5 +70,10 @@ public class ClassManager {
 	public InterestedFilterController getInterestedFilterController() {
 		if(m_InterestedFilterController == null) m_InterestedFilterController = new InterestedFilterController();
 		return m_InterestedFilterController;
+	}
+	
+	public CalculatorController getCalculatorController() {
+		if (m_CalculatorController == null) m_CalculatorController = new CalculatorController();
+		return m_CalculatorController;
 	}
 }
