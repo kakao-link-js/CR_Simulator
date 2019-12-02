@@ -158,8 +158,8 @@ public class RealFilterController {
     private class ExitButtonListener implements ActionListener { // 나가기 버튼
         @Override
         public void actionPerformed(ActionEvent e) {
-            Object obj = e.getSource();
-            // 수강신청으로 돌아가기
+        	System.out.println("123");
+            ClassManager.getInstance().getMainMenuController().comeToMain();
         } // actionPerformed
     } // ExitButtonListener
 

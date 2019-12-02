@@ -16,7 +16,11 @@ public class ClassManager {
 	private ArrayList<LectureVO> m_lectureList;
 	private LectureListController m_lectureListController;
 	private LectureListView m_lectureListView;
+	private MainMenuController m_MainMenuController;
+	private RealFilterController m_RealFilterController;
+	private InterestedFilterController m_InterestedFilterController;
 	
+
 	public static ClassManager getInstance() {
 		if (s_instance == null) s_instance = new ClassManager();
 		return s_instance;
@@ -50,5 +54,20 @@ public class ClassManager {
 	public LectureListView getLectureListView() {
 		if(m_lectureListView == null) m_lectureListView = new LectureListView(m_lectureListController);
 		return m_lectureListView;
+	}
+	
+	public MainMenuController getMainMenuController() {
+		if(m_MainMenuController == null) m_MainMenuController = new MainMenuController();
+		return m_MainMenuController;
+	}
+
+	public RealFilterController getRealFilterController() {
+		if(m_RealFilterController == null) m_RealFilterController = new RealFilterController();
+		return m_RealFilterController;
+	}
+
+	public InterestedFilterController getInterestedFilterController() {
+		if(m_InterestedFilterController == null) m_InterestedFilterController = new InterestedFilterController();
+		return m_InterestedFilterController;
 	}
 }

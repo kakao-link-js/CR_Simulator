@@ -1,15 +1,17 @@
 package Controller;
 
-import View.MainMenuView;
-import View.RealFilterView;
+import View.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import Model.ClassManager;
+
+import java.awt.event.*;
 
 public class MainMenuController {
 
-	static MainMenuView mainMenu ;
+	MainMenuView mainMenu;
+	static JFrame frame;
 
 	public MainMenuController() {
 		mainMenu = new MainMenuView(this);
@@ -18,6 +20,17 @@ public class MainMenuController {
 	}
 
 	public MainMenuView getMainMenuView() {return mainMenu;}
+	
+	public void comeToMain() {
+		changePanel(ClassManager.getInstance().getMainMenuController().getMainMenuView());
+	}
+	
+	public void changePanel(JPanel View) {
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(View);
+		frame.pack();
+		frame.repaint();
+	}
 
 	private class MenuButtonListener implements ActionListener
 	{
@@ -28,14 +41,13 @@ public class MainMenuController {
 			for (int i = 0; i < 5; i++ ) {
 				if (obj == mainMenu.btnMenu[i]) {
 					switch (i) {
-						case 0:
-
+						case 0: //수강신청
+							changePanel(ClassManager.getInstance().getRealFilterController().getRealFilterView());
 							break;
 						case 1:
-							// 관심과목 창으로 이동
+							changePanel(ClassManager.getInstance().getInterestedFilterController().getInterestedFilterView());
 							break;
-						case 2:
-							// 내 시간표 창으로 이동
+						case 2: //시간표
 							break;
 						case 3:
 							// 학점 계산기 창으로 이동
@@ -69,11 +81,11 @@ public class MainMenuController {
 
 
 	public static void main(String[] arg) {
-		JFrame frame = new JFrame("Class Registration Simulator");
+		frame = new JFrame("Class Registration Simulator");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 
-		MainMenuController controller = new MainMenuController();
+		MainMenuController controller = ClassManager.getInstance().getMainMenuController();
 		frame.getContentPane().add(controller.getMainMenuView());
 
 		frame.pack();

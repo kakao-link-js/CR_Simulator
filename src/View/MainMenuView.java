@@ -116,14 +116,13 @@ public class MainMenuView extends JPanel {
         add(selectMenuPanel);
 
         btnMenu = new JButton[5];
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             btnMenu[i] = new JButton(MENU[i]);
             btnMenu[i].setFont(new Font("a이끌림M", Font.BOLD, 20));
             btnMenu[i].setBorderPainted(false);
             btnMenu[i].setBackground(Color.white);
             btnMenu[i].setForeground(Color.darkGray);
-            if (i != 4) btnMenu[i].setEnabled(false);
+            btnMenu[i].setEnabled(true);
             selectMenuPanel.add(btnMenu[i]);
         }
     }
