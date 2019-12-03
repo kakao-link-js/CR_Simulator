@@ -5,75 +5,97 @@ import java.util.*;
 import Controller.*;
 import View.*;
 
-// 싱글턴 기법을 위한 ClassManagement
+/**
+ * 싱글턴 기법 ClassManagement
+ * 사용법 : ClassManagement.GetInstance().~
+ */
 public class ClassManager {
-	//모든 곳에서 같은 객체를 공유해야 할 경우에는 여기다가 객체를 만들어 넣고 사용하면 됩니다.
-    //객체를 불러올때에는 ClassManagement.GetInstance().~~~
-	
 	private static ClassManager s_instance;
-	private ArrayList<LectureVO> m_interestedList;
-	private ArrayList<LectureVO> m_realList;
+
+	// Main
+	private ClassRegistrationSimulator m_Main;
+
+	// Item list
 	private ArrayList<LectureVO> m_lectureList;
-	private LectureListController m_lectureListController;
-	private LectureListView m_lectureListView;
+	private ArrayList<LectureVO> m_realList;
+	private ArrayList<LectureVO> m_interestedList;
+
+	// Controller
 	private MainMenuController m_MainMenuController;
 	private RealFilterController m_RealFilterController;
 	private InterestedFilterController m_InterestedFilterController;
+	private LectureListController m_lectureListController;
 	private CalculatorController m_CalculatorController;
-	
+
+	// View
+	private MainMenuView m_MainMenuView;
+	private LectureListView m_lectureListView;
 
 	public static ClassManager getInstance() {
 		if (s_instance == null) s_instance = new ClassManager();
 		return s_instance;
 	}
-	
-	public ArrayList<LectureVO> getInterested(){
-		if(m_interestedList == null) m_interestedList = new ArrayList<LectureVO>();
-		return m_interestedList;
+
+	// Main
+	public ClassRegistrationSimulator getMain() {
+		if (m_Main == null) m_Main = new ClassRegistrationSimulator();
+		return m_Main;
 	}
-	
-	public ArrayList<LectureVO> getReal(){
-		if(m_realList == null) m_realList = new ArrayList<LectureVO>();
-		return m_realList;
-	}
-	public ArrayList<LectureVO> getLecture(){
-		if(m_lectureList == null) m_lectureList = new ArrayList<LectureVO>();
+
+	// Item list
+	public ArrayList<LectureVO> getLecture() {
+		if (m_lectureList == null) m_lectureList = new ArrayList<LectureVO>();
 		return m_lectureList;
 	}
-	
-	public LectureListController getLectureListController() {
-		if(m_lectureListController == null) m_lectureListController = new LectureListController();
-		return m_lectureListController;
+	public ArrayList<LectureVO> getReal() {
+		if (m_realList == null) m_realList = new ArrayList<LectureVO>();
+		return m_realList;
 	}
-	
-	public LectureListView getLectureListView(boolean flag) {
-		if(m_lectureListView == null) m_lectureListView = new LectureListView(m_lectureListController);
-		m_lectureListView.isFavorite = flag;
-		return m_lectureListView;
+	public ArrayList<LectureVO> getInterested() {
+		if (m_interestedList == null) m_interestedList = new ArrayList<LectureVO>();
+		return m_interestedList;
 	}
-	
-	public LectureListView getLectureListView() {
-		if(m_lectureListView == null) m_lectureListView = new LectureListView(m_lectureListController);
-		return m_lectureListView;
-	}
-	
+
+	// Controller
 	public MainMenuController getMainMenuController() {
-		if(m_MainMenuController == null) m_MainMenuController = new MainMenuController();
+		if (m_MainMenuController == null) m_MainMenuController = new MainMenuController();
 		return m_MainMenuController;
 	}
 
 	public RealFilterController getRealFilterController() {
-		if(m_RealFilterController == null) m_RealFilterController = new RealFilterController();
+		if (m_RealFilterController == null) m_RealFilterController = new RealFilterController();
 		return m_RealFilterController;
 	}
 
 	public InterestedFilterController getInterestedFilterController() {
-		if(m_InterestedFilterController == null) m_InterestedFilterController = new InterestedFilterController();
+		if (m_InterestedFilterController == null) m_InterestedFilterController = new InterestedFilterController();
 		return m_InterestedFilterController;
 	}
-	
+
+	public LectureListController getLectureListController() {
+		if (m_lectureListController == null) m_lectureListController = new LectureListController();
+		return m_lectureListController;
+	}
+
 	public CalculatorController getCalculatorController() {
 		if (m_CalculatorController == null) m_CalculatorController = new CalculatorController();
 		return m_CalculatorController;
+	}
+
+	// View
+	public MainMenuView getMainMenuView() {
+		if (m_MainMenuView == null) m_MainMenuView = new MainMenuView();
+		return m_MainMenuView;
+	}
+
+	public LectureListView getLectureListView() {
+		if (m_lectureListView == null) m_lectureListView = new LectureListView(m_lectureListController);
+		return m_lectureListView;
+	}
+
+	public LectureListView getLectureListView(boolean flag) {
+		if (m_lectureListView == null) m_lectureListView = new LectureListView(m_lectureListController);
+		m_lectureListView.isFavorite = flag;
+		return m_lectureListView;
 	}
 }
