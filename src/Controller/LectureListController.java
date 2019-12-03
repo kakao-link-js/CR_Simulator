@@ -168,7 +168,7 @@ public class LectureListController {
     	ActionListener listener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//뒤로가는 메소드 넣으면됨.
+				ClassManager.getInstance().getMainMenuController().comeToMain();
 			}
     	};
     	return listener;
