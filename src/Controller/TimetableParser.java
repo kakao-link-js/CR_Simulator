@@ -78,8 +78,6 @@ class TimetableParser {
             if (!TimetableParserConstants.isExists(cell.getStringCellValue()))
                 continue;
 
-            System.out.println(cell.getStringCellValue());
-
             dataColumnIndexArrayList.add(cell.getColumnIndex());
         } // while
 

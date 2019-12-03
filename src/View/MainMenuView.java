@@ -17,9 +17,9 @@ public class MainMenuView extends JPanel {
     private JLabel lblUnivName;
     private JButton browseButton;
 
-    private final static String[] MENU = {"수강신청","관심과목","내 시간표", "학점 계산기", "종료"};
+    private final static String[] MENU = {"수강신청", "관심과목", "내 시간표", "학점 계산기", "종료"};
 
-    // TODO :: 수정
+    // TODO :: Modify using layout
     private int x, y, width, height;
     private int standardNum = 50;
     private double standardBlank = 0.1;
@@ -95,13 +95,15 @@ public class MainMenuView extends JPanel {
         btnMenus = new JButton[5];
         for (int i = 0; i < 5; i++) {
             btnMenus[i] = new JButton(MENU[i]);
+            // TODO :: Modify using system font
             btnMenus[i].setFont(new Font("a이끌림M", Font.BOLD, 20));
             btnMenus[i].setBorderPainted(false);
             btnMenus[i].setBackground(Color.white);
             btnMenus[i].setForeground(Color.darkGray);
-            btnMenus[i].setEnabled(true);
+            btnMenus[i].setEnabled(false);
             selectMenuPanel.add(btnMenus[i]);
         }
+        btnMenus[4].setEnabled(true);
 
         add(selectMenuPanel);
     }

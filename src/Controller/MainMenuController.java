@@ -1,18 +1,19 @@
 package Controller;
 
-import common.*;
 import View.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
 import Model.ClassManager;
+import common.XlsxParseException;
 
 import java.awt.event.*;
 import java.io.File;
 
 public class MainMenuController {
 	private JFileChooser fileChooser;
+	private String strXlsxFilePath;
 
 	public MainMenuController() {
 		getMainMenuView().addMenuButtonListener(new MenuButtonListener());
@@ -83,7 +84,19 @@ public class MainMenuController {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Clicked!");
+			if (fileChooser.showOpenDialog(getMainMenuView()) == JFileChooser.APPROVE_OPTION) {
+				strXlsxFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+				getMainMenuView().lblPath.setText("PATH : " + strXlsxFilePath);
+
+				TimetableParser parser = new TimetableParser(strXlsxFilePath);
+
+				try {
+					parser.parseXlsxFile();
+					getMainMenuView().setEnabledAllButton(true);
+				} catch (XlsxParseException ex) {
+					JOptionPane.showMessageDialog(getMainMenuView(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} // try - catch
+			} // if
 		} // actionPerformed()
 	} // BrowseButtonListener Class
 } // MainMenuController Class
