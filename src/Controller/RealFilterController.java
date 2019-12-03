@@ -149,7 +149,7 @@ public class RealFilterController {
             } else {
                 filteredLecture();
                 ClassManager.getInstance().getLectureListController().setSearchListatLectureListView(realFilter.filteredLectureList);
-				ClassManager.getInstance().getMainMenuController().changePanel(ClassManager.getInstance().getLectureListView(true));
+				ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(true));
             } // if... else
 
         }// actionPerformed
