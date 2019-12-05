@@ -55,6 +55,18 @@ public class TimetableView extends JPanel {
         lblTitle.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
         titlePanel.add(lblTitle, BorderLayout.CENTER);
 
+        // TODO :: add feature to print
+
+        JButton btnPrint = new JButton("print");
+        btnPrint.setPreferredSize(new Dimension(50, 0));
+        btnPrint.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 15));
+        btnPrint.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
+//        btnBack.setBorderPainted(false);
+        btnPrint.setContentAreaFilled(false);
+//        btnBack.setFocusPainted(false);
+//        btnBack.setOpaque(false);
+        titlePanel.add(btnPrint, BorderLayout.EAST);
+
         add(titlePanel, BorderLayout.NORTH);
     } // setTitlePanel()
 
