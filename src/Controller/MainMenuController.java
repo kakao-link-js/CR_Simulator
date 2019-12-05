@@ -6,7 +6,9 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
 import Model.ClassManager;
+import common.FontConstants;
 
+import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
@@ -15,7 +17,7 @@ public class MainMenuController {
 	private String strXlsxFilePath;
 
 	public MainMenuController() {
-		getMainMenuView().addMenuButtonListener(new MenuButtonListener());
+		getMainMenuView().addMenuButtonListener(new MenuButtonsListener());
 		getMainMenuView().addBrowseButtonListener(new BrowseButtonListener());
 
 		initFileChooser();
@@ -45,57 +47,92 @@ public class MainMenuController {
 		return ClassManager.getInstance().getMainMenuView();
 	} // getMainMenuView()
 
-	private class MenuButtonListener implements ActionListener
-	{
+	private class MenuButtonsListener implements ActionListener, MouseListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Object obj = e.getSource();
+			JButton btnSelected = (JButton)e.getSource();
 			JPanel selectedView = null;
 
-			for (int i = 0; i < 5; i++ ) {
-				if (obj == getMainMenuView().btnMenus[i]) {
-					switch (i) {
-						case 0: //수강신청
-							selectedView = ClassManager.getInstance().getRealFilterController().getRealFilterView();
-							break;
-						case 1:
-							selectedView = ClassManager.getInstance().getInterestedFilterController().getInterestedFilterView();
-							break;
-						case 2: //시간표
-							selectedView = ClassManager.getInstance().getTimetableController().getTimetableView();
-							break;
-						case 3: // 학점 계산기 창으로 이동
-							selectedView = ClassManager.getInstance().getCalculatorController().getCalculatorPanelView();
-							break;
-						case 4:
-							System.exit(0);
-							break;
-					} // switch
-
-					ClassManager.getInstance().getMain().changePanel(selectedView);
+			switch (btnSelected.getText()) {
+				case "수강신청":
+					selectedView = ClassManager.getInstance().getRealFilterController().getRealFilterView();
 					break;
-				} // if
-			} // for
+				case "관심과목":
+					selectedView = ClassManager.getInstance().getInterestedFilterController().getInterestedFilterView();
+					break;
+				case "내 시간표":
+					selectedView = ClassManager.getInstance().getTimetableController().getTimetableView();
+					break;
+				case "학점 계산기":
+					selectedView = ClassManager.getInstance().getCalculatorController().getCalculatorPanelView();
+					break;
+				case "종료":
+					System.exit(0);
+					break;
+			}
+			ClassManager.getInstance().getMain().changePanel(selectedView);
 		} // actionPerformed()
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			JButton btnEvent = (JButton)e.getSource();
+			btnEvent.setForeground(new Color(FontConstants.HOVERING_COLOR));
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			JButton btnEvent = (JButton)e.getSource();
+			btnEvent.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) { }
+		@Override
+		public void mousePressed(MouseEvent e) { }
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
 	} // MenuButtonListener Class
 
-	private class BrowseButtonListener implements ActionListener
-	{
+	private class BrowseButtonListener implements ActionListener, MouseListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (fileChooser.showOpenDialog(getMainMenuView()) == JFileChooser.APPROVE_OPTION) {
 				strXlsxFilePath = fileChooser.getSelectedFile().getAbsolutePath();
-				getMainMenuView().lblPath.setText("PATH : " + strXlsxFilePath);
+				getMainMenuView().getTxtFilePath().setText(strXlsxFilePath);
 
 				TimetableParser parser = new TimetableParser(strXlsxFilePath);
+				getMainMenuView().getTxtFilePath().setFont(new Font(FontConstants.ENGLISH_CASUAL_FONT, Font.PLAIN, 12));
 
 				try {
 					parser.parseXlsxFile();
+					getMainMenuView().getTxtFilePath().setForeground(Color.BLACK);
 					getMainMenuView().setEnabledAllButton(true);
 				} catch (XlsxParseException ex) {
+					getMainMenuView().getTxtFilePath().setForeground(Color.RED);
 					JOptionPane.showMessageDialog(getMainMenuView(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} // try - catch
 			} // if
 		} // actionPerformed()
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			JButton btnEvent = (JButton)e.getSource();
+			btnEvent.setForeground(new Color(FontConstants.HOVERING_COLOR));
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			JButton btnEvent = (JButton)e.getSource();
+			btnEvent.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) { }
+		@Override
+		public void mousePressed(MouseEvent e) { }
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
 	} // BrowseButtonListener Class
 } // MainMenuController Class

@@ -1,5 +1,7 @@
 package View;
 
+import common.FontConstants;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.*;
@@ -38,9 +40,10 @@ public class TimetableView extends JPanel {
         btnBack.setPreferredSize(new Dimension(35, 0));
         titlePanel.add(btnBack, BorderLayout.WEST);
 
-        JLabel lblTitle = new JLabel("TIME TABLE");
-        lblTitle.setFont(new Font("Verdana", Font.BOLD, 25));
+        JLabel lblTitle = new JLabel("시 간 표");
+        lblTitle.setFont(new Font(FontConstants.HANGUL_FONT, Font.BOLD, 25));
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitle.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
         titlePanel.add(lblTitle, BorderLayout.CENTER);
 
         add(titlePanel, BorderLayout.NORTH);
@@ -68,8 +71,9 @@ public class TimetableView extends JPanel {
     private void setHeaderRenderer() {
         JTableHeader tableHeader = timetable.getTableHeader();
         tableHeader.setReorderingAllowed(false);
-        tableHeader.setFont(new Font("Verdana", Font.PLAIN, 10));
+        tableHeader.setFont(new Font(FontConstants.HANGUL_FONT, Font.PLAIN, 10));
         tableHeader.setBackground(Color.WHITE);
+        tableHeader.setForeground(Color.DARK_GRAY);
 
         JLabel headerRenderer = (JLabel)tableHeader.getDefaultRenderer();
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -90,7 +94,8 @@ public class TimetableView extends JPanel {
 
             if (value != null) {
                 cell.setHorizontalAlignment(SwingConstants.CENTER);
-                cell.setFont(new Font("Verdana", Font.BOLD, 10));
+                cell.setFont(new Font(FontConstants.HANGUL_FONT, Font.PLAIN, 10));
+                cell.setForeground(Color.DARK_GRAY);
 
                 if (col != 0)
                     cell.setBackground(Color.PINK);

@@ -25,9 +25,13 @@ public class ClassRegistrationSimulator {
     private void createAndShowUI() {
         frame = new JFrame("Class Registration Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
 
         MainMenuController mainMenuController = ClassManager.getInstance().getMainMenuController();
         frame.getContentPane().add(mainMenuController.getMainMenuView());
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width/2 - 410/2, dim.height/2 - 615/2);
 
         frame.pack();
         frame.setVisible(true);
