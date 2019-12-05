@@ -1,4 +1,4 @@
-package Controller;
+package common;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ public class XlsxParseException extends IOException {
 
     private final ExceptionType ERR_TYPE;
 
-    XlsxParseException(ExceptionType errType) {
+    public XlsxParseException(ExceptionType errType) {
         super(errType.getMsg());
         ERR_TYPE = errType;
     } // Constructor

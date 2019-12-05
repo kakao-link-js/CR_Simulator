@@ -3,93 +3,100 @@ package Controller;
 import View.*;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 
 import Model.ClassManager;
+import common.XlsxParseException;
 
 import java.awt.event.*;
+import java.io.File;
 
 public class MainMenuController {
-
-	MainMenuView mainMenu;
-	static JFrame frame;
+	private JFileChooser fileChooser;
+	private String strXlsxFilePath;
 
 	public MainMenuController() {
-		mainMenu = new MainMenuView(this);
-		mainMenu.addMenuButtonListener(new MenuButtonListener());
-		mainMenu.addBrowseButtonListener(new BrowseButtonListener());
-	}
+		getMainMenuView().addMenuButtonListener(new MenuButtonListener());
+		getMainMenuView().addBrowseButtonListener(new BrowseButtonListener());
 
-	public MainMenuView getMainMenuView() {return mainMenu;}
-	
+		initFileChooser();
+	} // Constructor
+
+	private void initFileChooser() {
+		fileChooser = new JFileChooser();
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.addChoosableFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(File f) {
+				return f.getName().endsWith(".xlsx");
+			}
+
+			@Override
+			public String getDescription() {
+				return null;
+			}
+		});
+	} // initFileChooser()
+
 	public void comeToMain() {
-		changePanel(ClassManager.getInstance().getMainMenuController().getMainMenuView());
-	}
-	
-	public void changePanel(JPanel View) {
-		frame.getContentPane().removeAll();
-		frame.getContentPane().add(View);
-		frame.pack();
-		frame.repaint();
-	}
+		ClassManager.getInstance().getMain().changePanel(getMainMenuView());
+	} // comeToMain()
+
+	public MainMenuView getMainMenuView() {
+		return ClassManager.getInstance().getMainMenuView();
+	} // getMainMenuView()
 
 	private class MenuButtonListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object obj = e.getSource();
+			JPanel selectedView = null;
 
 			for (int i = 0; i < 5; i++ ) {
-				if (obj == mainMenu.btnMenu[i]) {
+				if (obj == getMainMenuView().btnMenus[i]) {
 					switch (i) {
 						case 0: //수강신청
-							changePanel(ClassManager.getInstance().getRealFilterController().getRealFilterView());
+							selectedView = ClassManager.getInstance().getRealFilterController().getRealFilterView();
 							break;
 						case 1:
-							changePanel(ClassManager.getInstance().getInterestedFilterController().getInterestedFilterView());
+							selectedView = ClassManager.getInstance().getInterestedFilterController().getInterestedFilterView();
 							break;
 						case 2: //시간표
+							selectedView = ClassManager.getInstance().getTimetableController().getTimetableView();
 							break;
 						case 3: // 학점 계산기 창으로 이동
-							changePanel(ClassManager.getInstance().getCalculatorController().getCalculatorPanelView());
+							selectedView = ClassManager.getInstance().getCalculatorController().getCalculatorPanelView();
 							break;
 						case 4:
 							System.exit(0);
 							break;
 					} // switch
+
+					ClassManager.getInstance().getMain().changePanel(selectedView);
+					break;
 				} // if
 			} // for
-		} // actionPerformed
-	} // MenuButtonListener
+		} // actionPerformed()
+	} // MenuButtonListener Class
 
 	private class BrowseButtonListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (fileChooser.showOpenDialog(getMainMenuView()) == JFileChooser.APPROVE_OPTION) {
+				strXlsxFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+				getMainMenuView().lblPath.setText("PATH : " + strXlsxFilePath);
 
-			mainMenu.infoSelectedFile = mainMenu.excFileChooser.showOpenDialog(mainMenu);
+				TimetableParser parser = new TimetableParser(strXlsxFilePath);
 
-			if (mainMenu.infoSelectedFile == JFileChooser.APPROVE_OPTION) {
-				mainMenu.filePath = mainMenu.excFileChooser.getSelectedFile().getAbsolutePath();
-				mainMenu.checkFile = true; // 파일을 가져왔을 때에만 다른 메뉴(종료 제외)를 선택할 수 있도록 true로 설정
-				mainMenu.setEnabledAllButton(true);
-			}
-			mainMenu.lblPath.setText("PATH : " + mainMenu.filePath);
-			mainMenu.pathPanel.add(mainMenu.lblPath);
-		}
-	}
-
-
-
-	public static void main(String[] arg) {
-		frame = new JFrame("Class Registration Simulator");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-
-		MainMenuController controller = ClassManager.getInstance().getMainMenuController();
-		frame.getContentPane().add(controller.getMainMenuView());
-
-		frame.pack();
-		frame.setVisible(true);
-	}
-
-}
+				try {
+					parser.parseXlsxFile();
+					getMainMenuView().setEnabledAllButton(true);
+				} catch (XlsxParseException ex) {
+					JOptionPane.showMessageDialog(getMainMenuView(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} // try - catch
+			} // if
+		} // actionPerformed()
+	} // BrowseButtonListener Class
+} // MainMenuController Class
