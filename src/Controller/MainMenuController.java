@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
 import Model.ClassManager;
-import common.FontConstants;
+import common.DesignConstants;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -76,13 +76,13 @@ public class MainMenuController {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			JButton btnEvent = (JButton)e.getSource();
-			btnEvent.setForeground(new Color(FontConstants.HOVERING_COLOR));
+			btnEvent.setForeground(new Color(DesignConstants.HOVERING_COLOR));
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			JButton btnEvent = (JButton)e.getSource();
-			btnEvent.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
+			btnEvent.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
 		}
 
 		@Override
@@ -102,7 +102,7 @@ public class MainMenuController {
 				getMainMenuView().getTxtFilePath().setText(strXlsxFilePath);
 
 				TimetableParser parser = new TimetableParser(strXlsxFilePath);
-				getMainMenuView().getTxtFilePath().setFont(new Font(FontConstants.ENGLISH_CASUAL_FONT, Font.PLAIN, 12));
+				getMainMenuView().getTxtFilePath().setFont(new Font(DesignConstants.ENGLISH_CASUAL_FONT, Font.PLAIN, 12));
 
 				try {
 					parser.parseXlsxFile();
@@ -118,13 +118,13 @@ public class MainMenuController {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			JButton btnEvent = (JButton)e.getSource();
-			btnEvent.setForeground(new Color(FontConstants.HOVERING_COLOR));
+			btnEvent.setForeground(new Color(DesignConstants.HOVERING_COLOR));
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			JButton btnEvent = (JButton)e.getSource();
-			btnEvent.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
+			btnEvent.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
 		}
 
 		@Override

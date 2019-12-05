@@ -1,6 +1,6 @@
 package View;
 
-import common.FontConstants;
+import common.DesignConstants;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -45,17 +45,16 @@ public class MainMenuView extends JPanel {
         pathPanel.setBounds(5, 5, 400, 40);
 
         txtFilePath = new JTextField("  Path ..");
-        txtFilePath.setFont(new Font(FontConstants.ENGLISH_CASUAL_FONT, Font.BOLD + Font.ITALIC, 10));
+        txtFilePath.setFont(new Font(DesignConstants.ENGLISH_CASUAL_FONT, Font.BOLD + Font.ITALIC, 10));
         txtFilePath.setPreferredSize(new Dimension(45, 100));
         txtFilePath.setForeground(Color.LIGHT_GRAY);
         txtFilePath.setEditable(false);
         pathPanel.add(txtFilePath, BorderLayout.CENTER);
 
         btnBrowse = new JButton("Browse");
-//        btnBrowse.setBorderPainted(false);
         btnBrowse.setBackground(Color.lightGray);
-        btnBrowse.setFont(new Font(FontConstants.ENGLISH_CASUAL_FONT, Font.BOLD, 12));
-        btnBrowse.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
+        btnBrowse.setFont(new Font(DesignConstants.ENGLISH_CASUAL_FONT, Font.BOLD, 12));
+        btnBrowse.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
         pathPanel.add(btnBrowse, BorderLayout.EAST);
 
         add(pathPanel);
@@ -65,8 +64,8 @@ public class MainMenuView extends JPanel {
         JLabel lblProgramName = new JLabel("<html><center>CLASS<br>REGISTRATION<br>SIMULATOR</center></html>");
         lblProgramName.setBackground(Color.WHITE);
         lblProgramName.setOpaque(true);
-        lblProgramName.setFont(new Font(FontConstants.ENGLISH_FORMAL_FONT, Font.BOLD, 30));
-        lblProgramName.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
+        lblProgramName.setFont(new Font(DesignConstants.ENGLISH_FORMAL_FONT, Font.BOLD, 30));
+        lblProgramName.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
         lblProgramName.setVerticalAlignment(SwingConstants.CENTER);
         lblProgramName.setHorizontalAlignment(SwingConstants.CENTER);
         lblProgramName.setBounds(5, 50, 400, 150);
@@ -93,12 +92,12 @@ public class MainMenuView extends JPanel {
         for (String menu : MENU) {
             JButton btnMenu = new JButton(menu);
 
-            btnMenu.setFont(new Font(FontConstants.HANGUL_FONT, Font.BOLD, 20));
+            btnMenu.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
             btnMenu.setBorderPainted(false);
             btnMenu.setContentAreaFilled(false);
             btnMenu.setFocusPainted(false);
             btnMenu.setOpaque(false);
-            btnMenu.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
+            btnMenu.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
 
             if (!menu.equals("종료"))
                 btnMenu.setEnabled(false);
@@ -114,8 +113,8 @@ public class MainMenuView extends JPanel {
         JLabel lblUnivName = new JLabel("SEJONG UNIVERSITY");
         lblUnivName.setBackground(Color.WHITE);
         lblUnivName.setOpaque(true);
-        lblUnivName.setFont(new Font(FontConstants.ENGLISH_FORMAL_FONT, Font.BOLD, 30));
-        lblUnivName.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
+        lblUnivName.setFont(new Font(DesignConstants.ENGLISH_FORMAL_FONT, Font.BOLD, 30));
+        lblUnivName.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
         lblUnivName.setVerticalAlignment(SwingConstants.CENTER);
         lblUnivName.setHorizontalAlignment(SwingConstants.CENTER);
         lblUnivName.setBounds(5, 510, 400, 100);

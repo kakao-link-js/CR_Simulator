@@ -3,45 +3,58 @@ package Controller;
 import Model.ClassManager;
 import Model.LectureVO;
 import View.TimetableView;
+import common.DesignConstants;
 
 import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TimetableController {
 
     public TimetableController() {
         getTimetableView().addBackButtonListener(new BackButtonListener());
-        getTimetableView().addComponentListener(new ViewComponentListener());
+        getTimetableView().addAncestorListener(new ViewComponentListener());
     } // Constructor
 
     public TimetableView getTimetableView() {
         return ClassManager.getInstance().getTimetableView();
     } // getTimetableView()
 
-    private void drawTimetale() {
-        ArrayList<LectureVO> lectureList =  ClassManager.getInstance().getReal();
+    private void drawTimetable() {
+        ArrayList<LectureVO> lectureList =  ClassManager.getInstance().getInterested();
 
-        fillTimetableCell("선형대수", "센 B107", "수", "10:00~15:30");
+        for (LectureVO lecture : lectureList) {
+            String strWeekAndTime = lecture.time;
 
-//        for (LectureVO lecture : lectureList) {
-//            String strTime = lecture.time;
-//
-//            if (strTime.isEmpty())
-//                continue;
-//
-//            String[] splitTimes = strTime.split(",");
-//
-//            if (splitTimes.length <= 1) {
-//
-//            } else {
-//
-//            }
-//        }
-    }
+            if (strWeekAndTime.isEmpty())
+                continue;
+
+            String[] strSplitWeekAndTimeList = strWeekAndTime.split(",");
+
+            for (String strSplitWeekAndTime : strSplitWeekAndTimeList) {
+                List<String> strSplitWeekList = new ArrayList<>(Arrays.asList(strSplitWeekAndTime.split(" ")));
+                int listSize = strSplitWeekList.size();
+
+                if (listSize < 2)
+                    continue;
+
+                String time = strSplitWeekList.get(listSize - 1);
+                strSplitWeekList.remove(listSize - 1);
+
+                for (String week : strSplitWeekList)
+                    fillTimetableCell(lecture.className, lecture.classRoom, week, time);
+            } // foreach
+        } // foreach
+    } // drawTimetable()
 
     private void fillTimetableCell(final String className, final String classRoom, final String strWeek, final String strTime) {
         class TimeModel {
@@ -52,7 +65,7 @@ public class TimetableController {
                 String[] splitTime = time.split(":");
                 hour = Integer.parseInt(splitTime[0]);
                 minute = Integer.parseInt(splitTime[1]);
-            }
+            } // Constructor
 
             int isHalf() { return minute > 0 ? 1 : 0; }
         } // TimeModel Inner Class
@@ -73,32 +86,44 @@ public class TimetableController {
 
         for (int i = startRowIndex + 2; i <= endRowIndex; ++i) {
             table.setValueAt(" ", i, columnIndex);
-        }
-    }
+        } // for
+    } // fillTimetableCell
 
-    private boolean isDivisible(String str) {
-        return str.split(" ").length > 1;
-    }
-
-    private class ViewComponentListener implements java.awt.event.ComponentListener {
+    private class ViewComponentListener implements AncestorListener {
+        @Override
+        public void ancestorAdded(AncestorEvent event) {
+            drawTimetable();
+        } // ancestorAdded()
 
         @Override
-        public void componentShown(ComponentEvent e) {
-            drawTimetale();
-        }
+        public void ancestorRemoved(AncestorEvent event) { }
+        @Override
+        public void ancestorMoved(AncestorEvent event) { }
+    } // ViewComponentListener Class
 
-        @Override
-        public void componentHidden(ComponentEvent e) { }
-        @Override
-        public void componentResized(ComponentEvent e) { }
-        @Override
-        public void componentMoved(ComponentEvent e) { }
-    }
-
-    private static class BackButtonListener implements ActionListener {
+    private static class BackButtonListener implements ActionListener, MouseListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             ClassManager.getInstance().getMainMenuController().comeToMain();
         } // actionPerformed()
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            JButton btnEvent = (JButton)e.getSource();
+            btnEvent.setForeground(new Color(DesignConstants.HOVERING_COLOR));
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            JButton btnEvent = (JButton)e.getSource();
+            btnEvent.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) { }
+        @Override
+        public void mousePressed(MouseEvent e) { }
+        @Override
+        public void mouseReleased(MouseEvent e) { }
     } // BackButtonListener Class
 } // TimetableController Class
