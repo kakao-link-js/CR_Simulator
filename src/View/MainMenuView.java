@@ -1,8 +1,12 @@
 package View;
 
+import common.FontConstants;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 public class MainMenuView extends JPanel {
     private JPanel pathPanel;       // 경로 Panel
@@ -11,11 +15,12 @@ public class MainMenuView extends JPanel {
     private JPanel univNamePanel;   // 대학교 이름 Panel
 
     public JLabel lblPath;
-    public JButton[] btnMenus;
+    private JTextField txtFilePath;
+    private JButton btnBrowse;
 
     private JLabel lblProName;
     private JLabel lblUnivName;
-    private JButton browseButton;
+    public JButton[] btnMenus;
 
     private final static String[] MENU = {"수강신청", "관심과목", "내 시간표", "학점 계산기", "종료"};
 
@@ -25,9 +30,9 @@ public class MainMenuView extends JPanel {
     private double standardBlank = 0.1;
 
     public MainMenuView() {
-        setLayout(null);
-        setPreferredSize(new Dimension((int)(standardNum * 8.2), (int)(standardNum * 12.5)));
+        setLayout(new BorderLayout());
         setBackground(Color.lightGray);
+//        setPreferredSize(new Dimension((int)(standardNum * 8.2), (int)(standardNum * 12.5)));
 
         setPathPanel();
         setProNamePanel();
@@ -36,29 +41,33 @@ public class MainMenuView extends JPanel {
     }
 
     private void setPathPanel() {
-        x = (int) (standardNum*standardBlank);
-        y = (int) (standardNum*standardBlank);
-        width = (int) (standardNum*8);
-        height = (int) (standardNum);
+//        x = (int) (standardNum*standardBlank);
+//        y = (int) (standardNum*standardBlank);
+//        width = (int) (standardNum*8);
+//        height = (int) (standardNum);
 
         pathPanel = new JPanel();
         pathPanel.setBackground(Color.white);
-        pathPanel.setBounds(x, y, width, height);
-        pathPanel.setLayout(null);
+        pathPanel.setLayout(new BorderLayout());
+        pathPanel.setBorder(new MatteBorder(1, 1, 1, 1, Color.lightGray));
+        pathPanel.setPreferredSize(new Dimension(400, 30));
 
         lblPath = new JLabel("PATH : ") ;
-        lblPath.setFont(new Font("a이끌림M",Font.BOLD, 16));
+        lblPath.setFont(new Font(FontConstants.ENGLISH_CASUAL_FONT, Font.BOLD, 12));
         lblPath.setBounds(0,0, standardNum*6, height);
-        pathPanel.add(lblPath);
+        pathPanel.add(lblPath, BorderLayout.WEST);
 
-        browseButton = new JButton("Browse");
-        browseButton.setBorderPainted(false);
-        browseButton.setBackground(Color.lightGray);
-        browseButton.setFont(new Font("a이끌림M", Font.BOLD, 15));
-        browseButton.setBounds(standardNum*6, 0, standardNum*2, height);
-        pathPanel.add(browseButton);
+        txtFilePath = new JTextField();
+        pathPanel.add(txtFilePath, BorderLayout.CENTER);
 
-        add(pathPanel);
+        btnBrowse = new JButton("Browse");
+//        btnBrowse.setBorderPainted(false);
+        btnBrowse.setBackground(Color.lightGray);
+        btnBrowse.setFont(new Font(FontConstants.ENGLISH_CASUAL_FONT, Font.BOLD, 12));
+        btnBrowse.setBounds(standardNum*6, 0, standardNum*2, height);
+        pathPanel.add(btnBrowse, BorderLayout.EAST);
+
+        add(pathPanel, BorderLayout.NORTH);
     }
 
     private void setProNamePanel() {
@@ -69,10 +78,11 @@ public class MainMenuView extends JPanel {
         proNamePanel = new JPanel();
         proNamePanel.setBackground(Color.white);
         proNamePanel.setBounds(x, y, width, height);
-        proNamePanel.setLayout(null);
+        proNamePanel.setLayout(new BorderLayout());
 
         lblProName = new JLabel("<html><center>CLASS<br>REGISTRATION<br>REGISTER</center></html>");
-        lblProName.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        lblProName.setFont(new Font(FontConstants.ENGLISH_FORMAL_FONT, Font.BOLD, 30));
+        lblProName.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
         lblProName.setBounds(0,0,width,height);
         lblProName.setVerticalAlignment(SwingConstants.CENTER);
         lblProName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -95,8 +105,7 @@ public class MainMenuView extends JPanel {
         btnMenus = new JButton[5];
         for (int i = 0; i < 5; i++) {
             btnMenus[i] = new JButton(MENU[i]);
-            // TODO :: Modify using system font
-            btnMenus[i].setFont(new Font("Malgun Gothic", Font.BOLD, 20));
+            btnMenus[i].setFont(new Font(FontConstants.HANGUL_FONT, Font.BOLD, 20));
             btnMenus[i].setBorderPainted(false);
             btnMenus[i].setBackground(Color.white);
             btnMenus[i].setForeground(Color.darkGray);
@@ -119,7 +128,8 @@ public class MainMenuView extends JPanel {
         univNamePanel.setLayout(null);
 
         lblUnivName = new JLabel("SEJONG UNIVERSITY");
-        lblUnivName.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        lblUnivName.setFont(new Font(FontConstants.ENGLISH_FORMAL_FONT, Font.BOLD, 30));
+        lblUnivName.setForeground(new Color(FontConstants.SIGNATURE_COLOR));
         lblUnivName.setBounds(0,0,width,height);
         lblUnivName.setVerticalAlignment(SwingConstants.CENTER);
         lblUnivName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -134,7 +144,7 @@ public class MainMenuView extends JPanel {
     }
 
     public void addBrowseButtonListener(ActionListener listener) {
-        browseButton.addActionListener(listener);
+        btnBrowse.addActionListener(listener);
     }
 
     public void setEnabledAllButton(boolean flag) {
