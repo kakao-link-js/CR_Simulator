@@ -68,10 +68,12 @@ public class LectureListController {
 		for(int i = 0 ; i < myData.size();i++) {
 			if(myData.get(i).courseNum == inserted[3]) { //학수번호가 같다면.
 				System.out.println(inserted[5]+ " already inserted CourseNum");
+				JOptionPane.showMessageDialog(null, "이미 신청한 과목입니다.");
 				return false;
 			}
 			if(isClassOverLap(myData.get(i).time,inserted[9].toString())) {
 				System.out.println(inserted[5]+ " already inserted time");
+				JOptionPane.showMessageDialog(null, "시간이 겹치는 과목이 있습니다.");
 				return false;
 			}
 		}
