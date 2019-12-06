@@ -135,8 +135,10 @@ public class MainMenuView extends JPanel {
     }
 
     public void setEnabledAllButton(boolean flag) {
-        for (JButton btnMenu : btnMenuList)
-            btnMenu.setEnabled(flag);
+        for (JButton btnMenu : btnMenuList) {
+            if (!btnMenu.getText().equals("종료"))
+                btnMenu.setEnabled(flag);
+        }
     }
 
     public JTextField getTxtFilePath() {

@@ -13,15 +13,11 @@ import java.util.EventListener;
 
 public class TimetableView extends JPanel {
     private JButton btnBack;
+    private JButton btnPrint;
     private JTable timetable;
 
-    private final String[] HEADER = {"", "월", "화", "수", "목", "금"};
-    private final String[][] ROW_TIME = {{"9"}, {""}, {"10"}, {""},
-                                        {"11"}, {""}, {"12"}, {""},
-                                        {"1"}, {""}, {"2"}, {""},
-                                        {"3"}, {""}, {"4"}, {""},
-                                        {"5"}, {""}, {"6"}, {""},
-                                        {"7"}, {""}, {"8"}};
+    private ImageIcon imgDefaultPrint;
+    private ImageIcon imgHoveringPrint;
 
     public TimetableView() {
         setLayout(new BorderLayout());
@@ -43,10 +39,8 @@ public class TimetableView extends JPanel {
         btnBack.setPreferredSize(new Dimension(50, 0));
         btnBack.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 15));
         btnBack.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
-//        btnBack.setBorderPainted(false);
         btnBack.setContentAreaFilled(false);
-//        btnBack.setFocusPainted(false);
-//        btnBack.setOpaque(false);
+        btnBack.setFocusPainted(false);
         titlePanel.add(btnBack, BorderLayout.WEST);
 
         JLabel lblTitle = new JLabel("시 간 표");
@@ -55,16 +49,15 @@ public class TimetableView extends JPanel {
         lblTitle.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
         titlePanel.add(lblTitle, BorderLayout.CENTER);
 
-        // TODO :: add feature to print
+        imgDefaultPrint = new ImageIcon("Images/printer1.png");
+        imgHoveringPrint = new ImageIcon("Images/printer2.png");
 
-        JButton btnPrint = new JButton("print");
+        btnPrint = new JButton(imgDefaultPrint);
         btnPrint.setPreferredSize(new Dimension(50, 0));
         btnPrint.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 15));
         btnPrint.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
-//        btnBack.setBorderPainted(false);
         btnPrint.setContentAreaFilled(false);
-//        btnBack.setFocusPainted(false);
-//        btnBack.setOpaque(false);
+        btnPrint.setFocusPainted(false);
         titlePanel.add(btnPrint, BorderLayout.EAST);
 
         add(titlePanel, BorderLayout.NORTH);
@@ -72,7 +65,7 @@ public class TimetableView extends JPanel {
 
     private void setTimetablePanel() {
 
-        timetable = new JTable(new DefaultTableModel(ROW_TIME, HEADER));
+        timetable = new JTable(new DefaultTableModel(23, 5));
         timetable.setBackground(Color.WHITE);
         timetable.setGridColor(Color.GRAY);
         timetable.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -100,9 +93,21 @@ public class TimetableView extends JPanel {
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
     } // setHeaderRenderer()
 
+    public void setHoveringPrintIcon(boolean status) {
+        if (status)
+            btnPrint.setIcon(imgHoveringPrint);
+        else
+            btnPrint.setIcon(imgDefaultPrint);
+    }
+
     public void addBackButtonListener(EventListener listener) {
         btnBack.addActionListener((ActionListener)listener);
         btnBack.addMouseListener((MouseListener)listener);
+    }
+
+    public void addPrintButtonListener (EventListener listener) {
+        btnPrint.addActionListener((ActionListener) listener);
+        btnPrint.addMouseListener((MouseListener) listener);
     }
 
     public JTable getTable() {

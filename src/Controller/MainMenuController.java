@@ -14,7 +14,6 @@ import java.io.File;
 
 public class MainMenuController {
 	private JFileChooser fileChooser;
-	private String strXlsxFilePath;
 
 	public MainMenuController() {
 		getMainMenuView().addMenuButtonListener(new MenuButtonsListener());
@@ -98,7 +97,7 @@ public class MainMenuController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (fileChooser.showOpenDialog(getMainMenuView()) == JFileChooser.APPROVE_OPTION) {
-				strXlsxFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+				String strXlsxFilePath = fileChooser.getSelectedFile().getAbsolutePath();
 				getMainMenuView().getTxtFilePath().setText(strXlsxFilePath);
 
 				TimetableParser parser = new TimetableParser(strXlsxFilePath);
@@ -109,6 +108,8 @@ public class MainMenuController {
 					getMainMenuView().getTxtFilePath().setForeground(Color.BLACK);
 					getMainMenuView().setEnabledAllButton(true);
 				} catch (XlsxParseException ex) {
+					ClassManager.getInstance().getLecture().clear();
+					getMainMenuView().setEnabledAllButton(false);
 					getMainMenuView().getTxtFilePath().setForeground(Color.RED);
 					JOptionPane.showMessageDialog(getMainMenuView(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} // try - catch

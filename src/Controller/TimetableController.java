@@ -8,20 +8,31 @@ import common.DesignConstants;
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TimetableController {
 
+    private final String[] HEADER = {"", "월", "화", "수", "목", "금"};
+    private final String[][] ROW_TIME = {{"9"}, {""}, {"10"}, {""},
+            {"11"}, {""}, {"12"}, {""},
+            {"1"}, {""}, {"2"}, {""},
+            {"3"}, {""}, {"4"}, {""},
+            {"5"}, {""}, {"6"}, {""},
+            {"7"}, {""}, {"8"}};
+
     public TimetableController() {
         getTimetableView().addBackButtonListener(new BackButtonListener());
+        getTimetableView().addPrintButtonListener(new PrintButtonListener());
         getTimetableView().addAncestorListener(new ViewComponentListener());
     } // Constructor
 
@@ -30,6 +41,8 @@ public class TimetableController {
     } // getTimetableView()
 
     private void drawTimetable() {
+        getTimetableView().getTable().setModel(new DefaultTableModel(ROW_TIME, HEADER));
+
         ArrayList<LectureVO> lectureList =  ClassManager.getInstance().getInterested();
 
         for (LectureVO lecture : lectureList) {
@@ -126,4 +139,32 @@ public class TimetableController {
         @Override
         public void mouseReleased(MouseEvent e) { }
     } // BackButtonListener Class
+
+    public class PrintButtonListener implements ActionListener, MouseListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                getTimetableView().getTable().print();
+            } catch (PrinterException ex) {
+                JOptionPane.showMessageDialog(getTimetableView(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            getTimetableView().setHoveringPrintIcon(true);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            getTimetableView().setHoveringPrintIcon(false);
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) { }
+        @Override
+        public void mousePressed(MouseEvent e) { }
+        @Override
+        public void mouseReleased(MouseEvent e) { }
+    }
 } // TimetableController Class
