@@ -1,4 +1,6 @@
-package common;
+package Controller;
+
+import common.ExceptionType;
 
 import java.io.IOException;
 

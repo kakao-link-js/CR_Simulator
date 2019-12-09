@@ -3,7 +3,6 @@ package Controller;
 import Model.ClassManager;
 import Model.LectureVO;
 import common.ExceptionType;
-import common.XlsxParseException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;

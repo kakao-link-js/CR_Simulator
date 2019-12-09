@@ -25,11 +25,13 @@ public class ClassManager {
 	private RealFilterController m_RealFilterController;
 	private InterestedFilterController m_InterestedFilterController;
 	private LectureListController m_lectureListController;
+	private TimetableController m_TimetableController;
 	private CalculatorController m_CalculatorController;
 
 	// View
 	private MainMenuView m_MainMenuView;
 	private LectureListView m_lectureListView;
+	private TimetableView m_TimetableView;
 
 	public static ClassManager getInstance() {
 		if (s_instance == null) s_instance = new ClassManager();
@@ -77,6 +79,11 @@ public class ClassManager {
 		return m_lectureListController;
 	}
 
+	public TimetableController getTimetableController() {
+		if (m_TimetableController == null) m_TimetableController = new TimetableController();
+		return m_TimetableController;
+	}
+
 	public CalculatorController getCalculatorController() {
 		if (m_CalculatorController == null) m_CalculatorController = new CalculatorController();
 		return m_CalculatorController;
@@ -97,5 +104,10 @@ public class ClassManager {
 		if (m_lectureListView == null) m_lectureListView = new LectureListView(m_lectureListController);
 		m_lectureListView.isFavorite = flag;
 		return m_lectureListView;
+	}
+
+	public TimetableView getTimetableView() {
+		if (m_TimetableView == null) m_TimetableView = new TimetableView();
+		return m_TimetableView;
 	}
 }
