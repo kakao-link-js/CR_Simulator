@@ -13,10 +13,10 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public class RealFilterController {
-    RealFilterView realFilter;
+    private RealFilterView realFilter;
 
     public RealFilterController() {
-        realFilter = new RealFilterView(this);
+        realFilter = new RealFilterView();
         realFilter.addInterestingListener(new InterestingListener());
         realFilter.addSearchListener(new SearchListener());
         realFilter.addExitButtonListener(new ExitButtonListener());
@@ -148,7 +148,7 @@ public class RealFilterController {
                 // 관심과목만
             } else {
                 filteredLecture();
-                ClassManager.getInstance().getLectureListController().setSearchListatLectureListView(realFilter.filteredLectureList);
+                ClassManager.getInstance().getLectureListController().setSearchListLectureListView(realFilter.filteredLectureList);
 				ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(true));
             } // if... else
 

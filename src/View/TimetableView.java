@@ -68,7 +68,6 @@ public class TimetableView extends JPanel {
         timetable = new JTable(new DefaultTableModel(23, 5));
         timetable.setBackground(Color.WHITE);
         timetable.setGridColor(Color.GRAY);
-        timetable.getColumnModel().getColumn(0).setPreferredWidth(5);
         timetable.setRowHeight(25);
         timetable.setEnabled(false);
 
@@ -114,7 +113,7 @@ public class TimetableView extends JPanel {
         return timetable;
     }
 
-    public class customCellRenderer extends DefaultTableCellRenderer {
+    public static class customCellRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
             JLabel cell = (JLabel)super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);

@@ -9,9 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-public class InterestedFilterView extends JPanel {JPanel titlePanel; // 나가기 버튼 및 현재 페이지의 이름이 있는 Panel
-    InterestedFilterController TFC;
-
+public class InterestedFilterView extends JPanel {
+    JPanel titlePanel; // 나가기 버튼 및 현재 페이지의 이름이 있는 Panel
     JPanel filterPanel; // 수강신청 분류 조건 Panel
 
     // setBounds를 위한 변수들
