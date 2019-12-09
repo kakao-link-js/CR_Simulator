@@ -42,8 +42,9 @@ public class TimetableController {
 
     private void drawTimetable() {
         getTimetableView().getTable().setModel(new DefaultTableModel(ROW_TIME, HEADER));
+        getTimetableView().getTable().getColumnModel().getColumn(0).setPreferredWidth(5);
 
-        ArrayList<LectureVO> lectureList =  ClassManager.getInstance().getInterested();
+        ArrayList<LectureVO> lectureList =  ClassManager.getInstance().getReal();
 
         for (LectureVO lecture : lectureList) {
             String strWeekAndTime = lecture.time;

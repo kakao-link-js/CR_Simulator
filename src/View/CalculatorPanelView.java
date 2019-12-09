@@ -12,12 +12,9 @@ import Model.ClassManager;
 public class CalculatorPanelView extends JPanel {
 	
 	private JPanel titlePanel, infoPanel, calculPanel;
-	private JLabel SCORE, CALCULATOR;
-	private JLabel	title1, title2, title3;
 	private int width, height, margin;
-	private JButton btnCalcul, btnExit;
+	private JButton btnCalcul;
 	private JLabel txtResult;
-	private Image image;
 
 	public ArrayList<JComboBox> comboArr = new ArrayList<JComboBox>();
 	public ArrayList<JTextField> scoreArr = new ArrayList<JTextField>();
@@ -97,15 +94,15 @@ public class CalculatorPanelView extends JPanel {
 		int height = (int)(this.height * 0.1);
 		int x2 = margin;
 		int y2 = height;
-		
-		SCORE = new JLabel("SCORE");
+
+		JLabel SCORE = new JLabel("SCORE");
 		
 		SCORE.setBounds(x1, y1, width, height);
 		SCORE.setFont(new Font("Verdana", Font.BOLD + Font.ITALIC, 40));
 		SCORE.setHorizontalAlignment(SwingConstants.CENTER);
 		titlePanel.add(SCORE);
-		
-		CALCULATOR = new JLabel("CALCULATOR");
+
+		JLabel CALCULATOR = new JLabel("CALCULATOR");
 		
 		CALCULATOR.setBounds(x2, y2, width, height);
 		CALCULATOR.setFont(new Font("Verdana", Font.BOLD + Font.ITALIC, 40));
@@ -118,10 +115,10 @@ public class CalculatorPanelView extends JPanel {
 		int y = (int)(height * 0.02);
 		int width = (int)((this.width - margin * 2) * 0.45);
 		int height = (int)(this.height * 0.6* 0.05);
-		
-		title1 = new JLabel("Course Name");
-		title2 = new JLabel("credit");
-		title3 = new JLabel("grade Point");
+
+		JLabel title1 = new JLabel("Course Name");
+		JLabel title2 = new JLabel("credit");
+		JLabel title3 = new JLabel("grade Point");
 		
 		title1.setBounds(x, y, width, height);
 		title2.setBounds(margin+width, y, width / 2, height);
@@ -247,8 +244,8 @@ public class CalculatorPanelView extends JPanel {
 	      int y = margin;
 	      int width = (int)(this.height * 0.2)/2;
 	      int height = width;
-	      
-	      btnExit = new JButton("exit");
+
+		JButton btnExit = new JButton("exit");
 	      btnExit.setBounds(x, y, width, height);
 	      btnExit.addActionListener(m_CC.connectActionListener());
 	      titlePanel.add(btnExit);

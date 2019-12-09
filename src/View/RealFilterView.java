@@ -10,8 +10,6 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class RealFilterView extends JPanel {
-    RealFilterController RFC;
-
     JPanel titlePanel; // 나가기 버튼 및 현재 페이지의 이름이 있는 Panel
     JPanel filterPanel; // 수강신청 분류 조건 Panel
 
@@ -63,8 +61,7 @@ public class RealFilterView extends JPanel {
     JLabel lblCompletion; // 이수 구분
     JLabel lblTitle; // 제목
 
-    public RealFilterView(RealFilterController RFC) { // 패널 설정
-        this.RFC = RFC;
+    public RealFilterView() { // 패널 설정
         setBackground(Color.lightGray);
         setPreferredSize(new Dimension((int)(standardNum*8.2),(int)(standardNum*12.5)));
         setLayout(null);

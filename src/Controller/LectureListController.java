@@ -28,13 +28,11 @@ public class LectureListController {
 	} // public TabelCell connectTableCell(String text,int flag);
 	
 	//검색된 값을 LectureListView에 뿌리는 메소드
-	public void setSearchListatLectureListView(ArrayList<LectureVO> searchList) {
-
+	public void setSearchListAtLectureListView(ArrayList<LectureVO> searchList) {
 		for(int i = 0 ; i < searchList.size(); i++)
 			getLLV().getSearchListDTM().addRow(searchList.get(i).makeStringArray());
 		SetScore();
 	} //public setSearchListatlectureListView(ArrayList<LectureVO> searchList;
-	
 	
 	//신청 학점을 설정하는 메소드
 	public void SetScore() {
@@ -117,16 +115,16 @@ public class LectureListController {
     } //public boolean isTimeOverlap(TimeDTO class1, TimeDTO class2)
 	
 	// 요일및 시간이 적힌 문자열을 Time 객체들의 리스트로 만들어 반환
-		public ArrayList<TimeDTO> getTimeList(String timeString){
-	        ArrayList<TimeDTO> times = new ArrayList<TimeDTO>();
-	        String[] splitComma = timeString.split(",");    // 콤마로 분리    
-	        int timeIndex = 0; // 시간 정보를 넣기 시작해야하는 객체의 index
-	        for(String text : splitComma){
-	            String[] splitSpace = text.split(" "); // 스페이스로 분리해 단어 단위로 저장
-	            timeIndex = splitDay(times, splitSpace, timeIndex);
-	        }
-	        return times;
-	    } //public ArrayList<TimeDTO> getTimeList(String timeString)
+	public ArrayList<TimeDTO> getTimeList(String timeString){
+		ArrayList<TimeDTO> times = new ArrayList<TimeDTO>();
+		String[] splitComma = timeString.split(",");    // 콤마로 분리
+		int timeIndex = 0; // 시간 정보를 넣기 시작해야하는 객체의 index
+		for(String text : splitComma){
+			String[] splitSpace = text.split(" "); // 스페이스로 분리해 단어 단위로 저장
+			timeIndex = splitDay(times, splitSpace, timeIndex);
+		}
+		return times;
+	} //public ArrayList<TimeDTO> getTimeList(String timeString)
 	
 	
     // 요일 및 시간 string에서 요일을 분리해냄

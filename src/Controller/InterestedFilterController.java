@@ -7,8 +7,6 @@ import View.InterestedFilterView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -131,7 +129,7 @@ public class InterestedFilterController {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             filteredLecture();
-            ClassManager.getInstance().getLectureListController().setSearchListatLectureListView(interestedFilter.filteredLectureList);
+            ClassManager.getInstance().getLectureListController().setSearchListAtLectureListView(interestedFilter.filteredLectureList);
 			ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(true));
         }// actionPerformed
     } // SearchListener

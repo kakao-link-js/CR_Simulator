@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ClassRegistrationSimulator {
-    JFrame frame;
+    private JFrame frame;
 
     public static void main(String[] arg) {
         ClassManager.getInstance().getMain();
