@@ -52,7 +52,7 @@ public class TimetableController {
             if (strWeekAndTime.isEmpty())
                 continue;
 
-            String[] strSplitWeekAndTimeList = strWeekAndTime.split(",");
+            String[] strSplitWeekAndTimeList = strWeekAndTime.split(", ");
 
             for (String strSplitWeekAndTime : strSplitWeekAndTimeList) {
                 List<String> strSplitWeekList = new ArrayList<>(Arrays.asList(strSplitWeekAndTime.split(" ")));
