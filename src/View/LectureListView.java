@@ -131,8 +131,10 @@ public class LectureListView extends JPanel {
 		myLecturePanel.setBackground(Color.CYAN);
 		myLecturePanel.setLayout(null);
 		add(myLecturePanel);
-		
-		myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getInterested()),header);
+		if(isFavorite)
+			myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getInterested()),header);
+		else
+			myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getReal()),header);
 		
 		myLectureTable = new JTable(myLectureDTM);
 		myLecturePane = new JScrollPane(myLectureTable);

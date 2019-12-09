@@ -145,11 +145,12 @@ public class RealFilterController {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             if (realFilter.onlyInterested) {
-                // 관심과목만
+            	ClassManager.getInstance().getLectureListController().setSearchListAtLectureListView(ClassManager.getInstance().getInterested());
+ 				ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(false));
             } else {
                 filteredLecture();
-                ClassManager.getInstance().getLectureListController().setSearchListLectureListView(realFilter.filteredLectureList);
-				ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(true));
+                ClassManager.getInstance().getLectureListController().setSearchListAtLectureListView(realFilter.filteredLectureList);
+				ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(false));
             } // if... else
 
         }// actionPerformed

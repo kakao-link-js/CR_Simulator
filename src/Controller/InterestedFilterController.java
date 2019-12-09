@@ -129,8 +129,8 @@ public class InterestedFilterController {
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
             filteredLecture();
-            ClassManager.getInstance().getLectureListController().setSearchListLectureListView(interestedFilter.filteredLectureList);
-			ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(false));
+            ClassManager.getInstance().getLectureListController().setSearchListAtLectureListView(interestedFilter.filteredLectureList);
+			ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(true));
         }// actionPerformed
     } // SearchListener
 
