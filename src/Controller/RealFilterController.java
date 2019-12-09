@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -26,6 +27,7 @@ public class RealFilterController {
     public RealFilterView getRealFilterView() {return realFilter;}
 
     public void filteredLecture() {
+    	realFilter.filteredLectureList  = new ArrayList<LectureVO>();
         for (int i = 0; i < ClassManager.getInstance().getLecture().size(); i++ ) { // 개설 학과 전공 필터
             if (realFilter.filterMajorInfo.equals("") || ClassManager.getInstance().getLecture().get(i).major.equals(realFilter.filterMajorInfo))
                 realFilter.filteredLectureList.add(ClassManager.getInstance().getLecture().get(i));
@@ -144,13 +146,14 @@ public class RealFilterController {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
+            ClassManager.getInstance().getLectureListController().getLLV().isFavorite = false;
             if (realFilter.onlyInterested) {
             	ClassManager.getInstance().getLectureListController().setSearchListatLectureListView(ClassManager.getInstance().getInterested());
- 				ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(false));
+ 				ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListController().getLLV());
             } else {
                 filteredLecture();
                 ClassManager.getInstance().getLectureListController().setSearchListatLectureListView(realFilter.filteredLectureList);
-				ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(false));
+				ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListController().getLLV());
             } // if... else
 
         }// actionPerformed

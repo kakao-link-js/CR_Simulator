@@ -29,7 +29,8 @@ public class LectureListController {
 	
 	//검색된 값을 LectureListView에 뿌리는 메소드
 	public void setSearchListatLectureListView(ArrayList<LectureVO> searchList) {
-
+		getLLV().changeMyLectureDTM();
+		getLLV().changeSearchDTM();
 		for(int i = 0 ; i < searchList.size(); i++)
 			getLLV().getSearchListDTM().addRow(searchList.get(i).makeStringArray());
 		SetScore();
