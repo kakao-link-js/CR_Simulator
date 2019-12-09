@@ -6,7 +6,9 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import Controller.LectureListController;
+import Controller.LectureListController.CellRenderer;
 import Model.*;
+import common.DesignConstants;
 
 public class LectureListView extends JPanel {
 	LectureListController LLC;
@@ -123,13 +125,12 @@ public class LectureListView extends JPanel {
 	} //setMyLecturePanel()
 	
 	public void setColumnSize(JTable table) {
-		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
-		celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
+		CellRenderer newCellRenderer = LLC.connectCellRenderer();
+		newCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 		int sizes[] = {30,50,50,50,3,100,5,5,5,100,50,50};
-		for(int i = 0 ; i < 12; i ++) {
+		for(int i = 0 ; i < 12; i ++)
 			table.getColumn(header[i]).setPreferredWidth(sizes[i]);
-			table.getColumn(header[i]).setCellRenderer(celAlignCenter);
-		}
+		table.setDefaultRenderer(Object.class, newCellRenderer);
 	}
 	
 	public void changeMyLectureDTM() {
