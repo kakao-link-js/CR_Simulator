@@ -64,7 +64,7 @@ public class CalculatorController {
             if (CPV.isBtnCalcul(obj)) {
                 for (int i = 0; i < 8; i++) {
 
-                    if (CPV.comboArr.get(i).getSelectedItem() != "선택안함" && CPV.scoreArr.get(i).getText() != null
+                    if (CPV.comboArr.get(i).getSelectedItem() != "None" && CPV.scoreArr.get(i).getText() != null
                             && CPV.subjectArr.get(i).getText()!= null)
                     {
                         score = Double.parseDouble(CPV.scoreArr.get(i).getText());

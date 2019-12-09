@@ -47,7 +47,7 @@ public class CalculatorPanelView extends JPanel {
 		
 		titlePanel = new JPanel();
 		titlePanel.setBounds(x,y,width, height);
-		titlePanel.setBackground(Color.red);
+		titlePanel.setBackground(Color.white);
 		titlePanel.setLayout(null);
 		add(titlePanel);
 		setLabelTitle();
@@ -62,7 +62,7 @@ public class CalculatorPanelView extends JPanel {
 		
 		infoPanel = new JPanel();
 		infoPanel.setBounds(x, y, width, height);
-		infoPanel.setBackground(Color.yellow);
+		infoPanel.setBackground(Color.white);
 		infoPanel.setLayout(null);
 		add(infoPanel);
 		setSubTitle();
@@ -81,7 +81,7 @@ public class CalculatorPanelView extends JPanel {
 		
 		calculPanel = new JPanel();
 		calculPanel.setBounds(x, y, width, height);
-		calculPanel.setBackground(Color.green);
+		calculPanel.setBackground(Color.white);
 		calculPanel.setLayout(null);
 		//calculPanel.setVerticalAlignment(SwingConstants.CENTER);
 		add(calculPanel);
@@ -119,9 +119,9 @@ public class CalculatorPanelView extends JPanel {
 		int width = (int)((this.width - margin * 2) * 0.45);
 		int height = (int)(this.height * 0.6* 0.05);
 		
-		title1 = new JLabel("수강과목");
-		title2 = new JLabel("학점");
-		title3 = new JLabel("점수");
+		title1 = new JLabel("Course Name");
+		title2 = new JLabel("credit");
+		title3 = new JLabel("grade Point");
 		
 		title1.setBounds(x, y, width, height);
 		title2.setBounds(margin+width, y, width / 2, height);
@@ -156,7 +156,7 @@ public class CalculatorPanelView extends JPanel {
 	public void setGradeComboBox() {
 		int x = (int)(this.width * 0.73);
 		int width = (int)(this.width * 0.2);
-		String Grade[] = {"선택안함", "A+", "A0", "B+", "B0", "C+", "C0", "D+", "D0", "F"};
+		String Grade[] = {"None", "A+", "A0", "B+", "B0", "C+", "C0", "D+", "D0", "F"};
 
 
 		for(int i = 1 ; i <= 8; i++) {
@@ -186,8 +186,7 @@ public class CalculatorPanelView extends JPanel {
 		for (int i = 1; i <= 8; i++) {
 			JTextField txtScore = new JTextField();
 			txtScore.setFont(new Font("Verdana", Font.PLAIN, 15));
-			//txtScore.setPreferredSize(new Dimension(30, 30));
-			txtScore.setBounds(x, margin * (i * 7), width, 20);
+			txtScore.setBounds(x, margin * (i * 7), width, 50);
 			
 			infoPanel.add(txtScore);
 			scoreArr.add(txtScore);
@@ -203,7 +202,7 @@ public class CalculatorPanelView extends JPanel {
 		for (int i = 1; i <= 8; i++) {
 			JTextField txtSubject = new JTextField();
 			txtSubject.setFont(new Font("Verdana", Font.PLAIN, 15));
-			txtSubject.setBounds(x, margin * (i * 7), width, 20);
+			txtSubject.setBounds(x, margin * (i * 7), width, 50);
 			infoPanel.add(txtSubject);
 			subjectArr.add(txtSubject);
 		}
@@ -217,7 +216,7 @@ public class CalculatorPanelView extends JPanel {
 		int width = (int)(this.width * 0.4);
 		int height = (int)(this.height * 0.08);
 		
-		btnCalcul = new JButton("계산하기");
+		btnCalcul = new JButton("Calculate!");
 		btnCalcul.setFont(new Font("Verdana", Font.BOLD, 20));
 		btnCalcul.setBounds(x, y, width, height);
 		btnCalcul.addActionListener(m_CC.connectActionListener());
@@ -235,10 +234,8 @@ public class CalculatorPanelView extends JPanel {
 		txtResult.setBounds(x, y, width, height);
 		txtResult.setFont(new Font("Verdana", Font.BOLD, 30));
 		calculPanel.add(txtResult);
-		
-		
-		
 	}
+	
 	public void setBtnExit() {
 	      int x = margin;
 	      int y = margin;
@@ -247,9 +244,6 @@ public class CalculatorPanelView extends JPanel {
 	      
 	      btnExit = new JButton("exit");
 	      btnExit.setBounds(x, y, width, height);
-	      btnExit.setBorderPainted(false);
-	      btnExit.setContentAreaFilled(false);
-	      btnExit.setFocusPainted(false);
 	      btnExit.addActionListener(m_CC.connectActionListener());
 	      titlePanel.add(btnExit);
 	}
