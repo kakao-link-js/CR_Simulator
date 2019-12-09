@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import Controller.*;
 import Model.ClassManager;
+import common.DesignConstants;
 
 public class CalculatorPanelView extends JPanel {
 	
@@ -123,9 +124,9 @@ public class CalculatorPanelView extends JPanel {
 		title1.setBounds(x, y, width, height);
 		title2.setBounds(margin+width, y, width / 2, height);
 		title3.setBounds(margin+width + 150, y, width / 2, height);
-		title1.setFont(new Font("Verdana", Font.PLAIN, 20));
-		title2.setFont(new Font("Verdana", Font.PLAIN, 20));
-		title3.setFont(new Font("Verdana", Font.PLAIN, 20));
+		title1.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 20));
+		title2.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 20));
+		title3.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 20));
 		title1.setHorizontalAlignment(SwingConstants.CENTER);
 		title2.setHorizontalAlignment(SwingConstants.CENTER);
 		title3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -164,7 +165,7 @@ public class CalculatorPanelView extends JPanel {
 					JComboBox jcb = (JComboBox)e.getSource();		
 				}
 			});
-			box.setFont(new Font("Verdana", Font.PLAIN, 15));
+			box.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 15));
 			box.setBounds(x, margin * (i*7), width, 15);
 			box.setSize(110,50);
 			box.setVisible(true);
@@ -179,7 +180,7 @@ public class CalculatorPanelView extends JPanel {
 			
 		for (int i = 1; i <= 8; i++) {
 			JTextField txtScore = new JTextField();
-			txtScore.setFont(new Font("Verdana", Font.PLAIN, 15));
+			txtScore.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 15));
 			txtScore.setBounds(x, margin * (i * 7), width, 50);
 			System.out.println(ClassManager.getInstance().getReal().size());
 			if(ClassManager.getInstance().getReal().size() > i-1) {
@@ -199,7 +200,7 @@ public class CalculatorPanelView extends JPanel {
 			
 		for (int i = 1; i <= 8; i++) {
 			JTextField txtSubject = new JTextField();
-			txtSubject.setFont(new Font("Verdana", Font.PLAIN, 15));
+			txtSubject.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 15));
 			txtSubject.setBounds(x, margin * (i * 7), width, 50);
 			
 			if(ClassManager.getInstance().getReal().size() > i-1)
@@ -235,7 +236,7 @@ public class CalculatorPanelView extends JPanel {
 		
 		txtResult = new JLabel();
 		txtResult.setBounds(x, y, width, height);
-		txtResult.setFont(new Font("Verdana", Font.BOLD, 30));
+		txtResult.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 30));
 		calculPanel.add(txtResult);
 	}
 	
