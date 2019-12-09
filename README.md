@@ -13,4 +13,5 @@
 
 ---
 프로그램 UML 구조계획
-![그림1](https://user-images.githubusercontent.com/37828448/69120856-09b38980-0ade-11ea-9fd0-1d6306dba661.png)
+![image](https://user-images.githubusercontent.com/37828448/70433255-8e356e80-1ac4-11ea-8773-97d0aedee1ae.png)
+
