@@ -96,17 +96,17 @@ public class CalculatorPanelView extends JPanel {
 		int x2 = margin;
 		int y2 = height;
 
-		JLabel SCORE = new JLabel("SCORE");
+		JLabel SCORE = new JLabel("학점");
 		
 		SCORE.setBounds(x1, y1, width, height);
-		SCORE.setFont(new Font("Verdana", Font.BOLD + Font.ITALIC, 40));
+		SCORE.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.ITALIC, 40));
 		SCORE.setHorizontalAlignment(SwingConstants.CENTER);
 		titlePanel.add(SCORE);
 
-		JLabel CALCULATOR = new JLabel("CALCULATOR");
+		JLabel CALCULATOR = new JLabel("계산기");
 		
 		CALCULATOR.setBounds(x2, y2, width, height);
-		CALCULATOR.setFont(new Font("Verdana", Font.BOLD + Font.ITALIC, 40));
+		CALCULATOR.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.ITALIC, 40));
 		CALCULATOR.setHorizontalAlignment(SwingConstants.CENTER);
 		titlePanel.add(CALCULATOR);
 	}
@@ -117,9 +117,9 @@ public class CalculatorPanelView extends JPanel {
 		int width = (int)((this.width - margin * 2) * 0.45);
 		int height = (int)(this.height * 0.6* 0.05);
 
-		JLabel title1 = new JLabel("Course Name");
-		JLabel title2 = new JLabel("credit");
-		JLabel title3 = new JLabel("grade Point");
+		JLabel title1 = new JLabel("과목명");
+		JLabel title2 = new JLabel("학점");
+		JLabel title3 = new JLabel("성적");
 		
 		title1.setBounds(x, y, width, height);
 		title2.setBounds(margin+width, y, width / 2, height);
@@ -220,8 +220,8 @@ public class CalculatorPanelView extends JPanel {
 		int width = (int)(this.width * 0.4);
 		int height = (int)(this.height * 0.08);
 		
-		btnCalcul = new JButton("Calculate!");
-		btnCalcul.setFont(new Font("Verdana", Font.BOLD, 20));
+		btnCalcul = new JButton("계산하기!");
+		btnCalcul.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
 		btnCalcul.setBounds(x, y, width, height);
 		btnCalcul.addActionListener(m_CC.connectActionListener());
 		calculPanel.add(btnCalcul);
@@ -246,8 +246,9 @@ public class CalculatorPanelView extends JPanel {
 	      int width = (int)(this.height * 0.2)/2;
 	      int height = width;
 
-		JButton btnExit = new JButton("exit");
+		  JButton btnExit = new JButton("<");
 	      btnExit.setBounds(x, y, width, height);
+	      btnExit.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,30));
 	      btnExit.addActionListener(m_CC.connectActionListener());
 	      titlePanel.add(btnExit);
 	}

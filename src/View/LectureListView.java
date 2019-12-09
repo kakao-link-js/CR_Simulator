@@ -73,13 +73,13 @@ public class LectureListView extends JPanel {
 		infoPanel.setBackground(Color.white);
 		infoPanel.setLayout(null);
 		
-		btnExit = new JButton("exit");
+		btnExit = new JButton("<");
 		btnExit.setBounds(0,0, 50, infoPanel.getHeight());
 		btnExit.addActionListener(LLC.getActionListener());
 		infoPanel.add(btnExit);
 		
-		JLabel title = new JLabel("Sugang SinChung");
-		title.setFont(new Font("Verdana",Font.BOLD,20));
+		JLabel title = new JLabel("수강신청");
+		title.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,20));
 		title.setBounds(infoPanel.getWidth()/3,0,200,infoPanel.getHeight());
 		infoPanel.add(title);
 		add(infoPanel);

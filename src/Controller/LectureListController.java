@@ -85,7 +85,7 @@ public class LectureListController {
 					JOptionPane.showMessageDialog(null, "시간이 겹치는 과목이 있습니다.");
 				return false;
 			}
-			if(countScore() > 24 && isPopUp) {
+			if(countScore() + Double.parseDouble(inserted[7].toString()) > 24 && isPopUp) {
 				JOptionPane.showMessageDialog(null, "24학점 이상 신청할 수 없습니다..");
 				return false;
 			}
