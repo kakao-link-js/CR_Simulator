@@ -92,19 +92,7 @@ public class LectureListView extends JPanel {
 		searchListPanel.setBackground(Color.WHITE);
 		searchListPanel.setLayout(null);
 		add(searchListPanel);
-		
-		searchListDTM = new DefaultTableModel(null,header);
-		
-		searchListTable = new JTable(searchListDTM);
-		searchListPane = new JScrollPane(searchListTable);
-		searchListPane.setBounds(0,0,searchListPanel.getWidth(),searchListPanel.getHeight());
-		setColumnSize(searchListTable);
-		
-		//버튼을 연결한다.
-		searchListTable.getColumnModel().getColumn(0).setCellRenderer(LLC.connectTableCell("신청",1));
-		searchListTable.getColumnModel().getColumn(0).setCellEditor(LLC.connectTableCell("신청",1));
-		
-		searchListPanel.add(searchListPane);
+		changeSearchDTM();
 	} //setLectureListPanel()
 	
 	public void setStatusPanel() {
@@ -131,6 +119,22 @@ public class LectureListView extends JPanel {
 		myLecturePanel.setBackground(Color.CYAN);
 		myLecturePanel.setLayout(null);
 		add(myLecturePanel);
+		changeMyLectureDTM();
+	} //setMyLecturePanel()
+	
+	public void setColumnSize(JTable table) {
+		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
+		celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
+		int sizes[] = {30,50,50,50,3,100,5,5,5,100,50,50};
+		for(int i = 0 ; i < 12; i ++) {
+			table.getColumn(header[i]).setPreferredWidth(sizes[i]);
+			table.getColumn(header[i]).setCellRenderer(celAlignCenter);
+		}
+	}
+	
+	public void changeMyLectureDTM() {
+		if(myLecturePane != null)
+			myLecturePanel.remove(myLecturePane);
 		if(isFavorite)
 			myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getInterested()),header);
 		else
@@ -145,17 +149,24 @@ public class LectureListView extends JPanel {
 		myLectureTable.getColumnModel().getColumn(0).setCellRenderer(LLC.connectTableCell("취소",2));
         myLectureTable.getColumnModel().getColumn(0).setCellEditor(LLC.connectTableCell("취소",2));
 
-		myLecturePanel.add(myLecturePane);
-	} //setMyLecturePanel()
+		myLecturePanel.add(myLecturePane);	
+	} //public void changeMyLectureDTM();
 	
-	public void setColumnSize(JTable table) {
-		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
-		celAlignCenter.setHorizontalAlignment(JLabel.CENTER);
-		int sizes[] = {30,50,50,50,3,100,5,5,5,100,50,50};
-		for(int i = 0 ; i < 12; i ++) {
-			table.getColumn(header[i]).setPreferredWidth(sizes[i]);
-			table.getColumn(header[i]).setCellRenderer(celAlignCenter);
-		}
+	public void changeSearchDTM() {
+		if(searchListPane != null)
+			searchListPanel.remove(searchListPane);
+		searchListDTM = new DefaultTableModel(null,header);
+		
+		searchListTable = new JTable(searchListDTM);
+		searchListPane = new JScrollPane(searchListTable);
+		searchListPane.setBounds(0,0,searchListPanel.getWidth(),searchListPanel.getHeight());
+		setColumnSize(searchListTable);
+		
+		//버튼을 연결한다.
+		searchListTable.getColumnModel().getColumn(0).setCellRenderer(LLC.connectTableCell("신청",1));
+		searchListTable.getColumnModel().getColumn(0).setCellEditor(LLC.connectTableCell("신청",1));
+		
+		searchListPanel.add(searchListPane);
 	}
 	
 	public void setScore(String data) {

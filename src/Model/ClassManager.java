@@ -100,12 +100,6 @@ public class ClassManager {
 		return m_lectureListView;
 	}
 
-	public LectureListView getLectureListView(boolean flag) {
-		if (m_lectureListView == null) m_lectureListView = new LectureListView(m_lectureListController);
-		m_lectureListView.isFavorite = flag;
-		return m_lectureListView;
-	}
-
 	public TimetableView getTimetableView() {
 		if (m_TimetableView == null) m_TimetableView = new TimetableView();
 		return m_TimetableView;
