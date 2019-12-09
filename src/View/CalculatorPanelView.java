@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import Controller.*;
+import Model.ClassManager;
 
 public class CalculatorPanelView extends JPanel {
 	
@@ -88,6 +89,7 @@ public class CalculatorPanelView extends JPanel {
 		setButton();
 		setTextResult();
 	}
+	
 	public void setLabelTitle() {
 		int x1 = margin;
 		int y1 = margin;
@@ -95,7 +97,6 @@ public class CalculatorPanelView extends JPanel {
 		int height = (int)(this.height * 0.1);
 		int x2 = margin;
 		int y2 = height;
-		
 		
 		SCORE = new JLabel("SCORE");
 		
@@ -110,7 +111,6 @@ public class CalculatorPanelView extends JPanel {
 		CALCULATOR.setFont(new Font("Verdana", Font.BOLD + Font.ITALIC, 40));
 		CALCULATOR.setHorizontalAlignment(SwingConstants.CENTER);
 		titlePanel.add(CALCULATOR);
-		
 	}
 
 	public void setSubTitle() {
@@ -153,11 +153,11 @@ public class CalculatorPanelView extends JPanel {
 		box.setVisible(true);
 		infoPanel.add(box);
 	}
+	
 	public void setGradeComboBox() {
 		int x = (int)(this.width * 0.73);
 		int width = (int)(this.width * 0.2);
 		String Grade[] = {"None", "A+", "A0", "B+", "B0", "C+", "C0", "D+", "D0", "F"};
-
 
 		for(int i = 1 ; i <= 8; i++) {
 			JComboBox box = new JComboBox(Grade);
@@ -169,17 +169,14 @@ public class CalculatorPanelView extends JPanel {
 			});
 			box.setFont(new Font("Verdana", Font.PLAIN, 15));
 			box.setBounds(x, margin * (i*7), width, 15);
-			//box.setPreferredSize(new Dimension(500, 700));
 			box.setSize(110,50);
 			box.setVisible(true);
 			infoPanel.add(box);
 			comboArr.add(box);
-		}
-	
-		
+		}	
 	}
+	
 	public void setTextScore() {
-		
 		int x = (int)(this.width * 0.45);
 		int width = (int)(this.width * 0.2); 
 			
@@ -187,11 +184,15 @@ public class CalculatorPanelView extends JPanel {
 			JTextField txtScore = new JTextField();
 			txtScore.setFont(new Font("Verdana", Font.PLAIN, 15));
 			txtScore.setBounds(x, margin * (i * 7), width, 50);
+			System.out.println(ClassManager.getInstance().getReal().size());
+			if(ClassManager.getInstance().getReal().size() > i-1) {
+				System.out.println(String.valueOf(ClassManager.getInstance().getReal().get(i-1).score));
+				txtScore.setText(String.valueOf(ClassManager.getInstance().getReal().get(i-1).score));
+			}
 			
 			infoPanel.add(txtScore);
 			scoreArr.add(txtScore);
 		}
-		
 	}
 	
 	public void setTextSubject() {
@@ -203,7 +204,12 @@ public class CalculatorPanelView extends JPanel {
 			JTextField txtSubject = new JTextField();
 			txtSubject.setFont(new Font("Verdana", Font.PLAIN, 15));
 			txtSubject.setBounds(x, margin * (i * 7), width, 50);
+			
+			if(ClassManager.getInstance().getReal().size() > i-1)
+				txtSubject.setText(ClassManager.getInstance().getReal().get(i-1).className);
+				
 			infoPanel.add(txtSubject);
+		
 			subjectArr.add(txtSubject);
 		}
 		

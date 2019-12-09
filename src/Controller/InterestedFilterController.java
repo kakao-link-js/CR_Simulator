@@ -132,7 +132,7 @@ public class InterestedFilterController {
             Object obj = e.getSource();
             filteredLecture();
             ClassManager.getInstance().getLectureListController().setSearchListatLectureListView(interestedFilter.filteredLectureList);
-			ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(false));
+			ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(true));
         }// actionPerformed
     } // SearchListener
 

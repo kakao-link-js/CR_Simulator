@@ -29,6 +29,7 @@ public class LectureListController {
 	
 	//검색된 값을 LectureListView에 뿌리는 메소드
 	public void setSearchListatLectureListView(ArrayList<LectureVO> searchList) {
+
 		for(int i = 0 ; i < searchList.size(); i++)
 			getLLV().getSearchListDTM().addRow(searchList.get(i).makeStringArray());
 		SetScore();
@@ -48,18 +49,17 @@ public class LectureListController {
 	} //SetScore()
 	
 	
-	//강의를 들을 수 있는 강의인지 확인하는 메소드 Object로 넣을 강의정보를 받는다. flag = 1 은 진짜 수강신청  flag = 2 는 관심과목 신청
-	public boolean canInsertLecture(Object[] inserted,int flag) {
+	//강의를 들을 수 있는 강의인지 확인하는 메소드 Object로 넣을 강의정보를 받는다. flag = false 은 진짜 수강신청  flag = true 는 관심과목 신청
+	public boolean canInsertLecture(Object[] inserted,boolean flag) {
 		ArrayList<LectureVO> myData;
-		switch(flag) {
-		case 1: //진짜 수강신청
-			myData = ClassManager.getInstance().getReal();
-			return isCanInsert(myData,inserted);
-		case 2: //관심과목 수강신청
+		if(flag) {
 			myData = ClassManager.getInstance().getInterested();
 			return isCanInsert(myData,inserted);
 		}
-		return true;
+		else {
+			myData = ClassManager.getInstance().getReal();
+			return isCanInsert(myData,inserted);
+		}
 	} //public boolean CanInsertLecture(Object[] inserted)
 	
 	//리스트로받아 비교한다.
@@ -190,12 +190,20 @@ public class LectureListController {
             		System.out.println("취소 " + getLLV().getMyLectureTable().getSelectedRow() + "  " + getLLV().getMyLectureTable().getRowCount());
             		if(getLLV().getMyLectureTable().getSelectedRow() >= 0 //잘 선택이 되었다면.
             				&& getLLV().getMyLectureTable().getSelectedRow() < getLLV().getMyLectureTable().getRowCount()) {
-            			for(int i = 0; i < ClassManager.getInstance().getInterested().size(); i++)
-            				if(ClassManager.getInstance().getInterested().get(i).courseNum  //학수번호를 들고온다.
-            						== getLLV().getMyLectureDTM().getValueAt(getLLV().getMyLectureTable().getSelectedRow(),3))
-            					ClassManager.getInstance().getInterested().remove(i); //배열에서 지운다.
+            			if(getLLV().isFavorite) { //관심과목인 경우
+            				for(int i = 0; i < ClassManager.getInstance().getInterested().size(); i++)
+            					if(ClassManager.getInstance().getInterested().get(i).courseNum  //학수번호를 들고온다.
+            							== getLLV().getMyLectureDTM().getValueAt(getLLV().getMyLectureTable().getSelectedRow(),3))
+            						ClassManager.getInstance().getInterested().remove(i); //배열에서 지운다.
+            			}
+            			else { //관심과목이 아닌경우
+            				for(int i = 0; i < ClassManager.getInstance().getReal().size(); i++)
+            					if(ClassManager.getInstance().getReal().get(i).courseNum  //학수번호를 들고온다.
+            							== getLLV().getMyLectureDTM().getValueAt(getLLV().getMyLectureTable().getSelectedRow(),3))
+            						ClassManager.getInstance().getReal().remove(i); //배열에서 지운다.
+            			}
             			getLLV().getMyLectureDTM().removeRow(getLLV().getMyLectureTable().getSelectedRow()); //테이블에서 지운다.
-            			SetScore();
+        				SetScore();
             		}
             	}
             	else { //신청인 경우
@@ -205,11 +213,14 @@ public class LectureListController {
             			Object news [] = new Object[12];
             			for(int i = 0 ; i < 12; i++)
             				news[i] = getLLV().getSearchListDTM().getValueAt(getLLV().getSearchListTable().getSelectedRow(), i);
-            			if(!canInsertLecture(news,2))//신청이 불가능한 경우
+            			if(!canInsertLecture(news,getLLV().isFavorite))//신청이 불가능한 경우
             				return;
             			System.out.println("신청완료. " + news[5]);
             			getLLV().getMyLectureDTM().addRow(news);
-            			ClassManager.getInstance().getInterested().add(new LectureVO(news));
+            			if(getLLV().isFavorite)  //관심과목인 경우
+            				ClassManager.getInstance().getInterested().add(new LectureVO(news));
+            			else
+            				ClassManager.getInstance().getReal().add(new LectureVO(news));
             			SetScore();
             		}
             	}
