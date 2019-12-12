@@ -19,15 +19,17 @@ public class InterestedFilterController {
 
     InterestedFilterView interestedFilter;
 
+    //생성자
     public InterestedFilterController() {
         interestedFilter = new InterestedFilterView();
         interestedFilter.addSearchListener(new InterestedFilterController.SearchListener());
         interestedFilter.addExitButtonListener(new InterestedFilterController.ExitButtonListener());
         interestedFilter.addValueListener(new InterestedFilterController.ValueListener());
-    }
+    } //public InterestedFilterController()
 
     public InterestedFilterView getInterestedFilterView() { return interestedFilter; }
 
+    //Iterator 형식으로 필터를 진행
     public void filteredLecture() {
     	interestedFilter.filteredLectureList  = new ArrayList<LectureVO>();
         for (int i = 0; i < ClassManager.getInstance().getLecture().size(); i++ ) { // 개설 학과 전공 필터

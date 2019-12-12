@@ -15,6 +15,7 @@ import View.LectureListView;
 
 public class LectureListController {
 	
+	//생성자
 	public LectureListController() {
 	}
 	
@@ -23,19 +24,21 @@ public class LectureListController {
 		return ClassManager.getInstance().getLectureListView();
 	} //public LectureListView getLLV();
 	
+	//TableCell 클래스를 연결해주는 메소드
 	public TableCell connectTableCell(String text,int flag) {
 		return new TableCell(text,flag);
 	} // public TabelCell connectTableCell(String text,int flag);
 	
+	//Renderer를 연결하는 메소드
 	public CellRenderer connectCellRenderer() {
 		return new CellRenderer();
-	}
+	} //public CellRenderer connectCellRenderer() 
 	
 	//검색된 값을 LectureListView에 뿌리는 메소드
 	public void setSearchListAtLectureListView(ArrayList<LectureVO> searchList) {
-		getLLV().changeMyLectureDTM();
-		getLLV().changeSearchDTM();
-		for(int i = 0 ; i < searchList.size(); i++)
+		getLLV().changeMyLectureDTM(); //JTable 값을 초기화 한다.
+		getLLV().changeSearchDTM(); 
+		for(int i = 0 ; i < searchList.size(); i++) //검색 된 값을 JTable에 추가한다.
 			getLLV().getSearchListDTM().addRow(searchList.get(i).makeStringArray());
 		SetScore();
 	} //public setSearchListatlectureListView(ArrayList<LectureVO> searchList;
@@ -45,6 +48,7 @@ public class LectureListController {
 		getLLV().setScore(Integer.toString(countScore()));
 	} //SetScore()
 	
+	//수강하는 학점을 계산하는 메소드
 	public int countScore() {
 		int sums = 0;
 		if(getLLV().isFavorite)
@@ -60,32 +64,29 @@ public class LectureListController {
 	//강의를 들을 수 있는 강의인지 확인하는 메소드 Object로 넣을 강의정보를 받는다. flag = false 은 진짜 수강신청  flag = true 는 관심과목 신청
 	public boolean canInsertLecture(Object[] inserted,boolean isPopUp) {
 		ArrayList<LectureVO> myData;
-		if(getLLV().isFavorite) {
+		if(getLLV().isFavorite) //관심과목인지 아닌지를 먼저 구분.
 			myData = ClassManager.getInstance().getInterested();
-			return isCanInsert(myData,inserted,isPopUp);
-		}
-		else {
+		else
 			myData = ClassManager.getInstance().getReal();
-			return isCanInsert(myData,inserted,isPopUp);
-		}
+		return isCanInsert(myData,inserted,isPopUp);
 	} //public boolean CanInsertLecture(Object[] inserted,boolean isPopUp)
 	
 	//리스트로받아 비교한다.
 	public boolean isCanInsert(ArrayList<LectureVO> myData,Object[] inserted,boolean isPopUp) {
-		for(int i = 0 ; i < myData.size();i++) {
+		for(int i = 0 ; i < myData.size();i++) { //내 사이즈 만큼 비교한다.
 			if(myData.get(i).courseNum == inserted[3]) { //학수번호가 같다면.
 				System.out.println(inserted[5]+ " already inserted CourseNum");
-				if(isPopUp)
+				if(isPopUp) //팝업창을 띄울지 아닐지 구분
 					JOptionPane.showMessageDialog(null, "이미 신청한 과목입니다.");
 				return false;
 			}
-			if(isClassOverLap(myData.get(i).time,inserted[9].toString())) {
+			if(isClassOverLap(myData.get(i).time,inserted[9].toString())) { //시간을 비교한다.
 				System.out.println(inserted[5]+ " already inserted time");
 				if(isPopUp)
 					JOptionPane.showMessageDialog(null, "시간이 겹치는 과목이 있습니다.");
 				return false;
 			}
-			if(countScore() > 24 && isPopUp) {
+			if(countScore() + Double.parseDouble(inserted[7].toString()) > 24 && isPopUp) { //24학점 이상인지 아닌지.
 				JOptionPane.showMessageDialog(null, "24학점 이상 신청할 수 없습니다..");
 				return false;
 			}
@@ -96,7 +97,7 @@ public class LectureListController {
 	
 	//시간이 겹치지 않는지 확인한다.    
     public boolean isClassOverLap(String data1,String data2){
-    	ArrayList<TimeDTO> times1 = getTimeList(data2);
+    	ArrayList<TimeDTO> times1 = getTimeList(data2); //DTO 형태로 바꾼다.
 		ArrayList<TimeDTO> times2 = getTimeList(data1);
         for (int index1 = 0; index1 < times1.size(); index1++){
             TimeDTO time1 = times1.get(index1);
@@ -198,8 +199,7 @@ public class LectureListController {
         public TableCell(String text,int flag) {
             jb = new JButton(text);
             jb.addActionListener(e -> {
-            	if(flag == 2) {
-            		System.out.println("취소 " + getLLV().getMyLectureTable().getSelectedRow() + "  " + getLLV().getMyLectureTable().getRowCount());
+            	if(flag == 2) { //취소인 경우
             		if(getLLV().getMyLectureTable().getSelectedRow() >= 0 //잘 선택이 되었다면.
             				&& getLLV().getMyLectureTable().getSelectedRow() < getLLV().getMyLectureTable().getRowCount()) {
             			if(getLLV().isFavorite) { //관심과목인 경우
@@ -220,15 +220,13 @@ public class LectureListController {
             		}
             	}
             	else { //신청인 경우
-            		System.out.println("신청 " + getLLV().getSearchListTable().getSelectedRow() + "  " + getLLV().getSearchListTable().getRowCount());
             		if(getLLV().getSearchListTable().getSelectedRow() >= 0 
             				&& getLLV().getSearchListTable().getSelectedRow() < getLLV().getSearchListTable().getRowCount()) {
-            			Object news [] = new Object[12];
+            			Object news [] = new Object[12]; //신청이 가능한 경우
             			for(int i = 0 ; i < 12; i++)
             				news[i] = getLLV().getSearchListDTM().getValueAt(getLLV().getSearchListTable().getSelectedRow(), i);
             			if(!canInsertLecture(news,true))//신청이 불가능한 경우
             				return;
-            			System.out.println("신청완료. " + news[5]);
             			getLLV().getMyLectureDTM().addRow(news);
             			if(getLLV().isFavorite)  //관심과목인 경우
             				ClassManager.getInstance().getInterested().add(new LectureVO(news));
@@ -250,6 +248,7 @@ public class LectureListController {
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {return jb;}  
     }
 	
+	//CellRenderer를 통해 빨간글씨로 바꿀 수 있게 한다.
 	public class CellRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
@@ -260,10 +259,10 @@ public class LectureListController {
             	Object news [] = new Object[12];
             	for(int j = 0 ; j < 12; j++)
     				news[j] = getLLV().getSearchListDTM().getValueAt(row, j);
-        		if(canInsertLecture(news,false)) //겹치는 과목이라면
+        		if(canInsertLecture(news,false)) //겹치는 과목이 아니라면
         			 cell.setForeground(Color.black);
         		else
-        			cell.setForeground(Color.red);
+        			cell.setForeground(Color.red); // 겹치는 과목이면 Red색상으로변경한다.
             }
             else
             	cell.setForeground(Color.black);

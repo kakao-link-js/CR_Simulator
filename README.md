@@ -10,3 +10,8 @@
 확장성을 생각해 세종대학교의 강의계획표를 넣으면 사용할 수 있게 만들었습니다.
 
 개발인원 : 4명
+
+---
+프로그램 UML 구조계획
+![image](https://user-images.githubusercontent.com/37828448/70433255-8e356e80-1ac4-11ea-8773-97d0aedee1ae.png)
+

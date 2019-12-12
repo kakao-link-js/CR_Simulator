@@ -11,22 +11,21 @@ public class CalculatorController {
 
     public CalculatorController() {
         CPV= new CalculatorPanelView(this);
-    }
+    } //public CalculatorController()
 
     public CalculatorPanelView getCalculatorPanelView() {
         return CPV;
-    }
+    } //public CalculatorPanelView getCalculatorPanelView()
 
     public ActionListener connectActionListener(){
         return new ButtonListener();
-    }
+    } //public ActionListener connectActionListener()
 
     private class ButtonListener implements ActionListener {
 
         private double score, grade, totalScore = 0, resultScore, cntScore = 0;
         private void ChangeGrade(String s) {
-
-            switch(s) {
+            switch(s) { //성적을 구분한다.
                 case "A+" :
                     grade = 4.5;
                     break;
@@ -66,7 +65,7 @@ public class CalculatorController {
 
                     if (CPV.comboArr.get(i).getSelectedItem() != "None" && CPV.scoreArr.get(i).getText() != null
                             && CPV.subjectArr.get(i).getText()!= null)
-                    {
+                    { //넣을 수 있는 상황이라면 (빈칸이 없는 경우)
                         score = Double.parseDouble(CPV.scoreArr.get(i).getText());
                         ChangeGrade((String) CPV.comboArr.get(i).getSelectedItem());
                         cntScore += score;
@@ -75,7 +74,7 @@ public class CalculatorController {
                     } // if
                 } // for
 
-                resultScore = totalScore / cntScore;
+                resultScore = totalScore / cntScore;// 평점 계산
                 resultScore = Math.round(resultScore * 100)/100.0;
                 CPV.setScore(Double.toString(resultScore));
             }// if btnCalcul

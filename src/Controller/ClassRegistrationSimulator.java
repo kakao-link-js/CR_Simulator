@@ -14,12 +14,13 @@ public class ClassRegistrationSimulator {
 
     public static void main(String[] arg) {
         ClassManager.getInstance().getMain();
-    }
+    } //public static void main(String[] arg)
 
     public ClassRegistrationSimulator() {
         createAndShowUI();
-    }
+    } //public ClassRegistrationSimulator()
 
+    //Frame을 만들고 구성하는 메소드
     private void createAndShowUI() {
         frame = new JFrame("Class Registration Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,17 +33,17 @@ public class ClassRegistrationSimulator {
 
         frame.pack();
         frame.setVisible(true);
-    }
+    } //private void createAndShowUI()
 
     private void setLocationScreenCenter() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2 - 410/2, dim.height/2 - 615/2);
-    }
-
+    } // setLocationScreenCenter()
+    //패널을 교체하는 메소드
     public void changePanel(JPanel view) {
         frame.getContentPane().removeAll();
         frame.getContentPane().add(view);
         frame.pack();
         frame.repaint();
-    }
+    } // public void changePanel(JPanel view)
 }
