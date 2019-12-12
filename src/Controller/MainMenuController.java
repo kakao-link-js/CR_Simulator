@@ -15,6 +15,7 @@ import java.io.File;
 public class MainMenuController {
 	private JFileChooser fileChooser;
 
+	//생성자를 통해 리스너 연결
 	public MainMenuController() {
 		getMainMenuView().addMenuButtonListener(new MenuButtonsListener());
 		getMainMenuView().addBrowseButtonListener(new BrowseButtonListener());
@@ -22,6 +23,7 @@ public class MainMenuController {
 		initFileChooser();
 	} // Constructor
 
+	//file을 주소로 연결하는 구성 메소드
 	private void initFileChooser() {
 		fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -38,10 +40,12 @@ public class MainMenuController {
 		});
 	} // initFileChooser()
 
+	//MainView로 돌아가는 메소드
 	public void comeToMain() {
 		ClassManager.getInstance().getMain().changePanel(getMainMenuView());
 	} // comeToMain()
 
+	//MainMenuView를 주는 메소드
 	public MainMenuView getMainMenuView() {
 		return ClassManager.getInstance().getMainMenuView();
 	} // getMainMenuView()
@@ -83,7 +87,7 @@ public class MainMenuController {
 			JButton btnEvent = (JButton)e.getSource();
 			btnEvent.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
 		}
-
+ 
 		@Override
 		public void mouseClicked(MouseEvent e) { }
 		@Override

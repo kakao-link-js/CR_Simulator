@@ -26,6 +26,7 @@ public class RealFilterController {
 
     public RealFilterView getRealFilterView() {return realFilter;}
 
+    //filter를 하는 메소드 Iterator를 활용해 필터
     public void filteredLecture() {
     	realFilter.filteredLectureList  = new ArrayList<LectureVO>();
         for (int i = 0; i < ClassManager.getInstance().getLecture().size(); i++ ) { // 개설 학과 전공 필터
