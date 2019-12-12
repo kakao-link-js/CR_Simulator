@@ -8,17 +8,26 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-import java.awt.print.PrinterException;
 import java.util.EventListener;
 
+/**
+ * TimetableView Class
+ * 시간표 화면 출력 및 인쇄 컴포넌트들을 구성하고 있는 사용자 정의 패널 View 클래스
+ *
+ * @author 이종진
+ */
 public class TimetableView extends JPanel {
     private JButton btnBack;
     private JButton btnPrint;
     private JTable timetable;
 
-    private ImageIcon imgDefaultPrint;
-    private ImageIcon imgHoveringPrint;
+    private ImageIcon imgDefaultPrintButton;
+    private ImageIcon imgHoveringPrintButton;
 
+    /**
+     * TimetableView Constructor
+     * 레이아웃 설정과 내부 컴포넌트를 구성하는 메소드를 호출하고 화면에 출력
+     */
     public TimetableView() {
         setLayout(new BorderLayout());
 
@@ -28,6 +37,10 @@ public class TimetableView extends JPanel {
         setVisible(true);
     } // Constructor
 
+    /**
+     * setTitlePanel Method
+     * 하나의 패널(titlePanel)안에 메뉴이동 버튼, 제목, 인쇄 버튼 컴포넌트를 구성
+     */
     private void setTitlePanel() {
         JPanel titlePanel = new JPanel();
         titlePanel.setBackground(Color.WHITE);
@@ -49,10 +62,10 @@ public class TimetableView extends JPanel {
         lblTitle.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
         titlePanel.add(lblTitle, BorderLayout.CENTER);
 
-        imgDefaultPrint = new ImageIcon("Images/printer1.png");
-        imgHoveringPrint = new ImageIcon("Images/printer2.png");
+        imgDefaultPrintButton = new ImageIcon("Images/printer1.png");
+        imgHoveringPrintButton = new ImageIcon("Images/printer2.png");
 
-        btnPrint = new JButton(imgDefaultPrint);
+        btnPrint = new JButton(imgDefaultPrintButton);
         btnPrint.setPreferredSize(new Dimension(50, 0));
         btnPrint.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 15));
         btnPrint.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
@@ -60,9 +73,13 @@ public class TimetableView extends JPanel {
         btnPrint.setFocusPainted(false);
         titlePanel.add(btnPrint, BorderLayout.EAST);
 
-        add(titlePanel, BorderLayout.NORTH);
+        add(titlePanel, BorderLayout.NORTH); // 메인 패널(this) 상단에 titlePanel 추가
     } // setTitlePanel()
 
+    /**
+     * setTimetablePanel Method
+     * 시간표를 구성하는 패널 설정 및 추가
+     */
     private void setTimetablePanel() {
 
         timetable = new JTable(new DefaultTableModel(23, 5));
@@ -81,6 +98,10 @@ public class TimetableView extends JPanel {
         add(timetablePanel, BorderLayout.WEST);
     } // setTimetablePanel()
 
+    /**
+     * setHeaderRenderer Method
+     * 시간표 JTable의 헤더 렌더링 설정
+     */
     private void setHeaderRenderer() {
         JTableHeader tableHeader = timetable.getTableHeader();
         tableHeader.setReorderingAllowed(false);
@@ -92,18 +113,32 @@ public class TimetableView extends JPanel {
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
     } // setHeaderRenderer()
 
+    /**
+     * setHoveringPrintIcon Method
+     * 프린트 버튼 Hovering 이미지 설정
+     *
+     * @param status : boolean
+     */
     public void setHoveringPrintIcon(boolean status) {
         if (status)
-            btnPrint.setIcon(imgHoveringPrint);
+            btnPrint.setIcon(imgHoveringPrintButton);
         else
-            btnPrint.setIcon(imgDefaultPrint);
+            btnPrint.setIcon(imgDefaultPrintButton);
     }
 
+    /**
+     * addBackButtonListener Method
+     * 뒤로가기 버튼의 마우스 Hovering과 클릭시 동작할 이벤트 Listener 설정
+     */
     public void addBackButtonListener(EventListener listener) {
         btnBack.addActionListener((ActionListener)listener);
         btnBack.addMouseListener((MouseListener)listener);
     }
 
+    /**
+     * addPrintButtonListener Method
+     * 프린트 버튼의 마우스 Hovering과 클릭시 동작할 이벤트 Listener 설정
+     */
     public void addPrintButtonListener (EventListener listener) {
         btnPrint.addActionListener((ActionListener) listener);
         btnPrint.addMouseListener((MouseListener) listener);
@@ -113,17 +148,25 @@ public class TimetableView extends JPanel {
         return timetable;
     }
 
+    /**
+     * customCellRenderer Class
+     * JTable의 사용자 정의 Renderer 구현 클래스
+     */
     public static class customCellRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
             JLabel cell = (JLabel)super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
+            // value값, 즉 데이터가 Cell안에 존재할 경우
             if (value != null) {
+                // Row Header
                 if (col == 0) {
                     cell.setBackground(Color.WHITE);
                     cell.setHorizontalAlignment(SwingConstants.RIGHT);
                     cell.setVerticalAlignment(SwingConstants.TOP);
-                } else {
+                }
+                // 실제 시간표 정보를 담고 있는 Cell
+                else {
                     cell.setBackground(new Color(DesignConstants.TIMETABLE_CELL_COLOR));
                     cell.setHorizontalAlignment(SwingConstants.LEFT);
                     cell.setVerticalAlignment(SwingConstants.CENTER);
