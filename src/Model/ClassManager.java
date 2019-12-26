@@ -26,12 +26,12 @@ public class ClassManager {
 	private InterestedFilterController m_InterestedFilterController;
 	private LectureListController m_lectureListController;
 	private TimetableController m_TimetableController;
-	private CalculatorController m_CalculatorController;
 
 	// View
 	private MainMenuView m_MainMenuView;
 	private LectureListView m_lectureListView;
 	private TimetableView m_TimetableView;
+	private CalculatorPanelView m_CalculatorView;
 
 	public static ClassManager getInstance() {
 		if (s_instance == null) s_instance = new ClassManager();
@@ -84,9 +84,9 @@ public class ClassManager {
 		return m_TimetableController;
 	}
 
-	public CalculatorController getCalculatorController() {
-		if (m_CalculatorController == null) m_CalculatorController = new CalculatorController();
-		return m_CalculatorController;
+	public CalculatorPanelView getCalculatorView() {
+		if (m_CalculatorView == null) m_CalculatorView = new CalculatorPanelView();
+		return m_CalculatorView;
 	}
 
 	// View

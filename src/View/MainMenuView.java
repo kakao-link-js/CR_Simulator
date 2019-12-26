@@ -33,6 +33,7 @@ public class MainMenuView extends JPanel {
             e.printStackTrace();
         }
         setUnivNamePanel();
+        setEnabledAllButton(true);
     }
 
     //프로그램이름 패널 설정

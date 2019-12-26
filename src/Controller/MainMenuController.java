@@ -65,7 +65,7 @@ public class MainMenuController {
 					selectedView = ClassManager.getInstance().getTimetableController().getTimetableView();
 					break;
 				case "학점 계산기":
-					selectedView = ClassManager.getInstance().getCalculatorController().getCalculatorPanelView();
+					selectedView = ClassManager.getInstance().getCalculatorView();
 					break;
 				case "종료":
 					System.exit(0);
