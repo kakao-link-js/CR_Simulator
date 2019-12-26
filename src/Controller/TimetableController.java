@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.ClassManager;
-import Model.LectureVO;
+import Model.LectureDTO;
 import View.TimetableView;
 import common.DesignConstants;
 
@@ -56,9 +56,9 @@ public class TimetableController {
         getTimetableView().getTable().setModel(new DefaultTableModel(ROW_HEADER, COLUMN_HEADER));
         getTimetableView().getTable().getColumnModel().getColumn(0).setPreferredWidth(5);
 
-        ArrayList<LectureVO> lectureList =  ClassManager.getInstance().getReal();
+        ArrayList<LectureDTO> lectureList =  ClassManager.getInstance().getReal();
 
-        for (LectureVO lecture : lectureList) {
+        for (LectureDTO lecture : lectureList) {
             String strWeekAndTime = lecture.time;
 
             if (strWeekAndTime.isEmpty())

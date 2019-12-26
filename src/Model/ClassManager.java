@@ -16,9 +16,9 @@ public class ClassManager {
 	private ClassRegistrationSimulator m_Main;
 
 	// Item list
-	private ArrayList<LectureVO> m_lectureList;
-	private ArrayList<LectureVO> m_realList;
-	private ArrayList<LectureVO> m_interestedList;
+	private ArrayList<LectureDTO> m_lectureList;
+	private ArrayList<LectureDTO> m_realList;
+	private ArrayList<LectureDTO> m_interestedList;
 
 	// Controller
 	private MainMenuController m_MainMenuController;
@@ -45,16 +45,16 @@ public class ClassManager {
 	}
 
 	// Item list
-	public ArrayList<LectureVO> getLecture() {
-		if (m_lectureList == null) m_lectureList = new ArrayList<LectureVO>();
+	public ArrayList<LectureDTO> getLecture() {
+		if (m_lectureList == null) m_lectureList = new ArrayList<LectureDTO>();
 		return m_lectureList;
 	}
-	public ArrayList<LectureVO> getReal() {
-		if (m_realList == null) m_realList = new ArrayList<LectureVO>();
+	public ArrayList<LectureDTO> getReal() {
+		if (m_realList == null) m_realList = new ArrayList<LectureDTO>();
 		return m_realList;
 	}
-	public ArrayList<LectureVO> getInterested() {
-		if (m_interestedList == null) m_interestedList = new ArrayList<LectureVO>();
+	public ArrayList<LectureDTO> getInterested() {
+		if (m_interestedList == null) m_interestedList = new ArrayList<LectureDTO>();
 		return m_interestedList;
 	}
 

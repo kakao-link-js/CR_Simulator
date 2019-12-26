@@ -18,8 +18,6 @@ public class MainMenuController {
 	//생성자를 통해 리스너 연결
 	public MainMenuController() {
 		getMainMenuView().addMenuButtonListener(new MenuButtonsListener());
-		getMainMenuView().addBrowseButtonListener(new BrowseButtonListener());
-
 		initFileChooser();
 	} // Constructor
 
@@ -96,48 +94,4 @@ public class MainMenuController {
 		public void mouseReleased(MouseEvent e) {
 		}
 	} // MenuButtonListener Class
-
-	private class BrowseButtonListener implements ActionListener, MouseListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (fileChooser.showOpenDialog(getMainMenuView()) == JFileChooser.APPROVE_OPTION) {
-				String strXlsxFilePath = fileChooser.getSelectedFile().getAbsolutePath();
-				getMainMenuView().getTxtFilePath().setText(strXlsxFilePath);
-
-				TimetableParser parser = new TimetableParser(strXlsxFilePath);
-				getMainMenuView().getTxtFilePath().setFont(new Font(DesignConstants.ENGLISH_CASUAL_FONT, Font.PLAIN, 12));
-
-				try {
-					parser.parseXlsxFile();
-					getMainMenuView().getTxtFilePath().setForeground(Color.BLACK);
-					getMainMenuView().setEnabledAllButton(true);
-				} catch (XlsxParseException ex) {
-					ClassManager.getInstance().getLecture().clear();
-					getMainMenuView().setEnabledAllButton(false);
-					getMainMenuView().getTxtFilePath().setForeground(Color.RED);
-					JOptionPane.showMessageDialog(getMainMenuView(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} // try - catch
-			} // if
-		} // actionPerformed()
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			JButton btnEvent = (JButton)e.getSource();
-			btnEvent.setForeground(new Color(DesignConstants.HOVERING_COLOR));
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			JButton btnEvent = (JButton)e.getSource();
-			btnEvent.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) { }
-		@Override
-		public void mousePressed(MouseEvent e) { }
-		@Override
-		public void mouseReleased(MouseEvent e) {
-		}
-	} // BrowseButtonListener Class
 } // MainMenuController Class

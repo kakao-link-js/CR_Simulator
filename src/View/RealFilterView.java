@@ -1,7 +1,6 @@
 package View;
 
-import Controller.RealFilterController;
-import Model.LectureVO;
+import Model.LectureDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +32,7 @@ public class RealFilterView extends JPanel {
     public JComboBox<String> cbxCompletion; // 이수 구분
 
     // 필터가 완료된 강의 목록들
-    public ArrayList<LectureVO> filteredLectureList  = new ArrayList<LectureVO>();
+    public ArrayList<LectureDTO> filteredLectureList  = new ArrayList<LectureDTO>();
 
     // 필터 조건들 초기화
     public String filterMajorInfo = "";

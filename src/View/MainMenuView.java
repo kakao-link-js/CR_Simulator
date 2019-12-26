@@ -16,8 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 public class MainMenuView extends JPanel {
 
-    private JTextField txtFilePath;
-    private JButton btnBrowse;
     private ArrayList<JButton> btnMenuList;
 
     private final static String[] MENU = {"수강신청", "관심과목", "내 시간표", "학점 계산기", "종료"};
@@ -28,7 +26,6 @@ public class MainMenuView extends JPanel {
         setBackground(Color.LIGHT_GRAY);
         setPreferredSize(new Dimension(410, 615));
 
-        setPathPanel();
         setProgramName();
         try {
             setSelectMenuPanel();
@@ -36,30 +33,6 @@ public class MainMenuView extends JPanel {
             e.printStackTrace();
         }
         setUnivNamePanel();
-    }
-
-    //경로 설정 패널 설정
-    private void setPathPanel() {
-        JPanel pathPanel = new JPanel();
-        pathPanel.setBackground(Color.white);
-        pathPanel.setLayout(new BorderLayout());
-        pathPanel.setBorder(new EmptyBorder(4, 4, 4, 4));
-        pathPanel.setBounds(5, 5, 400, 40);
-
-        txtFilePath = new JTextField("  Path ..");
-        txtFilePath.setFont(new Font(DesignConstants.ENGLISH_CASUAL_FONT, Font.BOLD + Font.ITALIC, 10));
-        txtFilePath.setPreferredSize(new Dimension(45, 100));
-        txtFilePath.setForeground(Color.LIGHT_GRAY);
-        txtFilePath.setEditable(false);
-        pathPanel.add(txtFilePath, BorderLayout.CENTER);
-
-        btnBrowse = new JButton("Browse");
-        btnBrowse.setBackground(Color.lightGray);
-        btnBrowse.setFont(new Font(DesignConstants.ENGLISH_CASUAL_FONT, Font.BOLD, 12));
-        btnBrowse.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
-        pathPanel.add(btnBrowse, BorderLayout.EAST);
-
-        add(pathPanel);
     }
 
     //프로그램이름 패널 설정
@@ -71,7 +44,7 @@ public class MainMenuView extends JPanel {
         lblProgramName.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
         lblProgramName.setVerticalAlignment(SwingConstants.CENTER);
         lblProgramName.setHorizontalAlignment(SwingConstants.CENTER);
-        lblProgramName.setBounds(5, 50, 400, 150);
+        lblProgramName.setBounds(5, 5, 400, 150);
 
         add(lblProgramName);
     }
@@ -89,7 +62,7 @@ public class MainMenuView extends JPanel {
             }
         };
         selectMenuPanel.setBackground(Color.WHITE); 
-        selectMenuPanel.setBounds(5, 205, 400, 300);
+        selectMenuPanel.setBounds(5, 160, 400, 345);
         selectMenuPanel.setLayout(new GridLayout(MENU.length,1));
 
         btnMenuList = new ArrayList<>();
@@ -135,12 +108,6 @@ public class MainMenuView extends JPanel {
         }
     }
 
-    //브라우즈 리스너 연결 메소드
-    public void addBrowseButtonListener(EventListener listener) {
-        btnBrowse.addActionListener((ActionListener)listener);
-        btnBrowse.addMouseListener((MouseListener)listener);
-    }
-
     //flag대로 버튼 활성화 및 비활성화.
     public void setEnabledAllButton(boolean flag) {
         for (JButton btnMenu : btnMenuList) {
@@ -149,8 +116,4 @@ public class MainMenuView extends JPanel {
         }
     }
 
-    //TxtFiilPath를 반환하는 메소드
-    public JTextField getTxtFilePath() {
-        return txtFilePath;
-    }
 }

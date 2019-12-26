@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.ClassManager;
-import Model.LectureVO;
+import Model.LectureDTO;
 import View.RealFilterView;
 
 import javax.swing.*;
@@ -28,15 +28,15 @@ public class RealFilterController {
 
     //filter를 하는 메소드 Iterator를 활용해 필터
     public void filteredLecture() {
-    	realFilter.filteredLectureList  = new ArrayList<LectureVO>();
+    	realFilter.filteredLectureList  = new ArrayList<LectureDTO>();
         for (int i = 0; i < ClassManager.getInstance().getLecture().size(); i++ ) { // 개설 학과 전공 필터
             if (realFilter.filterMajorInfo.equals("") || ClassManager.getInstance().getLecture().get(i).major.equals(realFilter.filterMajorInfo))
                 realFilter.filteredLectureList.add(ClassManager.getInstance().getLecture().get(i));
         }
 
-        Iterator<LectureVO> iter = realFilter.filteredLectureList.iterator(); // 학수번호
+        Iterator<LectureDTO> iter = realFilter.filteredLectureList.iterator(); // 학수번호
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(realFilter.filterCourseNumInfo.equals(""))) {
                 if (!lvo.courseNum.equals(realFilter.filterCourseNumInfo)) {
                     iter.remove();
@@ -46,7 +46,7 @@ public class RealFilterController {
 
         iter = realFilter.filteredLectureList.iterator(); // 교과목명
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(realFilter.filterClassNameInfo.equals(""))) {
                 if (!lvo.className.equals(realFilter.filterClassNameInfo)) {
                     iter.remove();
@@ -56,7 +56,7 @@ public class RealFilterController {
 
         iter = realFilter.filteredLectureList.iterator(); // 교수명
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(realFilter.filterProInfo.equals(""))) {
                 if (!lvo.professor.equals(realFilter.filterProInfo)) {
                     iter.remove();
@@ -66,7 +66,7 @@ public class RealFilterController {
 
         iter = realFilter.filteredLectureList.iterator(); // 학년
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (realFilter.filterGradeInfo != -1) {
                 if (lvo.grade != realFilter.filterGradeInfo) {
                     iter.remove();
@@ -76,7 +76,7 @@ public class RealFilterController {
 
         iter = realFilter.filteredLectureList.iterator(); // 분반
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(realFilter.filterClassNumInfo.equals(""))) {
                 if (!lvo.classNum.equals(realFilter.filterClassNameInfo)) {
                     iter.remove();
@@ -86,7 +86,7 @@ public class RealFilterController {
 
         iter = realFilter.filteredLectureList.iterator(); // 이수 구분
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(realFilter.filterCompInfo.equals(""))) {
                 if (!lvo.completion.equals(realFilter.filterCompInfo)) {
                     iter.remove();

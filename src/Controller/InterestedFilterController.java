@@ -1,15 +1,13 @@
 package Controller;
 
 import Model.ClassManager;
-import Model.LectureVO;
+import Model.LectureDTO;
 import View.InterestedFilterView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import java.util.Iterator;
@@ -31,15 +29,15 @@ public class InterestedFilterController {
 
     //Iterator 형식으로 필터를 진행
     public void filteredLecture() {
-    	interestedFilter.filteredLectureList  = new ArrayList<LectureVO>();
+    	interestedFilter.filteredLectureList  = new ArrayList<LectureDTO>();
         for (int i = 0; i < ClassManager.getInstance().getLecture().size(); i++ ) { // 개설 학과 전공 필터
             if (interestedFilter.filterMajorInfo.equals("") || ClassManager.getInstance().getLecture().get(i).major.equals(interestedFilter.filterMajorInfo))
                 interestedFilter.filteredLectureList.add(ClassManager.getInstance().getLecture().get(i));
         }
 
-        Iterator<LectureVO> iter = interestedFilter.filteredLectureList.iterator(); // 학수번호
+        Iterator<LectureDTO> iter = interestedFilter.filteredLectureList.iterator(); // 학수번호
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(interestedFilter.filterCourseNumInfo.equals(""))) {
                 if (!lvo.courseNum.equals(interestedFilter.filterCourseNumInfo)) {
                     iter.remove();
@@ -49,7 +47,7 @@ public class InterestedFilterController {
 
         iter = interestedFilter.filteredLectureList.iterator(); // 교과목명
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(interestedFilter.filterClassNameInfo.equals(""))) {
                 if (!lvo.className.equals(interestedFilter.filterClassNameInfo)) {
                     iter.remove();
@@ -59,7 +57,7 @@ public class InterestedFilterController {
 
         iter = interestedFilter.filteredLectureList.iterator(); // 교수명
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(interestedFilter.filterProInfo.equals(""))) {
                 if (!lvo.professor.equals(interestedFilter.filterProInfo)) {
                     iter.remove();
@@ -69,7 +67,7 @@ public class InterestedFilterController {
 
         iter = interestedFilter.filteredLectureList.iterator(); // 학년
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (interestedFilter.filterGradeInfo != -1) {
                 if (lvo.grade != interestedFilter.filterGradeInfo) {
                     iter.remove();
@@ -79,7 +77,7 @@ public class InterestedFilterController {
 
         iter = interestedFilter.filteredLectureList.iterator(); // 분반
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(interestedFilter.filterClassNumInfo.equals(""))) {
                 if (!lvo.classNum.equals(interestedFilter.filterClassNameInfo)) {
                     iter.remove();
@@ -89,7 +87,7 @@ public class InterestedFilterController {
 
         iter = interestedFilter.filteredLectureList.iterator(); // 이수 구분
         while (iter.hasNext()) {
-            LectureVO lvo = iter.next();
+            LectureDTO lvo = iter.next();
             if (!(interestedFilter.filterCompInfo.equals(""))) {
                 if (!lvo.completion.equals(interestedFilter.filterCompInfo)) {
                     iter.remove();

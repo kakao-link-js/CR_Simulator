@@ -1,12 +1,10 @@
 package View;
 
-import Controller.InterestedFilterController;
-import Model.LectureVO;
+import Model.LectureDTO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class InterestedFilterView extends JPanel {
@@ -30,7 +28,7 @@ public class InterestedFilterView extends JPanel {
     public JComboBox<String> cbxCompletion; // 이수구분
 
     // 필터가 완료된 강의 목록들
-    public ArrayList<LectureVO> filteredLectureList  = new ArrayList<LectureVO>();
+    public ArrayList<LectureDTO> filteredLectureList  = new ArrayList<LectureDTO>();
 
     // 필터 조건들 초기화
     public String filterMajorInfo = "";

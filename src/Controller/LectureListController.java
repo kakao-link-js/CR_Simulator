@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import Model.ClassManager;
-import Model.LectureVO;
+import Model.LectureDTO;
 import Model.TimeDTO;
 import View.LectureListView;
 
@@ -35,7 +35,7 @@ public class LectureListController {
 	} //public CellRenderer connectCellRenderer() 
 	
 	//검색된 값을 LectureListView에 뿌리는 메소드
-	public void setSearchListAtLectureListView(ArrayList<LectureVO> searchList) {
+	public void setSearchListAtLectureListView(ArrayList<LectureDTO> searchList) {
 		getLLV().changeMyLectureDTM(); //JTable 값을 초기화 한다.
 		getLLV().changeSearchDTM(); 
 		for(int i = 0 ; i < searchList.size(); i++) //검색 된 값을 JTable에 추가한다.
@@ -63,7 +63,7 @@ public class LectureListController {
 	
 	//강의를 들을 수 있는 강의인지 확인하는 메소드 Object로 넣을 강의정보를 받는다. flag = false 은 진짜 수강신청  flag = true 는 관심과목 신청
 	public boolean canInsertLecture(Object[] inserted,boolean isPopUp) {
-		ArrayList<LectureVO> myData;
+		ArrayList<LectureDTO> myData;
 		if(getLLV().isFavorite) //관심과목인지 아닌지를 먼저 구분.
 			myData = ClassManager.getInstance().getInterested();
 		else
@@ -72,7 +72,7 @@ public class LectureListController {
 	} //public boolean CanInsertLecture(Object[] inserted,boolean isPopUp)
 	
 	//리스트로받아 비교한다.
-	public boolean isCanInsert(ArrayList<LectureVO> myData,Object[] inserted,boolean isPopUp) {
+	public boolean isCanInsert(ArrayList<LectureDTO> myData, Object[] inserted, boolean isPopUp) {
 		for(int i = 0 ; i < myData.size();i++) { //내 사이즈 만큼 비교한다.
 			if(myData.get(i).courseNum == inserted[3]) { //학수번호가 같다면.
 				System.out.println(inserted[5]+ " already inserted CourseNum");
@@ -229,9 +229,9 @@ public class LectureListController {
             				return;
             			getLLV().getMyLectureDTM().addRow(news);
             			if(getLLV().isFavorite)  //관심과목인 경우
-            				ClassManager.getInstance().getInterested().add(new LectureVO(news));
+            				ClassManager.getInstance().getInterested().add(new LectureDTO(news));
             			else
-            				ClassManager.getInstance().getReal().add(new LectureVO(news));
+            				ClassManager.getInstance().getReal().add(new LectureDTO(news));
             			SetScore();
             			getLLV().getSearchListTable().repaint();
             		}

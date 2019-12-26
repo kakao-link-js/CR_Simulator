@@ -181,7 +181,7 @@ public class LectureListView extends JPanel {
 	
 	
 	//문장 2차원 배열을 돌려주는 메소드
-	public String[][] makeInsertData(ArrayList<LectureVO> lists){
+	public String[][] makeInsertData(ArrayList<LectureDTO> lists){
 		int sizes = lists.size();
 		String output[][] = new String[sizes][12];
 		for(int i = 0 ; i < lists.size();i++) {

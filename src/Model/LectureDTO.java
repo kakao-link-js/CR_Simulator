@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class LectureVO {
+public class LectureDTO {
 
 	public String openUniv;		//개설대학
 	public String major;		//개설학과전공
@@ -17,7 +17,7 @@ public class LectureVO {
 	public String professor; 	//교수
 
 	// 1.constructor
-	public LectureVO(Object[] obj) {
+	public LectureDTO(Object[] obj) {
 		this.openUniv	= obj[1].toString();
 		this.major		= obj[2].toString();
 		this.courseNum	= obj[3].toString();
@@ -31,7 +31,7 @@ public class LectureVO {
 		this.professor 	= obj[11].toString();
 	} // public LectureVO(Object[])
 
-	public LectureVO(ArrayList<String> lectureDataArrayList) {
+	public LectureDTO(ArrayList<String> lectureDataArrayList) {
 		this.openUniv	= lectureDataArrayList.get(0);
 		this.major		= lectureDataArrayList.get(1);
 		this.courseNum	= lectureDataArrayList.get(2);
@@ -45,8 +45,8 @@ public class LectureVO {
 		this.professor	= lectureDataArrayList.get(10);
 	} // LectureVO(ArrayList<String>)
 
-	public LectureVO(String openUniv, String major, String courseNum, String classNum, String className,
-					 String completion,String grade,String score,String time, String classRoom, String professor) {
+	public LectureDTO(String openUniv, String major, String courseNum, String classNum, String className,
+					  String completion, String grade, String score, String time, String classRoom, String professor) {
 		this.openUniv	= openUniv;
 		this.major		= major;
 		this.courseNum	= courseNum;
