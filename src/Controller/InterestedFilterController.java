@@ -146,7 +146,7 @@ public class InterestedFilterController {
     private class ExitButtonListener implements ActionListener { // 나가기 버튼
         @Override
         public void actionPerformed(ActionEvent e) {
-            ClassManager.getInstance().getMainMenuController().comeToMain();
+            ClassManager.getInstance().getMain().comeToMain();
             // 수강신청으로 돌아가기
         } // actionPerformed
     } // ExitButtonListener

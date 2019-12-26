@@ -165,7 +165,7 @@ public class RealFilterController {
     private class ExitButtonListener implements ActionListener { // 나가기 버튼
         @Override
         public void actionPerformed(ActionEvent e) {
-            ClassManager.getInstance().getMainMenuController().comeToMain();
+            ClassManager.getInstance().getMain().comeToMain();
         } // actionPerformed
     } // ExitButtonListener
 

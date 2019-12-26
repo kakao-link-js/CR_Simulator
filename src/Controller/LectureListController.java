@@ -184,7 +184,7 @@ public class LectureListController {
     	ActionListener listener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				ClassManager.getInstance().getMainMenuController().comeToMain();
+				ClassManager.getInstance().getMain().comeToMain();
 			}
     	};
     	return listener;

@@ -21,7 +21,6 @@ public class ClassManager {
 	private ArrayList<LectureDTO> m_interestedList;
 
 	// Controller
-	private MainMenuController m_MainMenuController;
 	private RealFilterController m_RealFilterController;
 	private InterestedFilterController m_InterestedFilterController;
 	private LectureListController m_lectureListController;
@@ -56,12 +55,6 @@ public class ClassManager {
 	public ArrayList<LectureDTO> getInterested() {
 		if (m_interestedList == null) m_interestedList = new ArrayList<LectureDTO>();
 		return m_interestedList;
-	}
-
-	// Controller
-	public MainMenuController getMainMenuController() {
-		if (m_MainMenuController == null) m_MainMenuController = new MainMenuController();
-		return m_MainMenuController;
 	}
 
 	public RealFilterController getRealFilterController() {

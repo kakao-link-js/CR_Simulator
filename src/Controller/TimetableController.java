@@ -145,7 +145,7 @@ public class TimetableController {
     private static class BackButtonListener implements ActionListener, MouseListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ClassManager.getInstance().getMainMenuController().comeToMain();
+            ClassManager.getInstance().getMain().comeToMain();
         } // actionPerformed()
 
         @Override
