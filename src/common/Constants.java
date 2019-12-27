@@ -1,6 +1,8 @@
 package common;
 
 public class Constants {
+    public static final String BASE_URL = "";
+
     public static final String SCORES[] ={"NONE","A+","A","B+","B","C+","C","D+","D","F"};
     public static final String MENU[] = {"수강신청", "내 시간표", "학점 계산기","내 정보 수정", "종료"};
 
