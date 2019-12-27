@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.ClassManager;
+import View.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,8 +27,8 @@ public class ClassRegistrationSimulator {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
-        MainMenuController mainMenuController = ClassManager.getInstance().getMainMenuController();
-        frame.getContentPane().add(mainMenuController.getMainMenuView());
+        MainMenuView mainMenuView = ClassManager.getInstance().getMainMenuView();
+        frame.getContentPane().add(mainMenuView);
 
         setLocationScreenCenter();
 
@@ -46,4 +47,8 @@ public class ClassRegistrationSimulator {
         frame.pack();
         frame.repaint();
     } // public void changePanel(JPanel view)
+
+    public void comeToMain(){
+        changePanel(ClassManager.getInstance().getMainMenuView());
+    }
 }
