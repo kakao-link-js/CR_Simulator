@@ -32,6 +32,6 @@ public class FilterController implements ActionListener {
 
     private void searchFunction(){
         ArrayList<String> temp = filterView.getSelect();
-        //ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListController().getLLV());
+        ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView());
     }
 } // RealFilterController Class

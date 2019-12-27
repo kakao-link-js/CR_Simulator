@@ -14,7 +14,6 @@ public class ClassManager {
 	private ClassRegistrationSimulator m_Main;
 
 	// Controller
-	private LectureListController m_lectureListController;
 	private TimetableController m_TimetableController;
 
 	// View
@@ -35,11 +34,6 @@ public class ClassManager {
 		return m_Main;
 	}
 
-	public LectureListController getLectureListController() {
-		if (m_lectureListController == null) m_lectureListController = new LectureListController();
-		return m_lectureListController;
-	}
-
 	public TimetableController getTimetableController() {
 		if (m_TimetableController == null) m_TimetableController = new TimetableController();
 		return m_TimetableController;
@@ -57,7 +51,7 @@ public class ClassManager {
 	}
 
 	public LectureListView getLectureListView() {
-		if (m_lectureListView == null) m_lectureListView = new LectureListView(m_lectureListController);
+		if (m_lectureListView == null) m_lectureListView = new LectureListView();
 		return m_lectureListView;
 	}
 
