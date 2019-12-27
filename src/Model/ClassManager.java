@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.*;
-
 import Controller.*;
 import View.*;
 
@@ -15,14 +13,7 @@ public class ClassManager {
 	// Main
 	private ClassRegistrationSimulator m_Main;
 
-	// Item list
-	private ArrayList<LectureDTO> m_lectureList;
-	private ArrayList<LectureDTO> m_realList;
-	private ArrayList<LectureDTO> m_interestedList;
-
 	// Controller
-	private RealFilterController m_RealFilterController;
-	private InterestedFilterController m_InterestedFilterController;
 	private LectureListController m_lectureListController;
 	private TimetableController m_TimetableController;
 
@@ -31,6 +22,7 @@ public class ClassManager {
 	private LectureListView m_lectureListView;
 	private TimetableView m_TimetableView;
 	private CalculatorPanelView m_CalculatorView;
+	private FilterView m_FilterView;
 
 	public static ClassManager getInstance() {
 		if (s_instance == null) s_instance = new ClassManager();
@@ -41,30 +33,6 @@ public class ClassManager {
 	public ClassRegistrationSimulator getMain() {
 		if (m_Main == null) m_Main = new ClassRegistrationSimulator();
 		return m_Main;
-	}
-
-	// Item list
-	public ArrayList<LectureDTO> getLecture() {
-		if (m_lectureList == null) m_lectureList = new ArrayList<LectureDTO>();
-		return m_lectureList;
-	}
-	public ArrayList<LectureDTO> getReal() {
-		if (m_realList == null) m_realList = new ArrayList<LectureDTO>();
-		return m_realList;
-	}
-	public ArrayList<LectureDTO> getInterested() {
-		if (m_interestedList == null) m_interestedList = new ArrayList<LectureDTO>();
-		return m_interestedList;
-	}
-
-	public RealFilterController getRealFilterController() {
-		if (m_RealFilterController == null) m_RealFilterController = new RealFilterController();
-		return m_RealFilterController;
-	}
-
-	public InterestedFilterController getInterestedFilterController() {
-		if (m_InterestedFilterController == null) m_InterestedFilterController = new InterestedFilterController();
-		return m_InterestedFilterController;
 	}
 
 	public LectureListController getLectureListController() {
@@ -97,4 +65,10 @@ public class ClassManager {
 		if (m_TimetableView == null) m_TimetableView = new TimetableView();
 		return m_TimetableView;
 	}
+
+	public FilterView getFilterView() {
+		if(m_FilterView == null) m_FilterView = new FilterView();
+		return m_FilterView;
+	}
+
 }

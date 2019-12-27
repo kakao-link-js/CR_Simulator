@@ -1,6 +1,8 @@
 package View;
 
+import Controller.FilterController;
 import Model.LectureDTO;
+import common.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-public class RealFilterView extends JPanel {
+public class FilterView extends JPanel {
+    FilterController filterController;
+
     JPanel titlePanel; // 나가기 버튼 및 현재 페이지의 이름이 있는 Panel
     JPanel filterPanel; // 수강신청 분류 조건 Panel
 
@@ -17,31 +21,15 @@ public class RealFilterView extends JPanel {
     private int standardNum = 50;
     private double standardBlank = 0.1;
 
-    // filterPanel
-    JCheckBox ckbInterested; // 관심과목만 보게 하는 체크 박스
     public JTextField txtCourseNum; // 학수번호
     public JTextField txtClassName; // 교과목명
     public JTextField txtProfessor; // 교수님 성함
     public JTextField txtClassNum; // 분반
 
-    public boolean onlyInterested = false; // 관심과목 체크 여부
-
     // 콤보 박스
     public JComboBox<String> cbxMajor; // 전공
     public JComboBox<String> cbxGrade; // 학년
     public JComboBox<String> cbxCompletion; // 이수 구분
-
-    // 필터가 완료된 강의 목록들
-    public ArrayList<LectureDTO> filteredLectureList  = new ArrayList<LectureDTO>();
-
-    // 필터 조건들 초기화
-    public String filterMajorInfo = "";
-    public String filterCourseNumInfo = "";
-    public String filterProInfo = "";
-    public String filterClassNameInfo = "";
-    public String filterClassNumInfo = "";
-    public String filterCompInfo = "";
-    public int filterGradeInfo = -1;
 
     // 콤보 박스 설정을 위한 배열
     String[] strGrade = {"0", "1", "2", "3", "4"};
@@ -60,9 +48,11 @@ public class RealFilterView extends JPanel {
     JLabel lblCompletion; // 이수 구분
     JLabel lblTitle; // 제목
 
-    public RealFilterView() { // 패널 설정
+    public FilterView() { // 패널 설정
+        filterController = new FilterController(this);
+
         setBackground(Color.lightGray);
-        setPreferredSize(new Dimension((int)(standardNum*8.2),(int)(standardNum*12.5)));
+        setPreferredSize(new Dimension((int)(standardNum*8.2),(int)(standardNum*10.8)));
         setLayout(null);
 
         setTitlePanel(); // 상단바 패널 설정
@@ -72,7 +62,7 @@ public class RealFilterView extends JPanel {
     public void setTitlePanel() { // 상단바 패널 설정
         x = (int) (standardBlank*standardNum); // 비율에 따라 x,y,width, height 설정
         y = (int) (standardBlank*standardNum);
-        width = (int) (standardNum*8);
+        width = standardNum*8;
         height = (int) (standardNum * 1.6);
 
         // 패널 및 버튼 및 라벨 설정
@@ -82,12 +72,13 @@ public class RealFilterView extends JPanel {
         titlePanel.setLayout(null);
         add(titlePanel);
 
-        btnExit = new JButton("나가기");
+        btnExit = new JButton(Constants.EXIT_TXT);
         btnExit.setFont(new Font("나눔스퀘어",Font.PLAIN, 14));
         btnExit.setBounds(0,0,(int)(standardNum*1.5),height);
         btnExit.setBackground(Color.white);
         btnExit.setBorderPainted(false);
         titlePanel.add(btnExit);
+        btnExit.addActionListener(filterController);
 
         lblTitle = new JLabel("수강신청 필터");
         lblTitle.setFont(new Font("a이끌림M", Font.BOLD, 28));
@@ -96,17 +87,15 @@ public class RealFilterView extends JPanel {
     }
 
     public void setFilterPanel() { // 필터 패널 설정
-        y = (int)((standardNum*standardBlank)*2 + titlePanel.getHeight());
-        width = (int)(standardNum*8);
-        height = (int)(standardNum * 10.6);
+        y = (int)((standardNum*standardBlank) + titlePanel.getHeight());
+        width = standardNum*8;
+        height = standardNum * 9;
 
         filterPanel = new JPanel();
         filterPanel.setBackground(Color.white);
         filterPanel.setBounds(x, y, width, height);
         filterPanel.setLayout(null);
         add(filterPanel);
-
-        setInterested();
 
         // 필터 분류 setBounds를 위한 width, height 재설정
         width = standardNum*3;
@@ -118,18 +107,10 @@ public class RealFilterView extends JPanel {
 
     }
 
-    public void setInterested() { // 관심과목
-        ckbInterested = new JCheckBox("관심과목만 보기");
-        ckbInterested.setBackground(Color.white);
-        ckbInterested.setBounds(x+(standardNum*2), (int) (standardNum*0.2), standardNum*5,(int)(standardNum*1.1));
-        ckbInterested.setFont(new Font("a이끌림M", Font.BOLD, 20));
-        filterPanel.add(ckbInterested);
-    }
-
     public void setMajor() { // 개설 학과 전공
         lblMajor = new JLabel("개설 학과 전공");
         lblMajor.setBackground(Color.white);
-        lblMajor.setBounds(standardNum, (int)(standardNum*1.4), width, height);
+        lblMajor.setBounds(standardNum, 0, width, height);
         lblMajor.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(lblMajor);
 
@@ -139,12 +120,12 @@ public class RealFilterView extends JPanel {
     public void setCourseNum() { // 학수 번호
         lblCourseNum = new JLabel("학수 번호");
         lblCourseNum.setBackground(Color.white);
-        lblCourseNum.setBounds(standardNum, (int)(standardNum*2.5), width, height);
+        lblCourseNum.setBounds(standardNum, standardNum, width, height);
         lblCourseNum.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(lblCourseNum);
 
         txtCourseNum = new JTextField();
-        txtCourseNum.setBounds(standardNum*4, (int)(standardNum*2.6), width, (int)(height-(standardNum*0.3)));
+        txtCourseNum.setBounds(standardNum*4, (int)(standardNum*1.1), width, (int)(height-(standardNum*0.3)));
         txtCourseNum.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(txtCourseNum);
     }
@@ -152,12 +133,12 @@ public class RealFilterView extends JPanel {
     public void setClassName() { // 교과목명
         lblClassName = new JLabel("교과목명");
         lblClassName.setBackground(Color.white);
-        lblClassName.setBounds(standardNum, (int)(standardNum*3.6), width, height);
+        lblClassName.setBounds(standardNum, standardNum*2, width, height);
         lblClassName.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(lblClassName);
 
         txtClassName = new JTextField();
-        txtClassName.setBounds(standardNum*4, (int)(standardNum*3.7), width, (int)(height-(standardNum*0.3)));
+        txtClassName.setBounds(standardNum*4, (int)(standardNum*2.1), width, (int)(height-(standardNum*0.3)));
         txtClassName.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(txtClassName);
     }
@@ -165,12 +146,12 @@ public class RealFilterView extends JPanel {
     public void setProfessor() { // 교수명
         lblProfessor = new JLabel("교수명");
         lblProfessor.setBackground(Color.white);
-        lblProfessor.setBounds(standardNum, (int)(standardNum*4.7), width, height);
+        lblProfessor.setBounds(standardNum, standardNum*3, width, height);
         lblProfessor.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(lblProfessor);
 
         txtProfessor = new JTextField();
-        txtProfessor.setBounds(standardNum*4, (int)(standardNum*4.8), width, (int)(height-(standardNum*0.3)));
+        txtProfessor.setBounds(standardNum*4, (int)(standardNum*3.1), width, (int)(height-(standardNum*0.3)));
         txtProfessor.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(txtProfessor);
     }
@@ -178,7 +159,7 @@ public class RealFilterView extends JPanel {
     public void setGrade() { // 학년
         lblGrade = new JLabel("학년");
         lblGrade.setBackground(Color.white);
-        lblGrade.setBounds(standardNum, (int)(standardNum*5.8), width, height);
+        lblGrade.setBounds(standardNum, standardNum*4, width, height);
         lblGrade.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(lblGrade);
 
@@ -188,12 +169,12 @@ public class RealFilterView extends JPanel {
     public void setClassNum() { // 분반
         lblClassNum = new JLabel("분반");
         lblClassNum.setBackground(Color.white);
-        lblClassNum.setBounds(standardNum, (int)(standardNum*6.9), width, height);
+        lblClassNum.setBounds(standardNum, standardNum*5, width, height);
         lblClassNum.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(lblClassNum);
 
         txtClassNum = new JTextField();
-        txtClassNum.setBounds(standardNum*4, standardNum*7, width, (int)(height-(standardNum*0.3)));
+        txtClassNum.setBounds(standardNum*4, (int) (standardNum*5.1), width, (int)(height-(standardNum*0.3)));
         txtClassNum.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(txtClassNum);
     }
@@ -201,7 +182,7 @@ public class RealFilterView extends JPanel {
     public void setCompletion() { // 이수 구분
         lblCompletion = new JLabel("이수 구분");
         lblCompletion.setBackground(Color.white);
-        lblCompletion.setBounds(standardNum, standardNum*8, width, height);
+        lblCompletion.setBounds(standardNum, standardNum*6, width, height);
         lblCompletion.setFont(new Font("a이끌림M", Font.BOLD, 20));
         filterPanel.add(lblCompletion);
 
@@ -209,11 +190,12 @@ public class RealFilterView extends JPanel {
     }
 
     public void setBtnSearch() { // 검색 버튼 설정
-        btnSearch = new JButton("검색");
+        btnSearch = new JButton(Constants.SEARCH_TXT);
         btnSearch.setBackground(Color.white);
         btnSearch.setFont(new Font("a이끌림M", Font.BOLD, 20));
-        btnSearch.setBounds((int)(standardNum*2.1), (int)(standardNum*9.3), (int)(standardNum*3.8), (int)(height-(standardNum*0.3)));
+        btnSearch.setBounds((int)(standardNum*2.1), (int)(standardNum*7.5), (int)(standardNum*3.8), (int)(height-(standardNum*0.3)));
         filterPanel.add(btnSearch);
+        btnSearch.addActionListener(filterController);
     }
 
     // 콤보 박스 설정
@@ -221,7 +203,7 @@ public class RealFilterView extends JPanel {
     public void setMajorComboBox() {
         cbxMajor = new JComboBox<>(strMajor);
         cbxMajor.setFont(new Font("a이끌림M", Font.BOLD, 14));
-        cbxMajor.setBounds(standardNum*4, (int)(standardNum*1.5), width, (int)(height-(standardNum*0.3)));
+        cbxMajor.setBounds(standardNum*4, (int)(standardNum*0.1), width, (int)(height-(standardNum*0.3)));
         filterPanel.add(cbxMajor, BorderLayout.NORTH);
     }
 
@@ -229,7 +211,7 @@ public class RealFilterView extends JPanel {
     public void setGradeComboBox() {
         cbxGrade = new JComboBox<>(strGrade);
         cbxGrade.setFont(new Font("a이끌림M", Font.BOLD, 14));
-        cbxGrade.setBounds(standardNum*4, (int)(standardNum*5.9), width, (int)(height-(standardNum*0.3)));
+        cbxGrade.setBounds(standardNum*4, (int)(standardNum*4.1), width, (int)(height-(standardNum*0.3)));
         filterPanel.add(cbxGrade, BorderLayout.NORTH);
     }
 
@@ -237,44 +219,20 @@ public class RealFilterView extends JPanel {
     public void setCompletionComboBox() {
         cbxCompletion = new JComboBox<>(strCompletion);
         cbxCompletion.setFont(new Font("a이끌림M", Font.BOLD, 14));
-        cbxCompletion.setBounds(standardNum*4, (int)(standardNum*8.1), width, (int)(height-(standardNum*0.3)));
+        cbxCompletion.setBounds(standardNum*4, (int)(standardNum*6.1), width, (int)(height-(standardNum*0.3)));
         filterPanel.add(cbxCompletion, BorderLayout.NORTH);
     }
 
-    // 관심과목 선택 여부에 따라 다른 필터의 사용 가능 여부를 바꿈
-    public void setEnabledAll(boolean flag) {
-        txtCourseNum.setEnabled(flag);
-        txtClassName.setEnabled(flag);
-        txtProfessor.setEnabled(flag);
-        txtClassName.setEnabled(flag);
-        cbxCompletion.setEnabled(flag);
-        cbxGrade.setEnabled(flag);
-        cbxMajor.setEnabled(flag);
+    public ArrayList<String> getSelect(){
+        ArrayList<String> output = new ArrayList<String>();
+        output.add((String) cbxMajor.getSelectedItem()); //학과
+        output.add(lblCourseNum.getText()); //학수번호
+        output.add(lblClassName.getText()); //수업이름
+        output.add(lblProfessor.getText()); //교수이름
+        output.add((String) cbxGrade.getSelectedItem()); //학년
+        output.add(lblClassNum.getText()); //분반
+        output.add((String) cbxCompletion.getSelectedItem()) ;//이수구분
+        return output;
     }
 
-    // 관심 과목 체크 여부에 따라 동작하는 리스너
-    public void addInterestingListener(ItemListener listener) {
-        ckbInterested.addItemListener(listener);
-    }
-
-    // 검색 버튼 리스너
-    public void addSearchListener(ActionListener listener) {
-        btnSearch.addActionListener(listener);
-    }
-
-    // 나가기 버튼 리스너
-    public void addExitButtonListener(ActionListener listener) {
-        btnExit.addActionListener(listener);
-    }
-
-    // 각각의 필터 구분에 리스너 추가
-    public void addValueListener(ActionListener listener) {
-        txtCourseNum.addActionListener(listener);
-        txtClassName.addActionListener(listener);
-        txtProfessor.addActionListener(listener);
-        txtClassNum.addActionListener(listener);
-        cbxCompletion.addActionListener(listener);
-        cbxGrade.addActionListener(listener);
-        cbxMajor.addActionListener(listener);
-    }
 }

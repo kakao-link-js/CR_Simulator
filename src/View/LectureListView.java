@@ -99,7 +99,7 @@ public class LectureListView extends JPanel {
 	} //setLectureListPanel()
 	
 	public void setStatusPanel() {
-		int X = margin,Y = (int)(height * 0.63), height = (int)(this.height*0.05),width = this.width-margin*2;
+		int X = margin,Y = (int)(this.height * 0.63), height = (int)(this.height*0.05),width = this.width-margin*2;
 		statusPanel = new JPanel();
 		statusPanel.setBounds(X,Y,width,height);
 		statusPanel.setBackground(Color.white);
@@ -116,7 +116,7 @@ public class LectureListView extends JPanel {
 	
 	//MyLecturePanel 초기화
 	public void setMyLecturePanel() {
-		int X = margin,Y = (int)(height * 0.69), height = (int)(this.height*0.3),width = this.width-margin*2;
+		int X = margin,Y = (int)(this.height * 0.69), height = (int)(this.height*0.3),width = this.width-margin*2;
 		myLecturePanel = new JPanel();
 		myLecturePanel.setBounds(X,Y,width,height);
 		myLecturePanel.setBackground(Color.CYAN);
@@ -139,10 +139,7 @@ public class LectureListView extends JPanel {
 	public void changeMyLectureDTM() {
 		if(myLecturePane != null)
 			myLecturePanel.remove(myLecturePane);
-		if(isFavorite)
-			myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getInterested()),header);
-		else
-			myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getReal()),header);
+		//myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getReal()),header);
 		
 		myLectureTable = new JTable(myLectureDTM);
 		myLecturePane = new JScrollPane(myLectureTable);

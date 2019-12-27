@@ -22,10 +22,9 @@ public class MainMenuController implements ActionListener, MouseListener {
 
 		switch (btnSelected.getText()) {
 			case Constants.INSERT_TXT:
-				selectedView = ClassManager.getInstance().getRealFilterController().getRealFilterView();
+				selectedView = ClassManager.getInstance().getFilterView();
 				break;
-			case Constants.INTERESTED_TXT:
-				selectedView = ClassManager.getInstance().getInterestedFilterController().getInterestedFilterView();
+			case Constants.MODIFY_TXT:
 				break;
 			case Constants.MYLECTURE_TXT:
 				selectedView = ClassManager.getInstance().getTimetableController().getTimetableView();

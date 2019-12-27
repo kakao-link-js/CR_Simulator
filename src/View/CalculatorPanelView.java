@@ -152,11 +152,11 @@ public class CalculatorPanelView extends JPanel {
 			JTextField txtScore = new JTextField();
 			txtScore.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 15));
 			txtScore.setBounds(x, margin * (i * 7), width, 30);
-			System.out.println(ClassManager.getInstance().getReal().size());
-			if(ClassManager.getInstance().getReal().size() > i-1) {
-				System.out.println(String.valueOf(ClassManager.getInstance().getReal().get(i-1).score));
-				txtScore.setText(String.valueOf(ClassManager.getInstance().getReal().get(i-1).score));
-			}
+
+//			if(ClassManager.getInstance().getReal().size() > i-1) {
+//				System.out.println(String.valueOf(ClassManager.getInstance().getReal().get(i-1).score));
+//				txtScore.setText(String.valueOf(ClassManager.getInstance().getReal().get(i-1).score));
+//			}
 			
 			infoPanel.add(txtScore);
 			scoreArr.add(txtScore);
@@ -173,8 +173,8 @@ public class CalculatorPanelView extends JPanel {
 			txtSubject.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 15));
 			txtSubject.setBounds(x, margin * (i * 7), width, 30);
 			
-			if(ClassManager.getInstance().getReal().size() > i-1)
-				txtSubject.setText(ClassManager.getInstance().getReal().get(i-1).className);
+//			if(ClassManager.getInstance().getReal().size() > i-1)
+//				txtSubject.setText(ClassManager.getInstance().getReal().get(i-1).className);
 				
 			infoPanel.add(txtSubject);
 		
