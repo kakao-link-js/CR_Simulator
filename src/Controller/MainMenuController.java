@@ -9,10 +9,10 @@ import java.awt.event.*;
 
 
 public class MainMenuController implements ActionListener, MouseListener {
-	MainMenuView MMV;
+	MainMenuView menuView;
 
 	public MainMenuController(MainMenuView MMV) {
-		this.MMV = MMV;
+		this.menuView = MMV;
 	} // Constructor
 
 	@Override
@@ -27,7 +27,7 @@ public class MainMenuController implements ActionListener, MouseListener {
 			case Constants.MODIFY_TXT:
 				break;
 			case Constants.MYLECTURE_TXT:
-				selectedView = ClassManager.getInstance().getTimetableController().getTimetableView();
+				selectedView = ClassManager.getInstance().getTimetableView();
 				break;
 			case Constants.CALCUL_TXT:
 				selectedView = ClassManager.getInstance().getCalculatorView();

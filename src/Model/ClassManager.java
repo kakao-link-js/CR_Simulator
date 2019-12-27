@@ -13,9 +13,6 @@ public class ClassManager {
 	// Main
 	private ClassRegistrationSimulator m_Main;
 
-	// Controller
-	private TimetableController m_TimetableController;
-
 	// View
 	private MainMenuView m_MainMenuView;
 	private LectureListView m_lectureListView;
@@ -32,11 +29,6 @@ public class ClassManager {
 	public ClassRegistrationSimulator getMain() {
 		if (m_Main == null) m_Main = new ClassRegistrationSimulator();
 		return m_Main;
-	}
-
-	public TimetableController getTimetableController() {
-		if (m_TimetableController == null) m_TimetableController = new TimetableController();
-		return m_TimetableController;
 	}
 
 	public CalculatorPanelView getCalculatorView() {

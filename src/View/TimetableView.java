@@ -1,5 +1,7 @@
 package View;
 
+import Controller.TimetableController;
+import common.Constants;
 import common.DesignConstants;
 
 import javax.swing.*;
@@ -24,12 +26,17 @@ public class TimetableView extends JPanel {
     private ImageIcon imgDefaultPrintButton;
     private ImageIcon imgHoveringPrintButton;
 
+    private TimetableController timetableController;
+
     /**
      * TimetableView Constructor
      * 레이아웃 설정과 내부 컴포넌트를 구성하는 메소드를 호출하고 화면에 출력
      */
     public TimetableView() {
+        timetableController = new TimetableController(this);
+
         setLayout(new BorderLayout());
+        addAncestorListener(timetableController);
 
         setTitlePanel();
         setTimetablePanel();
@@ -48,12 +55,13 @@ public class TimetableView extends JPanel {
         titlePanel.setLayout(new BorderLayout());
         titlePanel.setBorder(new EmptyBorder(20, 15, 20, 15));
 
-        btnBack = new JButton("<");
+        btnBack = new JButton(Constants.BACK_TXT);
         btnBack.setPreferredSize(new Dimension(50, 0));
         btnBack.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 15));
         btnBack.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
         btnBack.setContentAreaFilled(false);
         btnBack.setFocusPainted(false);
+        btnBack.addActionListener(timetableController);
         titlePanel.add(btnBack, BorderLayout.WEST);
 
         JLabel lblTitle = new JLabel("시 간 표");
@@ -71,6 +79,7 @@ public class TimetableView extends JPanel {
         btnPrint.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
         btnPrint.setContentAreaFilled(false);
         btnPrint.setFocusPainted(false);
+        btnPrint.addActionListener(timetableController);
         titlePanel.add(btnPrint, BorderLayout.EAST);
 
         add(titlePanel, BorderLayout.NORTH); // 메인 패널(this) 상단에 titlePanel 추가
@@ -124,24 +133,6 @@ public class TimetableView extends JPanel {
             btnPrint.setIcon(imgHoveringPrintButton);
         else
             btnPrint.setIcon(imgDefaultPrintButton);
-    }
-
-    /**
-     * addBackButtonListener Method
-     * 뒤로가기 버튼의 마우스 Hovering과 클릭시 동작할 이벤트 Listener 설정
-     */
-    public void addBackButtonListener(EventListener listener) {
-        btnBack.addActionListener((ActionListener)listener);
-        btnBack.addMouseListener((MouseListener)listener);
-    }
-
-    /**
-     * addPrintButtonListener Method
-     * 프린트 버튼의 마우스 Hovering과 클릭시 동작할 이벤트 Listener 설정
-     */
-    public void addPrintButtonListener (EventListener listener) {
-        btnPrint.addActionListener((ActionListener) listener);
-        btnPrint.addMouseListener((MouseListener) listener);
     }
 
     public JTable getTable() {

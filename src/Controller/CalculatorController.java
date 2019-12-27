@@ -5,14 +5,13 @@ import java.awt.event.ActionListener;
 
 import Model.ClassManager;
 import View.*;
-import common.Constants;
 
 public class CalculatorController implements ActionListener {
 
-    CalculatorPanelView CPV;
+    CalculatorPanelView calculatorPanelView;
 
     public CalculatorController(CalculatorPanelView CPV) {
-        this.CPV= CPV;
+        this.calculatorPanelView = CPV;
     } //public CalculatorController()
 
     @Override
@@ -20,17 +19,17 @@ public class CalculatorController implements ActionListener {
         Object obj = e.getSource();
 
         double score, totalScore = 0, resultScore, cntScore = 0;
-        if (CPV.isBtnCalcul(obj)) {
+        if (calculatorPanelView.isBtnCalcul(obj)) {
             for (int i = 0; i < 8; i++) {
-                if (CPV.isInserted(i)) { //넣을 수 있는 상황이라면 (빈칸이 없는 경우)
-                    score = Double.parseDouble(CPV.scoreArr.get(i).getText());
+                if (calculatorPanelView.isInserted(i)) { //넣을 수 있는 상황이라면 (빈칸이 없는 경우)
+                    score = Double.parseDouble(calculatorPanelView.scoreArr.get(i).getText());
                     cntScore += score;
-                    totalScore += score * ChangeGrade((String) CPV.comboArr.get(i).getSelectedItem());;
+                    totalScore += score * ChangeGrade((String) calculatorPanelView.comboArr.get(i).getSelectedItem());;
                 } // if
             } // for
             resultScore = totalScore / cntScore;// 평점 계산
             resultScore = Math.round(resultScore * 100)/100.0;
-            CPV.setScore(Double.toString(resultScore));
+            calculatorPanelView.setScore(Double.toString(resultScore));
         }// if btnCalcul
         else { //나가기
             ClassManager.getInstance().getMain().comeToMain();
