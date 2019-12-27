@@ -27,61 +27,65 @@ public class LoginView extends JPanel{
 
 	//생성자
 	public LoginView() {
-
+		
+		//500x360
 		width = 500;
-		height = 180;
+		height = 360;
+		
 		margin = (int)(width * 0.01);
-
-
+		
 		setPreferredSize(new Dimension(width, height));
 		setBackground(Color.white);
 		setLayout(null);
 		
 		setImagePanel();
-		
 		setComponent();
-		
 	}
-	
-	private void setImagePanel() {
-		int x = (int) (width*0.1),y =(int) (height*0.2) , width , height ;
-		width = (int) (this.width * 0.12);
-		height = (int)(this.height * 0.2);
-		
-		
+
+	public void setImagePanel() {
 		imagePanel = new JPanel();
-		imagePanel.setBounds(x, y, width, height);
+		imagePanel.setBounds(0, 0, this.width, (int)(this.height*0.5));
 		
+		ImageIcon image = new ImageIcon("Images/sejong.png");
+		Image sizeConversation = image.getImage();
 		
+		double length = (int)(height*0.5)-margin*2;
+		Image results = sizeConversation.getScaledInstance((int)length, (int)length, java.awt.Image.SCALE_SMOOTH);
+		ImageIcon sizeImg = new ImageIcon(results);
+		JLabel label = new JLabel(sizeImg);
+		imagePanel.add(label);
+		imagePanel.setBackground(Color.white);
 		
+		add(imagePanel);
 	}
-
-
 
 	//component을 구성하는 메소드
-	private void setComponent() {
+	public void setComponent() {
+		
 		int x = (int) (width*0.1),y =(int) (height*0.2) , width , height ;
 
 		width = (int) (this.width * 0.12);
-		height = (int)(this.height * 0.2);
+		height = (int)(this.height * 0.2*0.5);
 		
-		ImageIcon i = new ImageIcon("Images/sejong.png");
+		//로그인 패널
+		loginPanel = new JPanel();
+		loginPanel.setBounds((int)(width*0.5), imagePanel.getHeight()+margin*4, this.width, (int)(this.height*0.5));
+		loginPanel.setLayout(null);
 		
-
 		//라벨
 		JLabel ID = new JLabel("ID");
 		JLabel PW = new JLabel("PW");
 
-		ID.setBounds(x, y, width, height);
+		ID.setBounds(x, 0, width, height);
 		ID.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.ITALIC, 20));
 		ID.setHorizontalAlignment(SwingConstants.CENTER);
-		add(ID);
+		loginPanel.add(ID);
 		ID.setLayout(null);
 
 		PW.setBounds(x, ID.getY()+height, width, height);
 		PW.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.ITALIC, 20));
 		PW.setHorizontalAlignment(SwingConstants.CENTER);
-		add(PW);
+		loginPanel.add(PW);
 		PW.setLayout(null);
 
 		//텍스트필드
@@ -95,8 +99,8 @@ public class LoginView extends JPanel{
 
 		idTextField.setBounds(x, y, width, height);
 		pwTextField.setBounds(x, y+idTextField.getHeight()+margin, width, height);
-		add(idTextField);
-		add(pwTextField);
+		loginPanel.add(idTextField);
+		loginPanel.add(pwTextField);
 		setVisible(true);
 
 		//버튼
@@ -104,16 +108,19 @@ public class LoginView extends JPanel{
 		searchIdBtn = new JButton("ID 찾기");
 		signUpBtn = new JButton("회원 가입");
 
+		System.out.println(height);
 		loginBtn.setBounds(idTextField.getX()+idTextField.getWidth()+margin*2, idTextField.getY(),
 				(int)(this.width*0.19), idTextField.getHeight()+pwTextField.getHeight()+margin);
 		searchIdBtn.setBounds(idTextField.getX(), idTextField.getY()+idTextField.getHeight()+pwTextField.getHeight()+margin*2,
-				(int)(idTextField.getWidth()*0.5-margin), (int)(this.height*0.16));
+				(int)(idTextField.getWidth()*0.5-margin), height);
 		signUpBtn.setBounds(idTextField.getX()+searchIdBtn.getWidth()+margin*2, idTextField.getY()+idTextField.getHeight()+pwTextField.getHeight()+margin*2,
-				(int)(idTextField.getWidth()*0.5-margin), (int)(this.height*0.16));
-		add(loginBtn);
-		add(searchIdBtn);
-		add(signUpBtn);
-
+				(int)(idTextField.getWidth()*0.5-margin), height);
+		loginPanel.add(loginBtn);
+		loginPanel.add(searchIdBtn);
+		loginPanel.add(signUpBtn);
+		
+		loginPanel.setBackground(Color.white);
+		add(loginPanel);
 
 	}
 
