@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.UserDTO;
 import View.*;
 import javax.swing.*;
 import Model.ClassManager;

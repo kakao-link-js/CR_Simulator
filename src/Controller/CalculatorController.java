@@ -8,9 +8,9 @@ import View.*;
 
 public class CalculatorController implements ActionListener {
 
-    CalculatorPanelView calculatorPanelView;
+    CalculatorView calculatorPanelView;
 
-    public CalculatorController(CalculatorPanelView CPV) {
+    public CalculatorController(CalculatorView CPV) {
         this.calculatorPanelView = CPV;
     } //public CalculatorController()
 
