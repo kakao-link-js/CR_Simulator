@@ -2,6 +2,7 @@ package Model;
 
 import Controller.*;
 import View.*;
+import org.json.simple.JSONObject;
 
 /**
  * 싱글턴 기법 ClassManagement
@@ -13,11 +14,14 @@ public class ClassManager {
 	// Main
 	private ClassRegistrationSimulator m_Main;
 
+	//Controller
+	private DAO m_DAO;
+
 	// View
 	private MainMenuView m_MainMenuView;
 	private LectureListView m_lectureListView;
 	private TimetableView m_TimetableView;
-	private CalculatorPanelView m_CalculatorView;
+	private CalculatorView m_CalculatorView;
 	private FilterView m_FilterView;
 
 	public static ClassManager getInstance() {
@@ -31,8 +35,8 @@ public class ClassManager {
 		return m_Main;
 	}
 
-	public CalculatorPanelView getCalculatorView() {
-		if (m_CalculatorView == null) m_CalculatorView = new CalculatorPanelView();
+	public CalculatorView getCalculatorView() {
+		if (m_CalculatorView == null) m_CalculatorView = new CalculatorView();
 		return m_CalculatorView;
 	}
 
@@ -42,8 +46,9 @@ public class ClassManager {
 		return m_MainMenuView;
 	}
 
-	public LectureListView getLectureListView() {
+	public LectureListView getLectureListView(JSONObject jsonObject) {
 		if (m_lectureListView == null) m_lectureListView = new LectureListView();
+		m_lectureListView.setLectureList(jsonObject);
 		return m_lectureListView;
 	}
 
@@ -55,6 +60,11 @@ public class ClassManager {
 	public FilterView getFilterView() {
 		if(m_FilterView == null) m_FilterView = new FilterView();
 		return m_FilterView;
+	}
+
+	public DAO getDAO(){
+		if(m_DAO == null) m_DAO = new DAO();
+		return m_DAO;
 	}
 
 }

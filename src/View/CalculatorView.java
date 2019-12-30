@@ -11,7 +11,7 @@ import Model.ClassManager;
 import common.Constants;
 import common.DesignConstants;
 
-public class CalculatorPanelView extends JPanel {
+public class CalculatorView extends JPanel {
 	
 	private JPanel titlePanel, infoPanel, calculPanel; //타이틀, 정보, 계산 패널
 	private int width = 600, height = 600, margin = (int)(height * 0.01); //기본으로 넣을 크기
@@ -25,7 +25,7 @@ public class CalculatorPanelView extends JPanel {
 	CalculatorController CalculatorController; //컨트롤러와 연결할 컨트롤러 객체변수
 
 	//생성자
-	public CalculatorPanelView() {
+	public CalculatorView() {
 		CalculatorController = new CalculatorController(this);
 
 		setPreferredSize(new Dimension(width, height));
@@ -104,9 +104,9 @@ public class CalculatorPanelView extends JPanel {
 		int width = (int)((this.width - margin * 2) * 0.45);
 		int height = (int)(this.height * 0.6* 0.05);
 
-		JLabel title1 = new JLabel("과목명");
-		JLabel title2 = new JLabel("학점");
-		JLabel title3 = new JLabel("성적");
+		JLabel title1 = new JLabel(Constants.CLASSNAME_TXT);
+		JLabel title2 = new JLabel(Constants.SCORE_TXT);
+		JLabel title3 = new JLabel(Constants.MYSCORE_TXT);
 		
 		title1.setBounds(x, y, width, height);
 		title2.setBounds(margin+width, y, width / 2, height);
@@ -173,11 +173,10 @@ public class CalculatorPanelView extends JPanel {
 			txtSubject.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 15));
 			txtSubject.setBounds(x, margin * (i * 7), width, 30);
 			
-//			if(ClassManager.getInstance().getReal().size() > i-1)
+//			if(ClassManager.getInstance().getDAO().getMyLecture(/*유저 ID*/) > i-1)
 //				txtSubject.setText(ClassManager.getInstance().getReal().get(i-1).className);
 				
 			infoPanel.add(txtSubject);
-		
 			subjectArr.add(txtSubject);
 		}
 	} //public void setTextSubject()
@@ -213,7 +212,7 @@ public class CalculatorPanelView extends JPanel {
 	public void setBtnExit() {
 	      int x = margin, y = margin, width = (int)(this.height * 0.1), height = 50;
 
-		  JButton btnExit = new JButton("<");
+		  JButton btnExit = new JButton(Constants.BACK_TXT);
 	      btnExit.setBounds(x, y, width, height);
 	      btnExit.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,15));
 	      btnExit.addActionListener(CalculatorController);

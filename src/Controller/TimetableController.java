@@ -2,6 +2,7 @@ package Controller;
 
 import Model.ClassManager;
 import Model.LectureDTO;
+import Model.UserDTO;
 import View.TimetableView;
 import common.Constants;
 import common.DesignConstants;
@@ -41,11 +42,11 @@ public class TimetableController implements ActionListener,MouseListener,Ancesto
     private void drawTimetable() {
         timetableView.getTable().setModel(new DefaultTableModel(Constants.ROW_HEADER,Constants.COLUMN_HEADER));
         timetableView.getTable().getColumnModel().getColumn(0).setPreferredWidth(5);
-
-        ArrayList<LectureDTO> lectureList =  new ArrayList<LectureDTO>(); //ClassManager.getInstance().getReal();
+        UserDTO user = ClassManager.getInstance().getMainMenuView().getUser();
+        ArrayList<LectureDTO> lectureList =  ClassManager.getInstance().getDAO().getMyLecture(user);
 
         for (LectureDTO lecture : lectureList) {
-            String strWeekAndTime = lecture.time;
+            String strWeekAndTime = lecture.getTime();
 
             if (strWeekAndTime.isEmpty())
                 continue; // 시간이 비어있는 경우 (보통 사이버강의) 다음 과목으로 continue
@@ -64,7 +65,7 @@ public class TimetableController implements ActionListener,MouseListener,Ancesto
                 strSplitWeekList.remove(listSize - 1);
 
                 for (String week : strSplitWeekList)
-                    fillTimetableCell(lecture.className, lecture.classRoom, week, time);
+                    fillTimetableCell(lecture.getClassName(), lecture.getClassRoom(), week, time);
             } // foreach
         } // foreach
     } // drawTimetable()

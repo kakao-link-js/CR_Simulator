@@ -11,7 +11,9 @@ import javax.swing.table.*;
 import Model.ClassManager;
 import Model.LectureDTO;
 import Model.TimeDTO;
+import Model.UserDTO;
 import View.LectureListView;
+import common.Constants;
 
 public class LectureListController implements ActionListener {
 
@@ -22,11 +24,6 @@ public class LectureListController implements ActionListener {
 		this.LLV = LLV;
 	}
 	
-	//TableCell 클래스를 연결해주는 메소드
-	public TableCell connectTableCell(String text,int flag) {
-		return new TableCell(text,flag);
-	} // public TabelCell connectTableCell(String text,int flag);
-	
 	//Renderer를 연결하는 메소드
 	public CellRenderer connectCellRenderer() {
 		return new CellRenderer();
@@ -34,7 +31,7 @@ public class LectureListController implements ActionListener {
 	
 	//검색된 값을 LectureListView에 뿌리는 메소드
 	public void setSearchListAtLectureListView(ArrayList<LectureDTO> searchList) {
-		LLV.changeMyLectureDTM(); //JTable 값을 초기화 한다.
+		LLV.changeMyLectureDTM(searchList); //JTable 값을 초기화 한다.
 		LLV.changeSearchDTM();
 		for(int i = 0 ; i < searchList.size(); i++) //검색 된 값을 JTable에 추가한다.
 			LLV.getSearchListDTM().addRow(searchList.get(i).makeStringArray());
@@ -49,31 +46,29 @@ public class LectureListController implements ActionListener {
 	//수강하는 학점을 계산하는 메소드
 	public int countScore() {
 		int sums = 0;
-//		for(int i = 0 ; i < ClassManager.getInstance().getReal().size(); i++)
-//			sums += (int)ClassManager.getInstance().getReal().get(i).score;
+		UserDTO user = ClassManager.getInstance().getMainMenuView().getUser();
+		ArrayList<LectureDTO> myLecture = ClassManager.getInstance().getDAO().getMyLecture(user);
+		for(int i = 0 ; i < myLecture.size(); i++)
+			sums += (int)myLecture.get(i).getScore();
 		return sums;
 	} //public int countScore()
-	
-	
-	//강의를 들을 수 있는 강의인지 확인하는 메소드 Object로 넣을 강의정보를 받는다. flag = false 은 진짜 수강신청  flag = true 는 관심과목 신청
+
+	//강의를 들을 수 있는 강의인지 확인하는 메소드 Object로 넣을 강의정보를 받는다.
 	public boolean canInsertLecture(Object[] inserted,boolean isPopUp) {
-//		ArrayList<LectureDTO> myData;
-////		myData = ClassManager.getInstance().getReal();
-//		return isCanInsert(myData,inserted,isPopUp);
-		return false;
+		UserDTO user = ClassManager.getInstance().getMainMenuView().getUser();
+		ArrayList<LectureDTO> myLecture = ClassManager.getInstance().getDAO().getMyLecture(user);
+		return isCanInsert(myLecture,inserted,isPopUp);
 	} //public boolean CanInsertLecture(Object[] inserted,boolean isPopUp)
 	
 	//리스트로받아 비교한다.
 	public boolean isCanInsert(ArrayList<LectureDTO> myData, Object[] inserted, boolean isPopUp) {
 		for(int i = 0 ; i < myData.size();i++) { //내 사이즈 만큼 비교한다.
-			if(myData.get(i).courseNum == inserted[3]) { //학수번호가 같다면.
-				System.out.println(inserted[5]+ " already inserted CourseNum");
+			if(myData.get(i).getCourseNum() == inserted[3]) { //학수번호가 같다면.
 				if(isPopUp) //팝업창을 띄울지 아닐지 구분
 					JOptionPane.showMessageDialog(null, "이미 신청한 과목입니다.");
 				return false;
 			}
-			if(isClassOverLap(myData.get(i).time,inserted[9].toString())) { //시간을 비교한다.
-				System.out.println(inserted[5]+ " already inserted time");
+			if(isClassOverLap(myData.get(i).getTime(),inserted[9].toString())) { //시간을 비교한다.
 				if(isPopUp)
 					JOptionPane.showMessageDialog(null, "시간이 겹치는 과목이 있습니다.");
 				return false;
@@ -174,55 +169,55 @@ public class LectureListController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ClassManager.getInstance().getMain().comeToMain();
-	}
-
-	//View를 조종할 리스너.
-	class TableCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer{
-		 
-        JButton jb;
-         
-        //flag 1은 신청 2는 취소
-        public TableCell(String text,int flag) {
-            jb = new JButton(text);
-            jb.addActionListener(e -> {
-            	if(flag == 2) { //취소인 경우
-            		if(LLV.getMyLectureTable().getSelectedRow() >= 0 //잘 선택이 되었다면.
-            				&& LLV.getMyLectureTable().getSelectedRow() < LLV.getMyLectureTable().getRowCount()) {
+		String operator = ((JButton)e.getSource()).getText();
+		switch (operator){
+			case Constants.APPLY_TXT:
+				if(isGoodinSearchTable()) {
+					Object news [] = new Object[12];
+					for(int i = 0 ; i < 12; i++)
+						news[i] = LLV.getSearchListDTM().getValueAt(LLV.getSearchListTable().getSelectedRow(), i);
+					if(!canInsertLecture(news,true))//신청이 불가능한 경우
+						return;
+					/* //신청부분
+					LLV.getMyLectureDTM().addRow(news);
+					//ClassManager.getInstance().getReal().add(new LectureDTO(news));
+					SetScore();
+					LLV.getSearchListTable().repaint();
+					*/
+				}
+				break;
+			case Constants.DELETE_TXT:
+				if(isGoodinMyTable()) {
+					/*
 //            			for(int i = 0; i < ClassManager.getInstance().getReal().size(); i++)
 //            				if(ClassManager.getInstance().getReal().get(i).courseNum  //학수번호를 들고온다.
 //									== getLLV().getMyLectureDTM().getValueAt(getLLV().getMyLectureTable().getSelectedRow(),3))
 //            					ClassManager.getInstance().getReal().remove(i); //배열에서 지운다.
-            			LLV.getMyLectureDTM().removeRow(LLV.getMyLectureTable().getSelectedRow()); //테이블에서 지운다.
-        				SetScore();
-        				LLV.getSearchListTable().repaint();
-            		}
-            	}
-            	else { //신청인 경우
-            		if(LLV.getSearchListTable().getSelectedRow() >= 0
-            				&& LLV.getSearchListTable().getSelectedRow() < LLV.getSearchListTable().getRowCount()) {
-            			Object news [] = new Object[12]; //신청이 가능한 경우
-            			for(int i = 0 ; i < 12; i++)
-            				news[i] = LLV.getSearchListDTM().getValueAt(LLV.getSearchListTable().getSelectedRow(), i);
-            			if(!canInsertLecture(news,true))//신청이 불가능한 경우
-            				return;
-						LLV.getMyLectureDTM().addRow(news);
-            			//ClassManager.getInstance().getReal().add(new LectureDTO(news));
-            			SetScore();
-						LLV.getSearchListTable().repaint();
-            		}
-            	}
-            });
-        }
-         
-        @Override
-        public Object getCellEditorValue() { return null;}
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {return jb;}
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {return jb;}  
-    }
-	
+					LLV.getMyLectureDTM().removeRow(LLV.getMyLectureTable().getSelectedRow()); //테이블에서 지운다.
+					SetScore();
+					LLV.getSearchListTable().repaint();
+					*/
+				}
+				break;
+			case Constants.BACK_TXT:
+				ClassManager.getInstance().getMain().comeToMain();
+				break;
+		}
+	}
+
+	private boolean isGoodinSearchTable(){ //table 내에서 선택이 잘 되었나 확인
+		if(LLV.getSearchListTable().getSelectedRow() >= 0
+				&& LLV.getSearchListTable().getSelectedRow() < LLV.getSearchListTable().getRowCount())
+			return true;
+		return false;
+	}
+	private boolean isGoodinMyTable(){ //table 내에서 선택이 잘 되었나 확인.
+		if(LLV.getMyLectureTable().getSelectedRow() >= 0 //잘 선택이 되었다면.
+				&& LLV.getMyLectureTable().getSelectedRow() < LLV.getMyLectureTable().getRowCount())
+			return true;
+		return false;
+	}
+
 	//CellRenderer를 통해 빨간글씨로 바꿀 수 있게 한다.
 	public class CellRenderer extends DefaultTableCellRenderer {
         @Override

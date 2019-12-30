@@ -1,6 +1,7 @@
 package View;
 
 import Controller.MainMenuController;
+import Model.*;
 import common.*;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ import javax.swing.*;
 
 public class MainMenuView extends JPanel {
     MainMenuController MMC;
+    UserDTO user;
 
     private ArrayList<JButton> btnMenuList;
 
@@ -105,5 +107,8 @@ public class MainMenuView extends JPanel {
         for (JButton btnMenu : btnMenuList)
             btnMenu.setEnabled(flag);
     }//public void setEnabledAllButton(boolean flag)
+
+
+    public UserDTO getUser(){return user;}
 
 }
