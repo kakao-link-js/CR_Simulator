@@ -1,0 +1,1 @@
+//view에 controller구현해놔서 옮겨야함
