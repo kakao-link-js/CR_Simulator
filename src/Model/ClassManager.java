@@ -23,6 +23,9 @@ public class ClassManager {
 	private TimetableView m_TimetableView;
 	private CalculatorView m_CalculatorView;
 	private FilterView m_FilterView;
+	private LoginView m_LoginView;
+	private SignUpView m_SignUpView;
+	private FindIdView m_FindIdView;
 
 	public static ClassManager getInstance() {
 		if (s_instance == null) s_instance = new ClassManager();
@@ -67,4 +70,18 @@ public class ClassManager {
 		return m_DAO;
 	}
 
+	public LoginView getLoginView() {
+		if(m_LoginView == null) m_LoginView = new LoginView();
+		return m_LoginView;
+	}
+
+	public SignUpView getSignUpView() {
+		if(m_SignUpView == null) m_SignUpView = new SignUpView();
+		return m_SignUpView;
+	}
+
+	public FindIdView getFindIdView(){
+		if(m_FindIdView == null) m_FindIdView = new FindIdView();
+		return m_FindIdView;
+	}
 }

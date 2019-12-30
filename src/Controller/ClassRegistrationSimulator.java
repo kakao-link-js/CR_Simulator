@@ -27,8 +27,8 @@ public class ClassRegistrationSimulator {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
-        MainMenuView mainMenuView = ClassManager.getInstance().getMainMenuView();
-        frame.getContentPane().add(mainMenuView);
+        LoginView loginView = ClassManager.getInstance().getLoginView();
+        frame.getContentPane().add(loginView);
 
         setLocationScreenCenter();
 

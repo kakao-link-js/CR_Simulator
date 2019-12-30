@@ -11,7 +11,9 @@ import javax.swing.table.*;
 
 import Controller.LectureListController;
 import Controller.LectureListController.CellRenderer;
+import Controller.LoginController;
 import Model.*;
+import common.Constants;
 import common.DesignConstants;
 
 public class LoginView extends JPanel{
@@ -25,8 +27,11 @@ public class LoginView extends JPanel{
 	private JButton signUpBtn; //회원가입 버튼
 	private JTextField idTextField, pwTextField;
 
+	LoginController loginController;
+
 	//생성자
 	public LoginView() {
+		loginController = new LoginController(this);
 
 		//500x360
 		width = 500;
@@ -61,7 +66,7 @@ public class LoginView extends JPanel{
 	//component을 구성하는 메소드
 	public void setComponent() {
 
-		int x = (int) (width*0.1),y =(int) (height*0.2) , width , height ;
+		int x = (int) (this.width*0.1),y =(int)(this.height*0.2) , width , height ;
 
 		width = (int) (this.width * 0.12);
 		height = (int)(this.height * 0.2*0.5);
@@ -103,9 +108,9 @@ public class LoginView extends JPanel{
 		setVisible(true);
 
 		//버튼
-		loginBtn = new JButton("로그인");
-		searchIdBtn = new JButton("ID 찾기");
-		signUpBtn = new JButton("회원 가입");
+		loginBtn = new JButton(Constants.LOGIN_TXT);
+		searchIdBtn = new JButton(Constants.IDSEARCH_TXT);
+		signUpBtn = new JButton(Constants.SIGNUP_TXT);
 
 		loginBtn.setBounds(idTextField.getX()+idTextField.getWidth()+margin*2, idTextField.getY(),
 				(int)(this.width*0.19), idTextField.getHeight()+pwTextField.getHeight()+margin);
@@ -120,48 +125,17 @@ public class LoginView extends JPanel{
 		loginPanel.setBackground(Color.white);
 		add(loginPanel);
 
-
-		//***********************************************//
-		//회원가입 리스너
-		ActionListener listener = new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//ClassManager.getInstance().getMainMenuController().comeToMain();
-				//회원가입창을 새창에 띄움 
-				JFrame frame = new JFrame();
-				frame.setBounds(770,220,485,570);
-				frame.add(new SignUpView());
-				frame.setVisible(true);
-			}
-
-		};
-		signUpBtn.addActionListener(listener);
-		
-		//로그인버튼 리스너
-		ActionListener id_pw_Listener = new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e) {
-				String id = idTextField.getText();
-				char[] pass = ((JPasswordField) pwTextField).getPassword();
-				String password = new String(pass);
-				JOptionPane.showMessageDialog(null, "ID : "+id+"\nPW : "+password);
-			}
-		};
-		loginBtn.addActionListener(id_pw_Listener);
-		
-		//id찾기버튼 리스너
-		ActionListener id_Listener = new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e) {
-				String id = idTextField.getText();
-				JOptionPane.showMessageDialog(null, "ID찾기");
-			}
-		};
-		searchIdBtn.addActionListener(id_Listener);
+		signUpBtn.addActionListener(loginController);
+		loginBtn.addActionListener(loginController);
+		searchIdBtn.addActionListener(loginController);
 	}
 
+	public String getIdTextField(){
+		return idTextField.getText();
+	}
 
+	public String getPwTextField(){
+		return pwTextField.getText();
+	}
 
 }
