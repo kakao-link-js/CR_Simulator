@@ -3,6 +3,7 @@ package Controller;
 import Model.ClassManager;
 import Model.LectureDTO;
 import View.TimetableView;
+import common.Constants;
 import common.DesignConstants;
 
 import javax.swing.*;
@@ -26,37 +27,22 @@ import java.util.List;
  *
  * @author 이종진
  */
-public class TimetableController {
+public class TimetableController implements ActionListener,MouseListener,AncestorListener {
+    TimetableView timetableView;
 
-    private final String[] COLUMN_HEADER = {"", "월", "화", "수", "목", "금"};
-    private final String[][] ROW_HEADER = {
-            {"9"}, {""}, {"10"}, {""},
-            {"11"}, {""}, {"12"}, {""},
-            {"1"}, {""}, {"2"}, {""},
-            {"3"}, {""}, {"4"}, {""},
-            {"5"}, {""}, {"6"}, {""},
-            {"7"}, {""}, {"8"}
-    };
-
-    public TimetableController() {
-        getTimetableView().addBackButtonListener(new BackButtonListener());
-        getTimetableView().addPrintButtonListener(new PrintButtonListener());
-        getTimetableView().addAncestorListener(new ViewComponentListener());
+    public TimetableController(TimetableView timetableView) {
+        this.timetableView = timetableView;
     } // Constructor
-
-    public TimetableView getTimetableView() {
-        return ClassManager.getInstance().getTimetableView();
-    } // getTimetableView()
 
     /**
      * drawTimetable Method
      * 수강신청 된 과목들의 시간을 요일과 시간별로 분할한 후, fillTimetableCell 메소드를 호출하여 시간표를 추가
      */
     private void drawTimetable() {
-        getTimetableView().getTable().setModel(new DefaultTableModel(ROW_HEADER, COLUMN_HEADER));
-        getTimetableView().getTable().getColumnModel().getColumn(0).setPreferredWidth(5);
+        timetableView.getTable().setModel(new DefaultTableModel(Constants.ROW_HEADER,Constants.COLUMN_HEADER));
+        timetableView.getTable().getColumnModel().getColumn(0).setPreferredWidth(5);
 
-        ArrayList<LectureDTO> lectureList =  ClassManager.getInstance().getReal();
+        ArrayList<LectureDTO> lectureList =  new ArrayList<LectureDTO>(); //ClassManager.getInstance().getReal();
 
         for (LectureDTO lecture : lectureList) {
             String strWeekAndTime = lecture.time;
@@ -114,7 +100,7 @@ public class TimetableController {
         int startRowIndex = (startTime.hour - 9) * 2 + startTime.isHalf();
         int endRowIndex = (endTime.hour - 9) * 2 + endTime.isHalf();
 
-        JTable table = getTimetableView().getTable();
+        JTable table = timetableView.getTable();
         TableColumn column = table.getColumn(strWeek);
         int columnIndex = column.getModelIndex();
 
@@ -126,74 +112,54 @@ public class TimetableController {
             table.setValueAt(" ", i, columnIndex);
     } // fillTimetableCell
 
-    /**
-     * ViewComponentListener Class
-     * ancestorAdded() 핸들링을 통해 연결된 View가 다른 Component에 Add될 경우 drawTimetable 메소드 호출
-     */
-    private class ViewComponentListener implements AncestorListener {
-        @Override
-        public void ancestorAdded(AncestorEvent event) {
-            drawTimetable();
-        } // ancestorAdded()
-
-        @Override
-        public void ancestorRemoved(AncestorEvent event) { }
-        @Override
-        public void ancestorMoved(AncestorEvent event) { }
-    } // ViewComponentListener Class
-
-    private static class BackButtonListener implements ActionListener, MouseListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            ClassManager.getInstance().getMainMenuController().comeToMain();
-        } // actionPerformed()
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            JButton btnEvent = (JButton)e.getSource();
-            btnEvent.setForeground(new Color(DesignConstants.HOVERING_COLOR));
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String operator = ((JButton)e.getSource()).getText();
+        switch (operator){
+            case Constants.BACK_TXT:
+                ClassManager.getInstance().getMain().comeToMain();
+                break;
+            default: //프린트
+                try {
+                    timetableView.getTable().print(); // 테이블 인쇄
+                } catch (PrinterException ex) {  }
+                break;
         }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            JButton btnEvent = (JButton)e.getSource();
-            btnEvent.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) { }
-        @Override
-        public void mousePressed(MouseEvent e) { }
-        @Override
-        public void mouseReleased(MouseEvent e) { }
-    } // BackButtonListener Class
-
-    public class PrintButtonListener implements ActionListener, MouseListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                getTimetableView().getTable().print(); // 테이블 인쇄
-            } catch (PrinterException ex) {
-                // 에러 메세지 출력
-                JOptionPane.showMessageDialog(getTimetableView(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            getTimetableView().setHoveringPrintIcon(true);
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            getTimetableView().setHoveringPrintIcon(false);
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) { }
-        @Override
-        public void mousePressed(MouseEvent e) { }
-        @Override
-        public void mouseReleased(MouseEvent e) { }
     }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        JButton btnEvent = (JButton)e.getSource();
+        if(btnEvent.getText() == Constants.BACK_TXT)
+            btnEvent.setForeground(new Color(DesignConstants.HOVERING_COLOR));
+        else
+            timetableView.setHoveringPrintIcon(true);
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        JButton btnEvent = (JButton)e.getSource();
+        if(btnEvent.getText() == Constants.BACK_TXT)
+            btnEvent.setForeground(new Color(DesignConstants.SIGNATURE_COLOR));
+        else
+            timetableView.setHoveringPrintIcon(false);
+    }
+
+    @Override
+    public void ancestorAdded(AncestorEvent event) { drawTimetable(); }
+
+    @Override
+    public void ancestorRemoved(AncestorEvent event) { }
+
+    @Override
+    public void ancestorMoved(AncestorEvent event) { }
+
+    @Override
+    public void mouseClicked(MouseEvent e) { }
+
+    @Override
+    public void mousePressed(MouseEvent e) { }
+
+    @Override
+    public void mouseReleased(MouseEvent e) { }
 } // TimetableController Class

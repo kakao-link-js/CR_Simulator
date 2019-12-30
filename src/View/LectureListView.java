@@ -17,8 +17,7 @@ public class LectureListView extends JPanel {
 	JPanel searchListPanel; //필터링 한 출력 Panel
 	JPanel statusPanel; //정보표현용 Panel
 	JPanel myLecturePanel; //내 수강신청 과목 Panel
-	
-	
+
 	//표 출력을 위한 Instance
 	private JTable searchListTable; //SearchList를 담는 JTable
 	private JTable myLectureTable; //내 수강신청을 담는 JTable
@@ -30,18 +29,15 @@ public class LectureListView extends JPanel {
 	JLabel lblScore; //현제 신청학점을 알기 위한 JLabel함수
 	JButton btnExit; //나가기 버튼
 	
-	
 	private int width = 1000; //동적 사이즈 조절을 위한 사이즈 변수
 	private int height = (int)(width * 0.7);
 	private int margin = (int)(height * 0.01);
 	
-	public boolean isFavorite;
-	
 	String header[] = {"신청/취소","개설대학","개설학과전공","학수번호","분반","교과목명","이수구분","학년","학점","요일 및 강의시간","강의실","교수"};
 	
 	//LectureListController를 파라미터로 받아 서로 연결한다.
-	public LectureListView(LectureListController LLC) {
-		this.LLC = LLC;
+	public LectureListView() {
+		LLC = new LectureListController(this);
 		
 		initPrimaryPanel();
 		
@@ -76,7 +72,7 @@ public class LectureListView extends JPanel {
 		
 		btnExit = new JButton("<");
 		btnExit.setBounds(0,0, 50, infoPanel.getHeight());
-		btnExit.addActionListener(LLC.getActionListener());
+		btnExit.addActionListener(LLC);
 		infoPanel.add(btnExit);
 		
 		JLabel title = new JLabel("수강신청");
@@ -99,7 +95,7 @@ public class LectureListView extends JPanel {
 	} //setLectureListPanel()
 	
 	public void setStatusPanel() {
-		int X = margin,Y = (int)(height * 0.63), height = (int)(this.height*0.05),width = this.width-margin*2;
+		int X = margin,Y = (int)(this.height * 0.63), height = (int)(this.height*0.05),width = this.width-margin*2;
 		statusPanel = new JPanel();
 		statusPanel.setBounds(X,Y,width,height);
 		statusPanel.setBackground(Color.white);
@@ -116,7 +112,7 @@ public class LectureListView extends JPanel {
 	
 	//MyLecturePanel 초기화
 	public void setMyLecturePanel() {
-		int X = margin,Y = (int)(height * 0.69), height = (int)(this.height*0.3),width = this.width-margin*2;
+		int X = margin,Y = (int)(this.height * 0.69), height = (int)(this.height*0.3),width = this.width-margin*2;
 		myLecturePanel = new JPanel();
 		myLecturePanel.setBounds(X,Y,width,height);
 		myLecturePanel.setBackground(Color.CYAN);
@@ -139,10 +135,7 @@ public class LectureListView extends JPanel {
 	public void changeMyLectureDTM() {
 		if(myLecturePane != null)
 			myLecturePanel.remove(myLecturePane);
-		if(isFavorite)
-			myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getInterested()),header);
-		else
-			myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getReal()),header);
+		//myLectureDTM = new DefaultTableModel(makeInsertData(ClassManager.getInstance().getReal()),header);
 		
 		myLectureTable = new JTable(myLectureDTM);
 		myLecturePane = new JScrollPane(myLectureTable);
