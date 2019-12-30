@@ -25,6 +25,7 @@ public class ClassManager {
 	private FilterView m_FilterView;
 	private LoginView m_LoginView;
 	private SignUpView m_SignUpView;
+	private FindIdView m_FindIdView;
 
 	public static ClassManager getInstance() {
 		if (s_instance == null) s_instance = new ClassManager();
@@ -77,5 +78,10 @@ public class ClassManager {
 	public SignUpView getSignUpView() {
 		if(m_SignUpView == null) m_SignUpView = new SignUpView();
 		return m_SignUpView;
+	}
+
+	public FindIdView getFindIdView(){
+		if(m_FindIdView == null) m_FindIdView = new FindIdView();
+		return m_FindIdView;
 	}
 }

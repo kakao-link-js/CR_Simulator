@@ -40,6 +40,19 @@ public class SignUpView extends JPanel{
 		setBackground(Color.WHITE);
 		setLayout(null);
 
+		JLabel lblTitle = new JLabel("회원 가입");
+		lblTitle.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,30));
+		lblTitle.setBounds(40,30,390,40);
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblTitle);
+
+		JButton exitBtn = new JButton(Constants.EXIT_TXT);
+		exitBtn.setFont(new Font(DesignConstants.HANGUL_FONT,Font.PLAIN,10));
+		exitBtn.setBounds(20,20,70,50);
+		exitBtn.setBackground(Color.white);
+		exitBtn.addActionListener(signUpController);
+		add(exitBtn);
+
 		setSignUpPanel();
 	}
 
@@ -120,7 +133,9 @@ public class SignUpView extends JPanel{
 
 		//Button
 		duChkBtn = new JButton(Constants.DUPLICATE_TXT);
+		duChkBtn.setBackground(Color.white);
 		signUpBtn = new JButton(Constants.SIGNUP_TXT);
+		signUpBtn.setBackground(Color.white);
 		duChkBtn.setBounds(idTextField.getX()+idTextField.getWidth()+margin*2, ID.getY(),
 				ID.getY(), ID.getHeight());
 		signUpBtn.setBounds((int) (idTextField.getX()*1.4), DOB.getY()+DOB.getHeight()+margin*10,
@@ -138,6 +153,9 @@ public class SignUpView extends JPanel{
 
 	public String getId(){
 		return idTextField.getText();
+	}
+	public String getPhone(){
+		return phoneTextField.getText();
 	}
 
 	public UserDTO getInsertData(){

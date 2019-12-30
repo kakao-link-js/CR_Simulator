@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.ClassManager;
+import View.FindIdView;
 import View.LoginView;
 import View.SignUpView;
 import common.Constants;
@@ -36,18 +37,20 @@ public class LoginController implements ActionListener {
     private void login(){
         String id = loginView.getIdTextField();
         String password = loginView.getPwTextField();
-        ClassManager.getInstance().getMain().comeToMain();
+        if(ClassManager.getInstance().getDAO().isCorrectID(id,password)){
+            ClassManager.getInstance().getMain().comeToMain();
+        } else {
+            JOptionPane.showMessageDialog(null, "잘못된 아이디나 비밀번호 입니다.");
+        }
     }
 
     private void signUp(){
-        JFrame frame = new JFrame();
-        frame.setBounds(770,220,485,570);
-        frame.add(new SignUpView());
-        frame.setVisible(true);
+        SignUpView signUpView = ClassManager.getInstance().getSignUpView();
+        ClassManager.getInstance().getMain().changePanel(signUpView);
     }
 
     private void idSearch(){
-        String id = loginView.getIdTextField();
-        JOptionPane.showMessageDialog(null, "ID찾기");
+        FindIdView findIdView = ClassManager.getInstance().getFindIdView();
+       ClassManager.getInstance().getMain().changePanel(findIdView);
     }
 }

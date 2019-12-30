@@ -30,7 +30,7 @@ public class DAO {
     }
 
     // 이름과 전화번호를 통해 아이디를 돌려줌
-    public String checkIdDuplication(String name,String phone){
+    public String getID(String name, String phone){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(Constants.NAME_TXT,name);
         jsonObject.put(Constants.PHONE_TXT,phone);
@@ -51,7 +51,7 @@ public class DAO {
 
 
     //아이디 중복 체크
-    public boolean canGetID(String id) {
+    public boolean isDuplicateID(String id) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(Constants.ID_TXT, id);
         jsonObject.put(Constants.URL_TXT, Constants.BASE_URL+"");
