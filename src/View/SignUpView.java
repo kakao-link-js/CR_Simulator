@@ -11,7 +11,9 @@ import javax.swing.table.*;
 
 import Controller.LectureListController;
 import Controller.LectureListController.CellRenderer;
+import Controller.SignUpController;
 import Model.*;
+import common.Constants;
 import common.DesignConstants;
 
 public class SignUpView extends JPanel{
@@ -25,8 +27,10 @@ public class SignUpView extends JPanel{
 	private JTextField phoneTextField; //휴대전화
 	private JTextField dobTextField; //생년월일
 
-	public SignUpView()
-	{
+	SignUpController signUpController;
+
+	public SignUpView() {
+		signUpController = new SignUpController(this);
 		//470x570
 		width = 470;
 		height = 570;
@@ -115,8 +119,8 @@ public class SignUpView extends JPanel{
 		signUpPanel.add(dobTextField);
 
 		//Button
-		duChkBtn = new JButton("중복");
-		signUpBtn = new JButton("회원 가입");
+		duChkBtn = new JButton(Constants.DUPLICATE_TXT);
+		signUpBtn = new JButton(Constants.SIGNUP_TXT);
 		duChkBtn.setBounds(idTextField.getX()+idTextField.getWidth()+margin*2, ID.getY(),
 				ID.getY(), ID.getHeight());
 		signUpBtn.setBounds((int) (idTextField.getX()*1.4), DOB.getY()+DOB.getHeight()+margin*10,
@@ -128,37 +132,22 @@ public class SignUpView extends JPanel{
 		signUpPanel.setBackground(Color.WHITE);
 		add(signUpPanel);
 
-
-		/**************************************************/
-		//액션리스너
-		//중복체크버튼 리스너
-		ActionListener duChkListener = new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e) {
-				String id = idTextField.getText();
-				JOptionPane.showMessageDialog(null, "ID : "+id);
-			}
-		};
-		duChkBtn.addActionListener(duChkListener);
-
-		//회원가입 리스너
-		ActionListener signUpListener = new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e) {
-				String id = idTextField.getText();
-				String pw = pwTextField.getText();
-				String name = nameTextField.getText();
-				String phone = phoneTextField.getText();
-				String dob = dobTextField.getText();
-				String info;
-				info = "ID : "+id+"\nPW : "+pw+"\nname : "+name
-						+"\nphone : "+phone+"\ndob : "+dob;
-				JOptionPane.showMessageDialog(null, info);
-			}
-		};
-		signUpBtn.addActionListener(signUpListener);
-
-
-
+		duChkBtn.addActionListener(signUpController);
+		signUpBtn.addActionListener(signUpController);
 	}
+
+	public String getId(){
+		return idTextField.getText();
+	}
+
+	public UserDTO getInsertData(){
+		UserDTO temp = new UserDTO();
+		temp.setId(idTextField.getText());
+		temp.setPassword(pwTextField.getText());
+		temp.setName(nameTextField.getText());
+		temp.setPhone(phoneTextField.getText());
+		temp.setBirth(dobTextField.getText());
+		return temp;
+	}
+
 }

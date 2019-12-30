@@ -48,6 +48,12 @@ public class Constants {
     public static final String APPLY_TXT = "신청";
     public static final String DELETE_TXT = "취소";
 
+    public static final String LOGIN_TXT = "로그인";
+    public static final String SIGNUP_TXT = "회원가입";
+    public static final String IDSEARCH_TXT = "ID찾기";
+
+    public static final String DUPLICATE_TXT = "중복";
+
     public static final String ID_TXT = "id";
     public static final String PASSWORD_TXT = "password";
     public static final String NAME_TXT = "name";
