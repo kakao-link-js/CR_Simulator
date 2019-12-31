@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.ClassManager;
+import common.ClassManager;
 import Model.LectureDTO;
 import Model.UserDTO;
 import View.TimetableView;

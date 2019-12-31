@@ -197,4 +197,25 @@ public class DAO {
         return false;
     }
 
+    public UserDTO getUserData(String UserId){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(Constants.ID_TXT,UserId);
+        jsonObject.put(Constants.URL_TXT,Constants.BASE_URL+"");
+
+        // 네트워크 처리 비동기화
+        //resultData = new NetworkProcessor().execute(jsonObject).get();
+
+        // 결과 처리
+        if(resultData == null)
+            return null;
+        UserDTO user = new UserDTO();
+        jsonObject = (JSONObject) resultData.get(0);
+        user.setId((String) jsonObject.get(Constants.ID_TXT));
+        user.setPassword((String) jsonObject.get(Constants.PASSWORD_TXT));
+        user.setName((String) jsonObject.get(Constants.NAME_TXT));
+        user.setPhone((String) jsonObject.get(Constants.PHONE_TXT));
+        user.setBirth((String) jsonObject.get(Constants.BIRTH_TXT));
+        return user;
+    }
+
 }

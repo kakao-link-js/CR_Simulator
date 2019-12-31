@@ -8,6 +8,7 @@ import javax.swing.table.*;
 import Controller.LectureListController;
 import Controller.LectureListController.CellRenderer;
 import Model.*;
+import common.ClassManager;
 import common.Constants;
 import common.DesignConstants;
 import org.json.simple.JSONObject;

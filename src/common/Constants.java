@@ -1,5 +1,7 @@
 package common;
 
+import javax.swing.*;
+
 public class Constants {
     public static final String BASE_URL = "";
 
@@ -60,6 +62,18 @@ public class Constants {
     public static final String PHONE_TXT = "phone";
     public static final String BIRTH_TXT = "birth";
     public static final String URL_TXT = "url";
+
+    public static final String IDKOR_TXT = "ID(학번)";
+    public static final String PWKOR_TXT = "비밀번호";
+    public static final String NAMEKOR_TXT = "이름";
+    public static final String PHONEKOR_TXT = "휴대전화";
+    public static final String BIRTHKOR_TXT = "생년월일";
+    public static final String MODIFYKOR_TXT = "수정";
+
+    public static final String KOREAN_REGEX = "^[가-힣]*$";
+    public static final String PHONE_REGEX = "^01(?:0|1|[6-9])[.-]?(//d{3}|//d{4})[.-]?(//d{4})$";
+    public static final String NUMBER_REGEX = "^[0-9]+$";
+    public static final String BIRTH_REGEX = "^[0-9]{2}(0[1-9|1[0-2])(0[1-9]|[12][0-9]|[3][01]$";
 
     public static final String UNIV_NAME = "SEJONG UNIVERSITY";
 }

@@ -1,7 +1,6 @@
 package View;
 
 import Controller.FindIdController;
-import Model.ClassManager;
 import common.Constants;
 import common.DesignConstants;
 

@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.ClassManager;
+import common.ClassManager;
 import View.FilterView;
 import common.Constants;
 import org.json.simple.JSONObject;
@@ -8,7 +8,6 @@ import org.json.simple.JSONObject;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class FilterController implements ActionListener {
     private FilterView filterView;

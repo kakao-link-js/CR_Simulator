@@ -1,4 +1,4 @@
-package Model;
+package common;
 
 import Controller.*;
 import View.*;
@@ -26,6 +26,7 @@ public class ClassManager {
 	private LoginView m_LoginView;
 	private SignUpView m_SignUpView;
 	private FindIdView m_FindIdView;
+	private StateModifyView m_stateModifyView;
 
 	public static ClassManager getInstance() {
 		if (s_instance == null) s_instance = new ClassManager();
@@ -83,5 +84,10 @@ public class ClassManager {
 	public FindIdView getFindIdView(){
 		if(m_FindIdView == null) m_FindIdView = new FindIdView();
 		return m_FindIdView;
+	}
+
+	public StateModifyView getStateModifyView() {
+		if(m_stateModifyView == null) m_stateModifyView = new StateModifyView();
+		return m_stateModifyView;
 	}
 }

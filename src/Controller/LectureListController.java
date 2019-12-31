@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import javax.swing.*;
 import javax.swing.table.*;
 
-import Model.ClassManager;
+import common.ClassManager;
 import Model.LectureDTO;
 import Model.TimeDTO;
 import Model.UserDTO;
@@ -30,21 +30,21 @@ public class LectureListController implements ActionListener {
 	} //public CellRenderer connectCellRenderer() 
 	
 	//검색된 값을 LectureListView에 뿌리는 메소드
-	public void setSearchListAtLectureListView(ArrayList<LectureDTO> searchList) {
+	private void setSearchListAtLectureListView(ArrayList<LectureDTO> searchList) {
 		LLV.changeMyLectureDTM(searchList); //JTable 값을 초기화 한다.
 		LLV.changeSearchDTM();
 		for(int i = 0 ; i < searchList.size(); i++) //검색 된 값을 JTable에 추가한다.
 			LLV.getSearchListDTM().addRow(searchList.get(i).makeStringArray());
-		SetScore();
+		setScore();
 	} //public setSearchListatlectureListView(ArrayList<LectureVO> searchList;
 	
 	//신청 학점을 설정하는 메소드
-	public void SetScore() {
+	private void setScore() {
 		LLV.setScore(Integer.toString(countScore()));
 	} //SetScore()
 	
 	//수강하는 학점을 계산하는 메소드
-	public int countScore() {
+	private int countScore() {
 		int sums = 0;
 		UserDTO user = ClassManager.getInstance().getMainMenuView().getUser();
 		ArrayList<LectureDTO> myLecture = ClassManager.getInstance().getDAO().getMyLecture(user);
@@ -54,14 +54,14 @@ public class LectureListController implements ActionListener {
 	} //public int countScore()
 
 	//강의를 들을 수 있는 강의인지 확인하는 메소드 Object로 넣을 강의정보를 받는다.
-	public boolean canInsertLecture(Object[] inserted,boolean isPopUp) {
+	private boolean canInsertLecture(Object[] inserted,boolean isPopUp) {
 		UserDTO user = ClassManager.getInstance().getMainMenuView().getUser();
 		ArrayList<LectureDTO> myLecture = ClassManager.getInstance().getDAO().getMyLecture(user);
-		return isCanInsert(myLecture,inserted,isPopUp);
+		return compareData(myLecture,inserted,isPopUp);
 	} //public boolean CanInsertLecture(Object[] inserted,boolean isPopUp)
 	
 	//리스트로받아 비교한다.
-	public boolean isCanInsert(ArrayList<LectureDTO> myData, Object[] inserted, boolean isPopUp) {
+	private boolean compareData(ArrayList<LectureDTO> myData, Object[] inserted, boolean isPopUp) {
 		for(int i = 0 ; i < myData.size();i++) { //내 사이즈 만큼 비교한다.
 			if(myData.get(i).getCourseNum() == inserted[3]) { //학수번호가 같다면.
 				if(isPopUp) //팝업창을 띄울지 아닐지 구분
@@ -83,7 +83,7 @@ public class LectureListController implements ActionListener {
 	
 	
 	//시간이 겹치지 않는지 확인한다.    
-    public boolean isClassOverLap(String data1,String data2){
+    private boolean isClassOverLap(String data1,String data2){
     	ArrayList<TimeDTO> times1 = getTimeList(data2); //DTO 형태로 바꾼다.
 		ArrayList<TimeDTO> times2 = getTimeList(data1);
         for (int index1 = 0; index1 < times1.size(); index1++){
@@ -100,7 +100,7 @@ public class LectureListController implements ActionListener {
     } //public boolean isClassOverLap(ArrayList<TimeDTO> times1, ArrayList<TimeDTO> times2)
 	
     //시간이 겹치는지 비교하는 메소드
-    public boolean isTimeOverlap(TimeDTO class1, TimeDTO class2){
+    private boolean isTimeOverlap(TimeDTO class1, TimeDTO class2){
         boolean isStartTime = true;    
         int class1StartTime = class1.ToMinute(isStartTime);
         int class2StartTime = class2.ToMinute(isStartTime);
@@ -118,7 +118,7 @@ public class LectureListController implements ActionListener {
     } //public boolean isTimeOverlap(TimeDTO class1, TimeDTO class2)
 	
 	// 요일및 시간이 적힌 문자열을 Time 객체들의 리스트로 만들어 반환
-	public ArrayList<TimeDTO> getTimeList(String timeString){
+	private ArrayList<TimeDTO> getTimeList(String timeString){
 		ArrayList<TimeDTO> times = new ArrayList<TimeDTO>();
 		String[] splitComma = timeString.split(",");    // 콤마로 분리
 		int timeIndex = 0; // 시간 정보를 넣기 시작해야하는 객체의 index
@@ -131,7 +131,7 @@ public class LectureListController implements ActionListener {
 	
 	
     // 요일 및 시간 string에서 요일을 분리해냄
-    public int splitDay(ArrayList<TimeDTO> times, String[] splitSpace, int timeIndex){
+    private int splitDay(ArrayList<TimeDTO> times, String[] splitSpace, int timeIndex){
         for(String word : splitSpace){
             if (word.length() == 0)
                 continue;   // 빈 문자열이면 통과
@@ -149,7 +149,7 @@ public class LectureListController implements ActionListener {
     
 	
     // 요일 및 시간 string에서 시간을 분리해냄
-    public int splitTime(ArrayList<TimeDTO> times, String word, int timeIndex){
+    private int splitTime(ArrayList<TimeDTO> times, String word, int timeIndex){
         String[] splitTime = word.split("~");   // 시작 시간, 끝시간 분리
        
         for (int index = timeIndex; index < times.size(); index++){

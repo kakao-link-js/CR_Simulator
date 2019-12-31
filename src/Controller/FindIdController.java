@@ -1,8 +1,9 @@
 package Controller;
 
-import Model.ClassManager;
+import common.ClassManager;
 import View.FindIdView;
 import common.Constants;
+import common.ExceptionHandling;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,10 @@ public class FindIdController implements ActionListener {
     private void findId(){
         String name = findIdView.getName();
         String phone = findIdView.getPhone();
+        if(!ExceptionHandling.isPhoneNumber(phone)){
+            showMessege("잘못된 전화번호 형식입니다.");
+            return;
+        }
         String output = ClassManager.getInstance().getDAO().getID(name,phone);
         if(output != null){
             showMessege("당신의 ID는 "+output + "입니다.");

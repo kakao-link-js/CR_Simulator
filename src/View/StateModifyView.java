@@ -1,36 +1,29 @@
 package View;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.table.*;
-
-//import org.apache.commons.math3.analysis.function.Add;
-
-import Controller.LectureListController;
-import Controller.LectureListController.CellRenderer;
-import Controller.SignUpController;
-import Model.*;
+import Controller.StateModifyController;
+import Model.UserDTO;
+import common.ClassManager;
 import common.Constants;
 import common.DesignConstants;
 
-public class SignUpView extends JPanel{
+import javax.swing.*;
+import java.awt.*;
+
+
+public class StateModifyView extends JPanel{
 	//회원가입 창을 위한 Instance
 	JPanel signUpPanel; //회원가입 패널
 	private int width, height, margin; //기본으로 넣을 크기
-	private JButton duChkBtn; //중복체크 버튼
-	private JButton signUpBtn; //회원가입 버튼
+	private JButton confirmBtn; //회원가입 버튼
 	private JTextField idTextField, pwTextField;
-	private JTextField nameTextField; //이름 
+	private JTextField nameTextField; //이름
 	private JTextField phoneTextField; //휴대전화
 	private JTextField dobTextField; //생년월일
 
-	SignUpController signUpController;
+	StateModifyController stateModifyController;
 
-	public SignUpView() {
-		signUpController = new SignUpController(this);
+	public StateModifyView() {
+		stateModifyController = new StateModifyController(this);
 		//470x570
 		width = 470;
 		height = 570;
@@ -40,7 +33,7 @@ public class SignUpView extends JPanel{
 		setBackground(Color.WHITE);
 		setLayout(null);
 
-		JLabel lblTitle = new JLabel("회원 가입");
+		JLabel lblTitle = new JLabel("회원 정보 수정");
 		lblTitle.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,30));
 		lblTitle.setBounds(40,30,390,40);
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -50,14 +43,15 @@ public class SignUpView extends JPanel{
 		exitBtn.setFont(new Font(DesignConstants.HANGUL_FONT,Font.PLAIN,10));
 		exitBtn.setBounds(20,20,70,50);
 		exitBtn.setBackground(Color.white);
-		exitBtn.addActionListener(signUpController);
+		exitBtn.addActionListener(stateModifyController);
 		add(exitBtn);
 
-		setSignUpPanel();
+		setPanel();
+		setUserData();
 	}
 
 	//그룹화
-	private void setSignUpPanel() {
+	private void setPanel() {
 		int x, y;
 
 		signUpPanel = new JPanel();
@@ -120,6 +114,7 @@ public class SignUpView extends JPanel{
 		dobTextField = new JTextField();
 
 		idTextField.setBounds(x, y, width, height);
+		idTextField.setEditable(false); //ID는 수정이 안된다.
 		pwTextField.setBounds(x, y+idTextField.getHeight()+margin*6, width, height);
 		nameTextField.setBounds(x, PW.getY()+idTextField.getHeight()+margin*6, width, height);
 		phoneTextField.setBounds(x, name.getY()+idTextField.getHeight()+margin*6, width, height);
@@ -130,32 +125,21 @@ public class SignUpView extends JPanel{
 		signUpPanel.add(nameTextField);
 		signUpPanel.add(phoneTextField);
 		signUpPanel.add(dobTextField);
-
 		//Button
-		duChkBtn = new JButton(Constants.DUPLICATE_TXT);
-		duChkBtn.setBackground(Color.white);
-		signUpBtn = new JButton(Constants.SIGNUP_TXT);
-		signUpBtn.setBackground(Color.white);
-		duChkBtn.setBounds(idTextField.getX()+idTextField.getWidth()+margin*2, ID.getY(),
-				ID.getY(), ID.getHeight());
-		signUpBtn.setBounds((int) (idTextField.getX()*1.4), DOB.getY()+DOB.getHeight()+margin*10,
+
+		confirmBtn = new JButton(Constants.MODIFYKOR_TXT);
+		confirmBtn.setBackground(Color.white);
+
+		confirmBtn.setBounds((int) (idTextField.getX()*1.4), DOB.getY()+DOB.getHeight()+margin*10,
 				ID.getWidth(), ID.getHeight());
 
-		signUpPanel.add(duChkBtn);
-		signUpPanel.add(signUpBtn);
+
+		confirmBtn.addActionListener(stateModifyController);
+
+		signUpPanel.add(confirmBtn);
 		
 		signUpPanel.setBackground(Color.WHITE);
 		add(signUpPanel);
-
-		duChkBtn.addActionListener(signUpController);
-		signUpBtn.addActionListener(signUpController);
-	}
-
-	public String getId(){
-		return idTextField.getText();
-	}
-	public String getPhone(){
-		return phoneTextField.getText();
 	}
 
 	public UserDTO getInsertData(){
@@ -166,6 +150,15 @@ public class SignUpView extends JPanel{
 		temp.setPhone(phoneTextField.getText());
 		temp.setBirth(dobTextField.getText());
 		return temp;
+	}
+
+	private void setUserData(){
+		UserDTO temp = ClassManager.getInstance().getMainMenuView().getUser();
+		idTextField.setText(temp.getId());
+		pwTextField.setText(temp.getPassword());
+		nameTextField.setText(temp.getName());
+		phoneTextField.setText(temp.getPhone());
+		dobTextField.setText(temp.getBirth());
 	}
 
 }
