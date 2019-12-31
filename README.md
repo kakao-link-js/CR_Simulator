@@ -32,7 +32,7 @@
 
 ## 프로그램 UML 구조 :building_construction:
 
-![image](https://user-images.githubusercontent.com/37828448/70433255-8e356e80-1ac4-11ea-8773-97d0aedee1ae.png)
+![UML](https://user-images.githubusercontent.com/37828448/71606634-d7557b80-2bb5-11ea-8e82-634b2656fe8f.png)
 
 ------
 
