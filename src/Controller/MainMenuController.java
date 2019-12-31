@@ -1,9 +1,8 @@
 package Controller;
 
-import Model.UserDTO;
 import View.*;
 import javax.swing.*;
-import Model.ClassManager;
+import common.ClassManager;
 import common.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -26,6 +25,7 @@ public class MainMenuController implements ActionListener, MouseListener {
 				selectedView = ClassManager.getInstance().getFilterView();
 				break;
 			case Constants.MODIFY_TXT:
+				selectedView = ClassManager.getInstance().getStateModifyView();
 				break;
 			case Constants.MYLECTURE_TXT:
 				selectedView = ClassManager.getInstance().getTimetableView();

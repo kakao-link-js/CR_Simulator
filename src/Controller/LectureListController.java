@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import javax.swing.*;
 import javax.swing.table.*;
 
-import Model.ClassManager;
+import common.ClassManager;
 import Model.LectureDTO;
 import Model.TimeDTO;
 import Model.UserDTO;

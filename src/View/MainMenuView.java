@@ -111,4 +111,6 @@ public class MainMenuView extends JPanel {
 
     public UserDTO getUser(){return user;}
 
+    public void setUser(UserDTO user) {this.user = user;}
+
 }
