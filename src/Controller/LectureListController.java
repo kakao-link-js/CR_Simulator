@@ -178,12 +178,11 @@ public class LectureListController implements ActionListener {
 						news[i] = LLV.getSearchListDTM().getValueAt(LLV.getSearchListTable().getSelectedRow(), i);
 					if(!canInsertLecture(news,true))//신청이 불가능한 경우
 						return;
-					/* //신청부분
+					//신청부분
 					LLV.getMyLectureDTM().addRow(news);
-					//ClassManager.getInstance().getReal().add(new LectureDTO(news));
-					SetScore();
+					ClassManager.getInstance().getDAO().applyLecture(ClassManager.getInstance().getMainMenuView().getUser(),new LectureDTO(news));
+					setScore();
 					LLV.getSearchListTable().repaint();
-					*/
 				}
 				break;
 			case Constants.DELETE_TXT:

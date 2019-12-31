@@ -160,6 +160,8 @@ public class SignUpView extends JPanel{
 
 	public UserDTO getInsertData(){
 		UserDTO temp = new UserDTO();
+		if(idTextField.getText() == null || pwTextField.getText() == null || nameTextField.getText() == null || phoneTextField.getText() == null || dobTextField.getText() == null)
+			return null;
 		temp.setId(idTextField.getText());
 		temp.setPassword(pwTextField.getText());
 		temp.setName(nameTextField.getText());

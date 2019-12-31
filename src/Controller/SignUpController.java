@@ -43,6 +43,8 @@ public class SignUpController implements ActionListener{
         }
         if(ClassManager.getInstance().getDAO().isDuplicateID(id)){
             flag = true;
+            showMessege("사용이 가능한 아이디 입니다.");
+            return;
         }
         showMessege("중복된 아이디 입니다.");
     }
@@ -50,8 +52,12 @@ public class SignUpController implements ActionListener{
     private void signUp(){
         if(flag) {
             UserDTO temp = signUpView.getInsertData();
-            if(!checkException(temp))
+            if(temp == null) {
+                showMessege("입력 되지 않은 값이 있습니다.");
                 return;
+            }
+            //if(!checkException(temp))
+            //    return;
             if(ClassManager.getInstance().getDAO().signUp(temp)){
                 showMessege("회원 등록 성공");
                 ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLoginView());
