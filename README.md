@@ -28,11 +28,17 @@
 
 - 메모리 절약 및 객체지향의 기능을 활용해 싱글턴 기법을 적용.
 
+## 전체 시스템 구조도
+
+![시스템구조도](https://user-images.githubusercontent.com/37828448/71608901-bbf36c00-2bc7-11ea-87b2-d34d20598744.png)
+
 ------
 
-## 프로그램 UML 구조 :building_construction:
+## 프로그램 UML :building_construction:
 
-![UML](https://user-images.githubusercontent.com/37828448/71606634-d7557b80-2bb5-11ea-8e82-634b2656fe8f.png)
+![UML](https://user-images.githubusercontent.com/37828448/71608859-8babcd80-2bc7-11ea-923f-585557da03bc.png)
+
+
 
 ------
 
