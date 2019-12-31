@@ -37,12 +37,12 @@ public class LoginController implements ActionListener {
     private void login(){
         String id = loginView.getIdTextField();
         String password = loginView.getPwTextField();
-       // if(ClassManager.getInstance().getDAO().isCorrectID(id,password)){
+        if(ClassManager.getInstance().getDAO().isCorrectID(id,password)){
             ClassManager.getInstance().getMainMenuView().setUser(ClassManager.getInstance().getDAO().getUserData(id));
             ClassManager.getInstance().getMain().comeToMain();
-       // } else {
-       //     JOptionPane.showMessageDialog(null, "잘못된 아이디나 비밀번호 입니다.");
-       // }
+        } else {
+            JOptionPane.showMessageDialog(null, "잘못된 아이디나 비밀번호 입니다.");
+        }
     }
 
     private void signUp(){

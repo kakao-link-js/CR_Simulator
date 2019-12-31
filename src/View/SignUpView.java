@@ -70,11 +70,11 @@ public class SignUpView extends JPanel{
 		width = (int)(width * 0.2);
 		height = (int)(height * 0.08);
 
-		JLabel ID = new JLabel("ID(학번)");
-		JLabel PW = new JLabel("비밀번호");
-		JLabel name = new JLabel("이름");
-		JLabel phone = new JLabel("휴대전화");
-		JLabel DOB = new JLabel("생년월일");
+		JLabel ID = new JLabel(Constants.IDKOR_TXT);
+		JLabel PW = new JLabel(Constants.PWKOR_TXT);
+		JLabel name = new JLabel(Constants.NAMEKOR_TXT);
+		JLabel phone = new JLabel(Constants.PHONEKOR_TXT);
+		JLabel DOB = new JLabel(Constants.BIRTHKOR_TXT);
 
 		ID.setBounds(x+margin*6, y, width, height);
 		ID.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.PLAIN, 20));

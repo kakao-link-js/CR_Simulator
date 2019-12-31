@@ -4,6 +4,7 @@ import common.ClassManager;
 import Model.UserDTO;
 import View.SignUpView;
 import common.Constants;
+import common.ExceptionHandling;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -36,6 +37,10 @@ public class SignUpController implements ActionListener{
 
     private void checkDuplication(){
         String id = signUpView.getId();
+        if(!ExceptionHandling.isOnlyNumber(id)){
+            showMessege("id를 숫자로만 입력 해주세요.");
+            return;
+        }
         if(ClassManager.getInstance().getDAO().isDuplicateID(id)){
             flag = true;
         }
@@ -45,6 +50,8 @@ public class SignUpController implements ActionListener{
     private void signUp(){
         if(flag) {
             UserDTO temp = signUpView.getInsertData();
+            if(!checkException(temp))
+                return;
             if(ClassManager.getInstance().getDAO().signUp(temp)){
                 showMessege("회원 등록 성공");
                 ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLoginView());
@@ -56,6 +63,24 @@ public class SignUpController implements ActionListener{
             showMessege("중복 확인을 해주세요.");
         }
     }
+
+    private boolean checkException(UserDTO user){
+        if(!ExceptionHandling.isOnlyKorean(user.getName())) {
+            showMessege("이름이 한글이 아닙니다.");
+            return false;
+        }
+        if(!ExceptionHandling.isPhoneNumber(user.getPhone())) {
+            showMessege("전화번호 형식이 맞지 않습니다.(010-XXXX-XXXX)");
+            return false;
+        }
+        if(!ExceptionHandling.isBirth(user.getBirth())){
+            showMessege("생년월일 형식이 맞지 않습니다.(주민번호앞자리 형식)");
+            return false;
+        }
+        return true;
+    }
+
+
     private void showMessege(String msg){
         JOptionPane.showMessageDialog(null, msg);
     }
