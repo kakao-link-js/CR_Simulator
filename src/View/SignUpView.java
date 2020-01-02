@@ -1,16 +1,10 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.*;
 import javax.swing.*;
-import javax.swing.table.*;
 
 //import org.apache.commons.math3.analysis.function.Add;
 
-import Controller.LectureListController;
-import Controller.LectureListController.CellRenderer;
 import Controller.SignUpController;
 import Model.*;
 import common.Constants;
@@ -22,10 +16,12 @@ public class SignUpView extends JPanel{
 	private int width, height, margin; //기본으로 넣을 크기
 	private JButton duChkBtn; //중복체크 버튼
 	private JButton signUpBtn; //회원가입 버튼
+	private JButton emailChkBtn; //이메일 인증 버튼
 	private JTextField idTextField, pwTextField;
 	private JTextField nameTextField; //이름 
 	private JTextField phoneTextField; //휴대전화
-	private JTextField dobTextField; //생년월일
+	private JTextField emailTextField; //이메일
+	private JLabel emailChk; //이메일 인증여부표시
 
 	SignUpController signUpController;
 
@@ -74,7 +70,8 @@ public class SignUpView extends JPanel{
 		JLabel PW = new JLabel(Constants.PWKOR_TXT);
 		JLabel name = new JLabel(Constants.NAMEKOR_TXT);
 		JLabel phone = new JLabel(Constants.PHONEKOR_TXT);
-		JLabel DOB = new JLabel(Constants.BIRTHKOR_TXT);
+		JLabel email = new JLabel(Constants.EMAILKOR_TXT);
+		emailChk = new JLabel(Constants.EMAILCHK_TXT);
 
 		ID.setBounds(x+margin*6, y, width, height);
 		ID.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.PLAIN, 20));
@@ -96,16 +93,25 @@ public class SignUpView extends JPanel{
 		phone.setHorizontalAlignment(SwingConstants.CENTER);
 		phone.setLayout(null);
 
-		DOB.setBounds(x+margin*6, phone.getY()+phone.getHeight()+margin*6, width, height);
-		DOB.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.PLAIN, 20));
-		DOB.setHorizontalAlignment(SwingConstants.CENTER);
-		DOB.setLayout(null);
+		email.setBounds(x+margin*6, phone.getY()+phone.getHeight()+margin*6, width, height);
+		email.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.PLAIN, 20));
+		email.setHorizontalAlignment(SwingConstants.CENTER);
+		email.setLayout(null);
+
+		//이메일 인증여부 표시
+		emailChk.setBounds(this.width-x+margin*5, email.getY()+phone.getHeight()-margin, width, height);
+		emailChk.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 12));
+		emailChk.setHorizontalAlignment(SwingConstants.CENTER);
+		emailChk.setForeground(Color.red);
+		emailChk.setLayout(null);
+
 
 		signUpPanel.add(ID);
 		signUpPanel.add(PW);
 		signUpPanel.add(name);
 		signUpPanel.add(phone);
-		signUpPanel.add(DOB);
+		signUpPanel.add(email);
+		signUpPanel.add(emailChk);
 
 		//TextField
 		x = ID.getWidth()+margin*10;
@@ -117,38 +123,46 @@ public class SignUpView extends JPanel{
 		pwTextField = new JTextField();
 		nameTextField = new JTextField();
 		phoneTextField = new JTextField();
-		dobTextField = new JTextField();
+		emailTextField = new JTextField();
 
 		idTextField.setBounds(x, y, width, height);
 		pwTextField.setBounds(x, y+idTextField.getHeight()+margin*6, width, height);
 		nameTextField.setBounds(x, PW.getY()+idTextField.getHeight()+margin*6, width, height);
 		phoneTextField.setBounds(x, name.getY()+idTextField.getHeight()+margin*6, width, height);
-		dobTextField.setBounds(x, phone.getY()+idTextField.getHeight()+margin*6, width, height);
+		emailTextField.setBounds(x, phone.getY()+idTextField.getHeight()+margin*6, width, height);
 
 		signUpPanel.add(idTextField);
 		signUpPanel.add(pwTextField);
 		signUpPanel.add(nameTextField);
 		signUpPanel.add(phoneTextField);
-		signUpPanel.add(dobTextField);
+		signUpPanel.add(emailTextField);
 
 		//Button
 		duChkBtn = new JButton(Constants.DUPLICATE_TXT);
 		duChkBtn.setBackground(Color.white);
 		signUpBtn = new JButton(Constants.SIGNUP_TXT);
 		signUpBtn.setBackground(Color.white);
+		emailChkBtn = new JButton(Constants.EMAIL_TXT);
+		emailChkBtn.setBackground(Color.white);
 		duChkBtn.setBounds(idTextField.getX()+idTextField.getWidth()+margin*2, ID.getY(),
 				ID.getY(), ID.getHeight());
-		signUpBtn.setBounds((int) (idTextField.getX()*1.4), DOB.getY()+DOB.getHeight()+margin*10,
+		signUpBtn.setBounds((int) (idTextField.getX()*1.4),
+				email.getY()+email.getHeight()+margin*12,
 				ID.getWidth(), ID.getHeight());
+		emailChkBtn.setBounds(duChkBtn.getX(), email.getY(), ID.getY(), ID.getHeight());
 
 		signUpPanel.add(duChkBtn);
 		signUpPanel.add(signUpBtn);
+		signUpPanel.add(emailChkBtn);
 		
 		signUpPanel.setBackground(Color.WHITE);
 		add(signUpPanel);
 
+
 		duChkBtn.addActionListener(signUpController);
 		signUpBtn.addActionListener(signUpController);
+		emailChkBtn.addActionListener(signUpController);
+
 	}
 
 	public String getId(){
@@ -157,6 +171,13 @@ public class SignUpView extends JPanel{
 	public String getPhone(){
 		return phoneTextField.getText();
 	}
+	public String getEmail() { return emailTextField.getText(); }
+	public void setEmailChk()
+	{
+		//이메일 인증여부 표시
+		emailChk.setText("인증완료");
+		emailChk.setForeground(Color.green);
+	}
 
 	public UserDTO getInsertData(){
 		UserDTO temp = new UserDTO();
@@ -164,7 +185,7 @@ public class SignUpView extends JPanel{
 		temp.setPassword(pwTextField.getText());
 		temp.setName(nameTextField.getText());
 		temp.setPhone(phoneTextField.getText());
-		temp.setBirth(dobTextField.getText());
+		temp.setBirth(emailTextField.getText());
 		return temp;
 	}
 
