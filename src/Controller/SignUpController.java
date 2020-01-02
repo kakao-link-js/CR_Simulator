@@ -2,7 +2,7 @@ package Controller;
 
 import common.ClassManager;
 import Model.UserDTO;
-import View.SignUpView;
+import View.*;
 import common.Constants;
 import common.ExceptionHandling;
 
@@ -128,7 +128,7 @@ public class SignUpController implements ActionListener {
         String mailHost = "smtp.gmail.com";
         String mailPort = "587";
         String mailId = "msmn1729@gmail.com"; // 구글계정
-        String mailPassword = "park1235!"; // 구글계정 비밀번호
+        String mailPassword = "****"; // 구글계정 비밀번호
 
         String fromName = "관리자";
         String fromEmail = "sejong@gmail.com"; // 보내는 사람 메일

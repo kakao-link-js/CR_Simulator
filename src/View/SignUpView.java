@@ -17,7 +17,8 @@ public class SignUpView extends JPanel{
 	private JButton duChkBtn; //중복체크 버튼
 	private JButton signUpBtn; //회원가입 버튼
 	private JButton emailChkBtn; //이메일 인증 버튼
-	private JTextField idTextField, pwTextField;
+	private JTextField idTextField;
+	private JPasswordField pwTextField;
 	private JTextField nameTextField; //이름 
 	private JTextField phoneTextField; //휴대전화
 	private JTextField emailTextField; //이메일
@@ -120,7 +121,7 @@ public class SignUpView extends JPanel{
 		height = ID.getHeight();
 
 		idTextField = new JTextField();
-		pwTextField = new JTextField();
+		pwTextField = new JPasswordField();
 		nameTextField = new JTextField();
 		phoneTextField = new JTextField();
 		emailTextField = new JTextField();

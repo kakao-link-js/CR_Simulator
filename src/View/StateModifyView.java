@@ -15,10 +15,11 @@ public class StateModifyView extends JPanel{
 	JPanel signUpPanel; //회원가입 패널
 	private int width, height, margin; //기본으로 넣을 크기
 	private JButton confirmBtn; //회원가입 버튼
-	private JTextField idTextField, pwTextField;
+	private JTextField idTextField;
+	private JPasswordField pwTextField;
 	private JTextField nameTextField; //이름
 	private JTextField phoneTextField; //휴대전화
-	private JTextField dobTextField; //생년월일
+	private JTextField emailTextField; //생년월일
 
 	StateModifyController stateModifyController;
 
@@ -68,7 +69,7 @@ public class StateModifyView extends JPanel{
 		JLabel PW = new JLabel(Constants.PWKOR_TXT);
 		JLabel name = new JLabel(Constants.NAMEKOR_TXT);
 		JLabel phone = new JLabel(Constants.PHONEKOR_TXT);
-		JLabel DOB = new JLabel(Constants.BIRTHKOR_TXT);
+		JLabel email = new JLabel(Constants.EMAILKOR_TXT);
 
 		ID.setBounds(x+margin*6, y, width, height);
 		ID.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.PLAIN, 20));
@@ -90,16 +91,16 @@ public class StateModifyView extends JPanel{
 		phone.setHorizontalAlignment(SwingConstants.CENTER);
 		phone.setLayout(null);
 
-		DOB.setBounds(x+margin*6, phone.getY()+phone.getHeight()+margin*6, width, height);
-		DOB.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.PLAIN, 20));
-		DOB.setHorizontalAlignment(SwingConstants.CENTER);
-		DOB.setLayout(null);
+		email.setBounds(x+margin*6, phone.getY()+phone.getHeight()+margin*6, width, height);
+		email.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD + Font.PLAIN, 20));
+		email.setHorizontalAlignment(SwingConstants.CENTER);
+		email.setLayout(null);
 
 		signUpPanel.add(ID);
 		signUpPanel.add(PW);
 		signUpPanel.add(name);
 		signUpPanel.add(phone);
-		signUpPanel.add(DOB);
+		signUpPanel.add(email);
 
 		//TextField
 		x = ID.getWidth()+margin*10;
@@ -108,29 +109,29 @@ public class StateModifyView extends JPanel{
 		height = ID.getHeight();
 
 		idTextField = new JTextField();
-		pwTextField = new JTextField();
+		pwTextField = new JPasswordField();
 		nameTextField = new JTextField();
 		phoneTextField = new JTextField();
-		dobTextField = new JTextField();
+		emailTextField = new JTextField();
 
 		idTextField.setBounds(x, y, width, height);
 		idTextField.setEditable(false); //ID는 수정이 안된다.
 		pwTextField.setBounds(x, y+idTextField.getHeight()+margin*6, width, height);
 		nameTextField.setBounds(x, PW.getY()+idTextField.getHeight()+margin*6, width, height);
 		phoneTextField.setBounds(x, name.getY()+idTextField.getHeight()+margin*6, width, height);
-		dobTextField.setBounds(x, phone.getY()+idTextField.getHeight()+margin*6, width, height);
+		emailTextField.setBounds(x, phone.getY()+idTextField.getHeight()+margin*6, width, height);
 
 		signUpPanel.add(idTextField);
 		signUpPanel.add(pwTextField);
 		signUpPanel.add(nameTextField);
 		signUpPanel.add(phoneTextField);
-		signUpPanel.add(dobTextField);
+		signUpPanel.add(emailTextField);
 		//Button
 
 		confirmBtn = new JButton(Constants.MODIFYKOR_TXT);
 		confirmBtn.setBackground(Color.white);
 
-		confirmBtn.setBounds((int) (idTextField.getX()*1.4), DOB.getY()+DOB.getHeight()+margin*10,
+		confirmBtn.setBounds((int) (idTextField.getX()*1.4), email.getY()+email.getHeight()+margin*10,
 				ID.getWidth(), ID.getHeight());
 
 
@@ -148,7 +149,7 @@ public class StateModifyView extends JPanel{
 		temp.setPassword(pwTextField.getText());
 		temp.setName(nameTextField.getText());
 		temp.setPhone(phoneTextField.getText());
-		temp.setEmail(dobTextField.getText());
+		temp.setEmail(emailTextField.getText());
 		return temp;
 	}
 
@@ -156,10 +157,9 @@ public class StateModifyView extends JPanel{
 		UserDTO temp = ClassManager.getInstance().getMainMenuView().getUser();
 		System.out.println(temp.getId()+" "+temp.getPhone());
 		idTextField.setText(temp.getId());
-		//pwTextField.setText(temp.getPassword());
 		nameTextField.setText(temp.getName());
 		phoneTextField.setText(temp.getPhone());
-		dobTextField.setText(temp.getEmail());
+		emailTextField.setText(temp.getEmail());
 	}
 
 }
