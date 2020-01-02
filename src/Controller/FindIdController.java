@@ -22,6 +22,7 @@ public class FindIdController implements ActionListener {
         String operator = ((JButton)e.getSource()).getText();
         switch (operator){
             case Constants.EXIT_TXT:
+                findIdView.resetView();
                 ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLoginView());
                 break;
             case Constants.IDSEARCH_TXT:
@@ -32,16 +33,14 @@ public class FindIdController implements ActionListener {
 
     private void findId(){
         String name = findIdView.getName();
-        String phone = findIdView.getPhone();
-        if(!ExceptionHandling.isPhoneNumber(phone)){
-            showMessege("잘못된 전화번호 형식입니다.");
-            return;
-        }
-        String output = ClassManager.getInstance().getDAO().getID(name,phone);
+        String email = findIdView.getEmail();
+        String output = ClassManager.getInstance().getDAO().getID(name,email);
         if(output != null){
             showMessege("당신의 ID는 "+output + "입니다.");
+            findIdView.resetView();
+            ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLoginView());
         }else{
-            showMessege("이름이나 전화번호가 잘못 되었습니다.");
+            showMessege("이름이나 이메일이 잘못 되었습니다.");
         }
     }
 

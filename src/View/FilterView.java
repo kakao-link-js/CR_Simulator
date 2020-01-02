@@ -65,7 +65,7 @@ public class FilterView extends JPanel {
 
         btnExit = new JButton(Constants.EXIT_TXT);
         btnExit.setFont(new Font(DesignConstants.HANGUL_FONT,Font.PLAIN, 14));
-        btnExit.setBounds(0,0,(int)(standardNum*1.5),height);
+        btnExit.setBounds(0,0,(int)(standardNum*2),height);
         btnExit.setBackground(Color.white);
         btnExit.setBorderPainted(false);
         titlePanel.add(btnExit);
@@ -99,7 +99,7 @@ public class FilterView extends JPanel {
     }
 
     public void setMajor() { // 개설 학과 전공
-        lblMajor = new JLabel(Constants.MAJOR_TXT);
+        lblMajor = new JLabel(Constants.MAJORKOR_TXT);
         lblMajor.setBackground(Color.white);
         lblMajor.setBounds(standardNum, 0, width, height);
         lblMajor.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
@@ -109,7 +109,7 @@ public class FilterView extends JPanel {
     }
 
     public void setCourseNum() { // 학수 번호
-        lblCourseNum = new JLabel(Constants.COURSENUM_TXT);
+        lblCourseNum = new JLabel(Constants.COURSENUMKOR_TXT);
         lblCourseNum.setBackground(Color.white);
         lblCourseNum.setBounds(standardNum, standardNum, width, height);
         lblCourseNum.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
@@ -122,7 +122,7 @@ public class FilterView extends JPanel {
     }
 
     public void setClassName() { // 교과목명
-        lblClassName = new JLabel(Constants.CLASSNAME_TXT);
+        lblClassName = new JLabel(Constants.CLASSNAMEKOR_TXT);
         lblClassName.setBackground(Color.white);
         lblClassName.setBounds(standardNum, standardNum*2, width, height);
         lblClassName.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
@@ -135,7 +135,7 @@ public class FilterView extends JPanel {
     }
 
     public void setProfessor() { // 교수명
-        lblProfessor = new JLabel(Constants.PROFESSOR_TXT);
+        lblProfessor = new JLabel(Constants.PROFESSORKOR_TXT);
         lblProfessor.setBackground(Color.white);
         lblProfessor.setBounds(standardNum, standardNum*3, width, height);
         lblProfessor.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
@@ -148,7 +148,7 @@ public class FilterView extends JPanel {
     }
 
     public void setGrade() { // 학년
-        lblGrade = new JLabel(Constants.GRADE_TXT);
+        lblGrade = new JLabel(Constants.GRADEKOR_TXT);
         lblGrade.setBackground(Color.white);
         lblGrade.setBounds(standardNum, standardNum*4, width, height);
         lblGrade.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
@@ -158,7 +158,7 @@ public class FilterView extends JPanel {
     }
 
     public void setClassNum() { // 분반
-        lblClassNum = new JLabel(Constants.CLASSNUM_TXT);
+        lblClassNum = new JLabel(Constants.CLASSNUMKOR_TXT);
         lblClassNum.setBackground(Color.white);
         lblClassNum.setBounds(standardNum, standardNum*5, width, height);
         lblClassNum.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
@@ -171,7 +171,7 @@ public class FilterView extends JPanel {
     }
 
     public void setCompletion() { // 이수 구분
-        lblCompletion = new JLabel(Constants.COMPLETION_TXT);
+        lblCompletion = new JLabel(Constants.COMPLETIONKOR_TXT);
         lblCompletion.setBackground(Color.white);
         lblCompletion.setBounds(standardNum, standardNum*6, width, height);
         lblCompletion.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
@@ -214,12 +214,16 @@ public class FilterView extends JPanel {
         filterPanel.add(cbxCompletion, BorderLayout.NORTH);
     }
 
-    public String getMajor(){return (String) cbxMajor.getSelectedItem();}
-    public String getCourseNum(){return lblCourseNum.getText();}
-    public String getProfessor() {return lblProfessor.getText();}
-    public String getGrade(){return (String) cbxGrade.getSelectedItem();}
-    public String getClassNum(){return lblClassNum.getText();}
+    public String getMajor(){ return (String) cbxMajor.getSelectedItem(); }
+    public String getCourseNum(){return txtCourseNum.getText();}
+    public String getProfessor() {return txtProfessor.getText();}
+    public String getGrade(){
+        if (!cbxGrade.getSelectedItem().equals("NONE"))
+            return (String) cbxGrade.getSelectedItem();
+        return "";
+    }
+    public String getClassNum(){return txtClassNum.getText();}
     public String getCompletion(){return (String) cbxCompletion.getSelectedItem();}
-    public String getClassName(){return lblClassName.getText();}
+    public String getClassName(){return txtClassName.getText();}
 
 }

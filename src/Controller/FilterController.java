@@ -32,13 +32,20 @@ public class FilterController implements ActionListener {
 
     private void searchFunction(){
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(Constants.MAJOR_TXT,filterView.getMajor());
-        jsonObject.put(Constants.COURSENUM_TXT,filterView.getCourseNum());
-        jsonObject.put(Constants.CLASSNAME_TXT,filterView.getClassName());
-        jsonObject.put(Constants.PROFESSOR_TXT,filterView.getProfessor());
-        jsonObject.put(Constants.GRADE_TXT,filterView.getGrade());
-        jsonObject.put(Constants.CLASSNUM_TXT,filterView.getClassNum());
-        jsonObject.put(Constants.COMPLETION_TXT,filterView.getCompletion());
+        if(!filterView.getMajor().isEmpty())
+            jsonObject.put(Constants.MAJOR_TXT,filterView.getMajor());
+        if(!filterView.getCourseNum().isEmpty())
+            jsonObject.put(Constants.COURSENUM_TXT,filterView.getCourseNum());
+        if(!filterView.getClassName().isEmpty())
+            jsonObject.put(Constants.CLASSNAME_TXT,filterView.getClassName());
+        if(!filterView.getProfessor().isEmpty())
+            jsonObject.put(Constants.PROFESSOR_TXT,filterView.getProfessor());
+        if(!filterView.getGrade().isEmpty())
+            jsonObject.put(Constants.GRADE_TXT,filterView.getGrade());
+        if(!filterView.getClassNum().isEmpty())
+            jsonObject.put(Constants.CLASSNUM_TXT,filterView.getClassNum());
+        if(!filterView.getCompletion().isEmpty())
+            jsonObject.put(Constants.COMPLETION_TXT,filterView.getCompletion());
         ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLectureListView(jsonObject));
     }
 } // RealFilterController Class

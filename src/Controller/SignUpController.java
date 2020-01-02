@@ -17,12 +17,6 @@ import java.util.Random;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-
 
 public class SignUpController implements ActionListener {
 
@@ -49,9 +43,17 @@ public class SignUpController implements ActionListener {
                 checkEmail();
                 break;
             case Constants.EXIT_TXT:
+                resetData();
                 ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLoginView());
                 break;
         }
+    }
+
+    private void resetData(){
+        flag = false;
+        emailFlag = false;
+        validEmailFlag = true;
+        signUpView.resetView();
     }
 
     private void checkDuplication() {
@@ -62,6 +64,8 @@ public class SignUpController implements ActionListener {
         }
         if (ClassManager.getInstance().getDAO().isDuplicateID(id)) {
             flag = true;
+            showMessege("사용이 가능한 아이디 입니다.");
+            return;
         }
         showMessege("중복된 아이디 입니다.");
     }
@@ -69,23 +73,48 @@ public class SignUpController implements ActionListener {
     private void signUp() {
         if (flag) {
             UserDTO temp = signUpView.getInsertData();
-            if (!checkException(temp))
+            if(temp == null) {
+                showMessege("입력 되지 않은 값이 있습니다.");
                 return;
+            }
+            if(!checkException(temp))
+                return;
+            if(!emailFlag) {
+                showMessege("이메일 인증을 완료해주세요.");
+                return;
+            }
             if (ClassManager.getInstance().getDAO().signUp(temp)) {
-                showMessege("회원 등록 성공");
+                showMessege("회원가입 성공");
+                resetData();
                 ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLoginView());
             }
-            else if(!emailFlag) {
-                showMessege("이메일 인증을 완료해주세요.");
-            }
             else {
-                showMessege("회원 등록 실패");
+                showMessege("회원가입 실패");
             }
         } else {
             showMessege("중복 확인을 해주세요.");
         }
     }
 
+    private boolean checkException(UserDTO user) {
+        if (user.getPassword() == null) {
+            showMessege("비밀번호가 빈값입니다.");
+            return false;
+        }
+        if (!ExceptionHandling.isOnlyKorean(user.getName())) {
+            showMessege("이름이 한글이 아닙니다.");
+            return false;
+        }
+        if (!ExceptionHandling.isPhoneNumber(user.getPhone())) {
+            showMessege("전화번호 형식이 맞지 않습니다.(010-XXXX-XXXX)");
+            return false;
+        }
+        return true;
+    }
+
+    private void showMessege(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
+    }
 
     class MyAuthentication extends Authenticator {
         PasswordAuthentication pa;
@@ -99,7 +128,7 @@ public class SignUpController implements ActionListener {
         String mailHost = "smtp.gmail.com";
         String mailPort = "587";
         String mailId = "msmn1729@gmail.com"; // 구글계정
-        String mailPassword = "****"; // 구글계정 비밀번호
+        String mailPassword = "park1235!"; // 구글계정 비밀번호
 
         String fromName = "관리자";
         String fromEmail = "sejong@gmail.com"; // 보내는 사람 메일
@@ -175,21 +204,6 @@ public class SignUpController implements ActionListener {
         validEmailFlag = true;
     }
 
-    private boolean checkException(UserDTO user) {
-        if (!ExceptionHandling.isOnlyKorean(user.getName())) {
-            showMessege("이름이 한글이 아닙니다.");
-            return false;
-        }
-        if (!ExceptionHandling.isPhoneNumber(user.getPhone())) {
-            showMessege("전화번호 형식이 맞지 않습니다.(010-XXXX-XXXX)");
-            return false;
-        }
-        return true;
-    }
-
-    private void showMessege(String msg) {
-        JOptionPane.showMessageDialog(null, msg);
-    }
 }
 
 

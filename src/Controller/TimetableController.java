@@ -48,7 +48,7 @@ public class TimetableController implements ActionListener,MouseListener,Ancesto
         for (LectureDTO lecture : lectureList) {
             String strWeekAndTime = lecture.getTime();
 
-            if (strWeekAndTime.isEmpty())
+            if (strWeekAndTime == null)
                 continue; // 시간이 비어있는 경우 (보통 사이버강의) 다음 과목으로 continue
 
             String[] strSplitWeekAndTimeList = strWeekAndTime.split(", ");

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import Controller.*;
+import Model.LectureDTO;
+import common.ClassManager;
 import common.Constants;
 import common.DesignConstants;
 
@@ -73,10 +75,12 @@ public class CalculatorView extends JPanel {
 		infoPanel.setLayout(null);
 		add(infoPanel);
 
+		ArrayList<LectureDTO> list = ClassManager.getInstance().getDAO().getMyLecture(ClassManager.getInstance().getMainMenuView().getUser());
+
 		setSubTitle();
 		setGradeComboBox();
-		setTextScore();
-		setTextSubject();
+		setTextScore(list);
+		setTextSubject(list);
 	} //public void setInfoPanel()
 	
 	//계산 패널 구성 메소드
@@ -103,9 +107,9 @@ public class CalculatorView extends JPanel {
 		int width = (int)((this.width - margin * 2) * 0.45);
 		int height = (int)(this.height * 0.6* 0.05);
 
-		JLabel title1 = new JLabel(Constants.CLASSNAME_TXT);
-		JLabel title2 = new JLabel(Constants.SCORE_TXT);
-		JLabel title3 = new JLabel(Constants.MYSCORE_TXT);
+		JLabel title1 = new JLabel(Constants.CLASSNAMEKOR_TXT);
+		JLabel title2 = new JLabel(Constants.SCOREKOR_TXT);
+		JLabel title3 = new JLabel(Constants.MYSCOREKOR_TXT);
 		
 		title1.setBounds(x, y, width, height);
 		title2.setBounds(margin+width, y, width / 2, height);
@@ -143,7 +147,7 @@ public class CalculatorView extends JPanel {
 	} //public void setGradeComboBox()
 	
 	//학점 Label구성 메소드
-	public void setTextScore() {
+	public void setTextScore(ArrayList<LectureDTO> list) {
 		int x = (int)(this.width * 0.45);
 		int width = (int)(this.width * 0.2); 
 			
@@ -152,10 +156,8 @@ public class CalculatorView extends JPanel {
 			txtScore.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 15));
 			txtScore.setBounds(x, margin * (i * 7), width, 30);
 
-//			if(ClassManager.getInstance().getReal().size() > i-1) {
-//				System.out.println(String.valueOf(ClassManager.getInstance().getReal().get(i-1).score));
-//				txtScore.setText(String.valueOf(ClassManager.getInstance().getReal().get(i-1).score));
-//			}
+			if(list.size() > i-1)
+				txtScore.setText(String.valueOf(list.get(i-1).getScore()));
 			
 			infoPanel.add(txtScore);
 			scoreArr.add(txtScore);
@@ -163,7 +165,7 @@ public class CalculatorView extends JPanel {
 	} //public void setTextScore()
 	
 	//제목 구성 메소드
-	public void setTextSubject() {
+	public void setTextSubject(ArrayList<LectureDTO> list) {
 		int x = (int)(this.height * 0.05);
 		int width = (int)(this.width * 0.3); 
 			
@@ -172,8 +174,8 @@ public class CalculatorView extends JPanel {
 			txtSubject.setFont(new Font(DesignConstants.HANGUL_FONT, Font.PLAIN, 15));
 			txtSubject.setBounds(x, margin * (i * 7), width, 30);
 			
-//			if(ClassManager.getInstance().getDAO().getMyLecture(/*유저 ID*/) > i-1)
-//				txtSubject.setText(ClassManager.getInstance().getReal().get(i-1).className);
+			if(list.size() > i-1)
+				txtSubject.setText(list.get(i-1).getClassName());
 				
 			infoPanel.add(txtSubject);
 			subjectArr.add(txtSubject);
@@ -191,6 +193,7 @@ public class CalculatorView extends JPanel {
 		btnCalcul.setFont(new Font(DesignConstants.HANGUL_FONT, Font.BOLD, 20));
 		btnCalcul.setBounds(x, y, width, height);
 		btnCalcul.addActionListener(CalculatorController);
+		btnCalcul.setBackground(Color.white);
 		calculPanel.add(btnCalcul);
 	} //public void setButton() 
 	
@@ -209,12 +212,13 @@ public class CalculatorView extends JPanel {
 	
 	//나가기버튼 구성 메소드입니다.
 	public void setBtnExit() {
-	      int x = margin, y = margin, width = (int)(this.height * 0.1), height = 50;
+	      int x = margin, y = margin, width = (int)(this.height * 0.2), height = (int) (this.height*0.1 - 10);
 
-		  JButton btnExit = new JButton(Constants.BACK_TXT);
+		  JButton btnExit = new JButton(Constants.EXIT_TXT);
 	      btnExit.setBounds(x, y, width, height);
 	      btnExit.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,15));
 	      btnExit.addActionListener(CalculatorController);
+	      btnExit.setBackground(Color.white);
 	      titlePanel.add(btnExit);
 	} //public void setBtnExit()
 

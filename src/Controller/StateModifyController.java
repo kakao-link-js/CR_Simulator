@@ -26,7 +26,7 @@ public class StateModifyController implements ActionListener{
                 modify();
                 break;
             case Constants.EXIT_TXT:
-                ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLoginView());
+                ClassManager.getInstance().getMain().comeToMain();
                 break;
         }
     }
@@ -44,16 +44,16 @@ public class StateModifyController implements ActionListener{
     }
 
     private boolean checkException(UserDTO user){
+        if(user.getPassword() == null){
+            showMessege("비밀번호가 빈값입니다.");
+            return false;
+        }
         if(!ExceptionHandling.isOnlyKorean(user.getName())) {
             showMessege("이름이 한글이 아닙니다.");
             return false;
         }
         if(!ExceptionHandling.isPhoneNumber(user.getPhone())) {
             showMessege("전화번호 형식이 맞지 않습니다.(010-XXXX-XXXX)");
-            return false;
-        }
-        if(!ExceptionHandling.isBirth(user.getBirth())){
-            showMessege("생년월일 형식이 맞지 않습니다.(주민번호앞자리 형식)");
             return false;
         }
         return true;

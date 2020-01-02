@@ -10,7 +10,7 @@ import java.awt.*;
 public class FindIdView extends JPanel {
     private int width = 510, height = 220;
     private JTextField nameTextField; //이름
-    private JTextField phoneTextField; //휴대전화
+    private JTextField emailTextField; //휴대전화
     private JButton findBtn;
     FindIdController findIdController;
 
@@ -31,8 +31,8 @@ public class FindIdView extends JPanel {
         lblTitle.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,30));
         add(lblTitle);
 
-        JLabel lblName = new JLabel("이름");
-        JLabel lblPhone = new JLabel("전화번호");
+        JLabel lblName = new JLabel(Constants.NAMEKOR_TXT);
+        JLabel lblPhone = new JLabel(Constants.EMAILKOR_TXT);
         lblName.setBounds( 110, 70, 40,30);
         lblName.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,20));
         lblPhone.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,20));
@@ -43,12 +43,12 @@ public class FindIdView extends JPanel {
         nameTextField = new JTextField();
         nameTextField.setBounds(180,lblName.getY(),200,lblName.getHeight());
         nameTextField.setFont(new Font(DesignConstants.HANGUL_FONT,Font.PLAIN,15));
-        phoneTextField = new JTextField();
-        phoneTextField.setBounds(180,lblPhone.getY(),200,lblPhone.getHeight());
-        phoneTextField.setFont(new Font(DesignConstants.HANGUL_FONT,Font.PLAIN,15));
+        emailTextField = new JTextField();
+        emailTextField.setBounds(180,lblPhone.getY(),200,lblPhone.getHeight());
+        emailTextField.setFont(new Font(DesignConstants.HANGUL_FONT,Font.PLAIN,15));
 
         add(nameTextField);
-        add(phoneTextField);
+        add(emailTextField);
 
         setButton();
     }
@@ -73,7 +73,12 @@ public class FindIdView extends JPanel {
         return nameTextField.getText();
     }
 
-    public String getPhone(){
-        return phoneTextField.getText();
+    public String getEmail(){
+        return emailTextField.getText();
+    }
+
+    public void resetView(){
+        nameTextField.setText("");
+        emailTextField.setText("");
     }
 }

@@ -5,7 +5,7 @@ public class UserDTO {
     private String password;
     private String phone;
     private String name;
-    private String birth;
+    private String email;
 
 
     public String getId() { return id; }
@@ -24,7 +24,7 @@ public class UserDTO {
 
     public void setName(String name) { this.name = name; }
 
-    public String getBirth() { return birth; }
+    public String getEmail() { return email; }
 
-    public void setBirth(String birth) { this.birth = birth; }
+    public void setEmail(String email) { this.email = email; }
 }

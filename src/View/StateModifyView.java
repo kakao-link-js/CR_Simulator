@@ -148,17 +148,18 @@ public class StateModifyView extends JPanel{
 		temp.setPassword(pwTextField.getText());
 		temp.setName(nameTextField.getText());
 		temp.setPhone(phoneTextField.getText());
-		temp.setBirth(dobTextField.getText());
+		temp.setEmail(dobTextField.getText());
 		return temp;
 	}
 
 	private void setUserData(){
 		UserDTO temp = ClassManager.getInstance().getMainMenuView().getUser();
+		System.out.println(temp.getId()+" "+temp.getPhone());
 		idTextField.setText(temp.getId());
-		pwTextField.setText(temp.getPassword());
+		//pwTextField.setText(temp.getPassword());
 		nameTextField.setText(temp.getName());
 		phoneTextField.setText(temp.getPhone());
-		dobTextField.setText(temp.getBirth());
+		dobTextField.setText(temp.getEmail());
 	}
 
 }

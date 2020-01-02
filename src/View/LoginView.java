@@ -114,10 +114,13 @@ public class LoginView extends JPanel{
 
 		loginBtn.setBounds(idTextField.getX()+idTextField.getWidth()+margin*2, idTextField.getY(),
 				(int)(this.width*0.19), idTextField.getHeight()+pwTextField.getHeight()+margin);
+		loginBtn.setBackground(Color.white);
 		searchIdBtn.setBounds(idTextField.getX(), idTextField.getY()+idTextField.getHeight()+pwTextField.getHeight()+margin*2,
 				(int)(idTextField.getWidth()*0.5-margin), height);
+		searchIdBtn.setBackground(Color.white);
 		signUpBtn.setBounds(idTextField.getX()+searchIdBtn.getWidth()+margin*2, idTextField.getY()+idTextField.getHeight()+pwTextField.getHeight()+margin*2,
 				(int)(idTextField.getWidth()*0.5-margin), height);
+		signUpBtn.setBackground(Color.white);
 		loginPanel.add(loginBtn);
 		loginPanel.add(searchIdBtn);
 		loginPanel.add(signUpBtn);
@@ -136,6 +139,11 @@ public class LoginView extends JPanel{
 
 	public String getPwTextField(){
 		return pwTextField.getText();
+	}
+
+	public void resetInput(){
+		idTextField.setText("");
+		pwTextField.setText("");
 	}
 
 }

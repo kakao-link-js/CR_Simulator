@@ -38,6 +38,7 @@ public class LoginController implements ActionListener {
         String id = loginView.getIdTextField();
         String password = loginView.getPwTextField();
         if(ClassManager.getInstance().getDAO().isCorrectID(id,password)){
+            loginView.resetInput();
             ClassManager.getInstance().getMainMenuView().setUser(ClassManager.getInstance().getDAO().getUserData(id));
             ClassManager.getInstance().getMain().comeToMain();
         } else {

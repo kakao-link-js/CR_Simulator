@@ -19,10 +19,4 @@ public class ExceptionHandling {
             return true;
         return false;
     }
-
-    public static boolean isBirth(String birth){
-        if(birth.matches(Constants.BIRTH_REGEX))
-            return true;
-        return false;
-    }
 }

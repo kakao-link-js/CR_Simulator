@@ -168,25 +168,36 @@ public class SignUpView extends JPanel{
 	public String getId(){
 		return idTextField.getText();
 	}
-	public String getPhone(){
-		return phoneTextField.getText();
-	}
 	public String getEmail() { return emailTextField.getText(); }
 	public void setEmailChk()
 	{
 		//이메일 인증여부 표시
 		emailChk.setText("인증완료");
 		emailChk.setForeground(Color.green);
+		emailTextField.setEditable(false);
 	}
 
 	public UserDTO getInsertData(){
 		UserDTO temp = new UserDTO();
+		if(idTextField.getText() == null || pwTextField.getText() == null || nameTextField.getText() == null || phoneTextField.getText() == null || emailTextField.getText() == null)
+			return null;
 		temp.setId(idTextField.getText());
 		temp.setPassword(pwTextField.getText());
 		temp.setName(nameTextField.getText());
 		temp.setPhone(phoneTextField.getText());
-		temp.setBirth(emailTextField.getText());
+		temp.setEmail(emailTextField.getText());
 		return temp;
+	}
+
+	public void resetView(){
+		emailChk.setText("인증안됨");
+		emailChk.setForeground(Color.RED);
+		emailTextField.setEditable(true);
+		idTextField.setText("");
+		pwTextField.setText("");
+		nameTextField.setText("");
+		phoneTextField.setText("");
+		emailTextField.setText("");
 	}
 
 }
