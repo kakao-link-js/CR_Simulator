@@ -170,4 +170,5 @@ public class SignUpView extends JPanel{
 		return temp;
 	}
 
+
 }

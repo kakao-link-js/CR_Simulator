@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class DAO {
     private JSONArray resultData = null; //결과값을 받기 위한 변수
@@ -28,7 +29,7 @@ public class DAO {
         jsonObject.put(Constants.ID_TXT,id);
         jsonObject.put(Constants.PASSWORD_TXT,pw);
 
-        jsonObject = sendPost(Constants.BASE_URL+route,jsonObject.toString());
+        jsonObject = sendRequest(Constants.BASE_URL+route,jsonObject.toString(),Constants.POST_TXT);
 
         // 결과 처리
         if(jsonObject == null)
@@ -47,7 +48,7 @@ public class DAO {
         jsonObject.put(Constants.NAME_TXT,name);
         jsonObject.put(Constants.PHONE_TXT,phone);
 
-        jsonObject = sendPost(Constants.BASE_URL+route,jsonObject.toString());
+        jsonObject = sendRequest(Constants.BASE_URL+route,jsonObject.toString(),Constants.POST_TXT);
 
         // 결과 처리
         if(jsonObject == null)
@@ -93,7 +94,7 @@ public class DAO {
         //jsonObject.put(Constants.BIRTH_TXT,user.getBirth());
         jsonObject.put("email","ab2C@naver.com");
 
-        jsonObject = sendPost(Constants.BASE_URL+router,jsonObject.toString());
+        jsonObject = sendRequest(Constants.BASE_URL+router,jsonObject.toString(),Constants.POST_TXT);
 
         // 결과 처리
         if(jsonObject == null)
@@ -107,13 +108,13 @@ public class DAO {
     // 필터링한 결과 과목들 반환
     public ArrayList<LectureDTO> getFilterLecture(JSONObject jsonObject){
         String route = "timetable";
-        ArrayList<LectureDTO> lectureData = null;
+        ArrayList<LectureDTO> lectureData = new ArrayList<LectureDTO>();
 
         resultData = sendPostAtArray(Constants.BASE_URL+route,jsonObject.toString());
 
         // 결과 처리
-        if(resultData == null)
-            return null;
+        if(resultData == null || resultData.size() < 1)
+            return lectureData;
 
         System.out.println("getFilterLecture : " + resultData.get(0).toString());
 
@@ -127,40 +128,39 @@ public class DAO {
     // 내가 신청한 과목들을 반환
     public ArrayList<LectureDTO> getMyLecture(UserDTO user){
         String route = "reg/"+user.getId();
-        JSONObject jsonObject = new JSONObject();
         ArrayList<LectureDTO> lectureData = new ArrayList<LectureDTO>();
-        if(user == null) return null;
+        if(user == null) return lectureData;
 
-        //jsonObject = sendGet(Constants.BASE_URL+route);
+        resultData = sendGetAtArray(Constants.BASE_URL+route);
 
         // 결과 처리
-        if(jsonObject == null)
-            return null;
+        if(resultData == null || resultData.size() < 1)
+            return lectureData;
 
-        System.out.println("getMyLecture : "+jsonObject.toString());
+        System.out.println("getMyLecture : "+resultData.get(0).toString());
 
-        //lectureData = new ArrayList<LectureDTO>();
-        //for(int i = 0 ; i < resultData.size();i++)
-            //lectureData.add(new LectureDTO((JSONObject)resultData.get(i)));
+        lectureData = new ArrayList<LectureDTO>();
+        for(int i = 0 ; i < resultData.size();i++)
+            lectureData.add(new LectureDTO((JSONObject)resultData.get(i)));
         return lectureData;
     }
 
     // 수강신청
     public boolean applyLecture(UserDTO user, LectureDTO lecture){
+        String route ="reg";
         JSONObject jsonObject = new JSONObject();
         if(user == null || lecture == null) return false;
         jsonObject.put(Constants.ID_TXT,user.getId());
-        jsonObject.put(Constants.COURSENUMKOR_TXT,lecture.getCourseNum());
-        jsonObject.put(Constants.CLASSNUMKOR_TXT,lecture.getClassNum());
+        jsonObject.put(Constants.MAJOR_TXT,lecture.getMajor());
+        jsonObject.put(Constants.COURSENUM_TXT,lecture.getCourseNum());
+        jsonObject.put(Constants.CLASSNUM_TXT,lecture.getClassNum());
 
-        // 네트워크 처리 비동기화
-        //resultData = new NetworkProcessor().execute(jsonObject).get();
+        jsonObject = sendRequest(Constants.BASE_URL+route,jsonObject.toString(),Constants.PUT_TXT);
 
         // 결과 처리
-        if(resultData == null)
+        if(jsonObject == null)
             return false;
 
-        jsonObject = (JSONObject)resultData.get(0);
         if(jsonObject.get(Constants.SUCCESS_TXT).equals(Constants.TRUE_TXT))
             return true;
         return false;
@@ -168,20 +168,20 @@ public class DAO {
 
     //신청 취소
     public boolean cancelLecture(UserDTO user, LectureDTO lecture){
+        String route = "reg";
         JSONObject jsonObject = new JSONObject();
         if(user == null || lecture == null) return false;
         jsonObject.put(Constants.ID_TXT,user.getId());
-        jsonObject.put(Constants.COURSENUMKOR_TXT,lecture.getCourseNum());
-        jsonObject.put(Constants.CLASSNUMKOR_TXT,lecture.getClassNum());
+        jsonObject.put(Constants.COURSENUM_TXT,lecture.getCourseNum());
+        jsonObject.put(Constants.CLASSNUM_TXT,lecture.getClassNum());
+        jsonObject.put(Constants.MAJOR_TXT,lecture.getMajor());
 
-        // 네트워크 처리 비동기화
-        //resultData = new NetworkProcessor().execute(jsonObject).get();
+        jsonObject = sendRequest(Constants.BASE_URL+route,jsonObject.toString(),Constants.DELETE_TXT);
 
         // 결과 처리
-        if(resultData == null)
+        if(jsonObject == null)
             return false;
 
-        jsonObject = (JSONObject)resultData.get(0);
         if(jsonObject.get(Constants.SUCCESS_TXT).equals(Constants.TRUE_TXT))
             return true;
         return false;
@@ -199,7 +199,7 @@ public class DAO {
         //jsonObject.put(Constants.BIRTH_TXT,user.getBirth());
         jsonObject.put("email","csafa@fadfg.ds");
 
-        jsonObject = sendPut(Constants.BASE_URL+route,jsonObject.toString());
+        jsonObject = sendRequest(Constants.BASE_URL+route,jsonObject.toString(), Constants.PUT_TXT);
 
         // 결과 처리
         if(jsonObject == null)
@@ -233,7 +233,7 @@ public class DAO {
         return user;
     }
 
-    public JSONObject sendPost(String strUrl, String jsonMessage){
+    public JSONObject sendRequest(String strUrl, String jsonMessage, String quary){
         try {
             JSONObject output = new JSONObject();
             JSONParser parser = new JSONParser();
@@ -241,7 +241,7 @@ public class DAO {
             conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(5000); //서버에 연결되는 Timeout 시간 설정
             conn.setReadTimeout(5000); // InputStream 읽어 오는 Timeout 시간 설정
-            conn.setRequestMethod("POST");
+            conn.setRequestMethod(quary);
 
             //json으로 message를 전달하고자 할 때
             conn.setRequestProperty("Content-Type", "application/json");
@@ -329,36 +329,25 @@ public class DAO {
         }
     }
 
-    public JSONObject sendPut(String strUrl, String jsonMessage){
+    private JSONArray sendGetAtArray(String targetUrl){
         try {
-            JSONObject output = new JSONObject();
+            JSONArray output = new JSONArray();
             JSONParser parser = new JSONParser();
-            url = new URL(strUrl);
+            url = new URL(targetUrl);
             conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(5000); //서버에 연결되는 Timeout 시간 설정
-            conn.setReadTimeout(5000); // InputStream 읽어 오는 Timeout 시간 설정
-            conn.setRequestMethod("PUT");
-
-            //json으로 message를 전달하고자 할 때
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setDoInput(true);
-            conn.setDoOutput(true); //POST 데이터를 OutputStream으로 넘겨 주겠다는 설정
-            conn.setUseCaches(false);
-            conn.setDefaultUseCaches(false);
-
-            wr = new OutputStreamWriter(conn.getOutputStream());
-            wr.write(jsonMessage); //json 형식의 message 전달
-            wr.flush();
-
-            //Stream을 처리해줘야 하는 귀찮음이 있음.
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-            String line;
-            while ((line = br.readLine()) != null) {
-                output = (JSONObject) parser.parse(line);
+            conn.setRequestMethod("GET"); // optional default is GET
+            conn.setConnectTimeout(3000); //서버에 연결되는 Timeout 시간 설정
+            conn.setReadTimeout(3000); // InputStream 읽어 오는 Timeout 시간 설정
+            br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            while ((inputLine = br.readLine()) != null) {
+                jsonObject = (JSONObject) parser.parse(inputLine);
             }
-            br.close();
+            jsonObject = (JSONObject) jsonObject.get("reg");
+            output = (JSONArray) jsonObject.get("timetable");
+            br.close(); // print result
             return output;
-        } catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.toString());
             return null;
         }

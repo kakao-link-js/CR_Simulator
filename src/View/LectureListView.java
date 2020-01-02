@@ -30,7 +30,6 @@ public class LectureListView extends JPanel {
 	private DefaultTableModel myLectureDTM; //JTable과 연결될 DTM
 	
 	JLabel lblScore; //현제 신청학점을 알기 위한 JLabel함수
-	JButton btnExit; //나가기 버튼
 	
 	private int width = 1000; //동적 사이즈 조절을 위한 사이즈 변수
 	private int height = (int)(width * 0.7);
@@ -72,14 +71,23 @@ public class LectureListView extends JPanel {
 		infoPanel.setBackground(Color.white);
 		infoPanel.setLayout(null);
 		
-		btnExit = new JButton(Constants.BACK_TXT);
-		btnExit.setBounds(0,0, 50, infoPanel.getHeight());
+		JButton btnExit = new JButton(Constants.EXIT_TXT);
+		btnExit.setBounds(0,0, (int)(width * 0.1), infoPanel.getHeight());
 		btnExit.addActionListener(LLC);
+		btnExit.setBackground(Color.white);
 		infoPanel.add(btnExit);
+
+		JButton btnRefresh = new JButton(Constants.REFRESH_TXT);
+		btnRefresh.setBounds((int) (width * 0.9),0,(int) ( width * 0.1 ),infoPanel.getHeight());
+		btnRefresh.addActionListener(LLC);
+		btnRefresh.setBackground(Color.white);
+		infoPanel.add(btnRefresh);
 		
 		JLabel title = new JLabel("수강신청");
 		title.setFont(new Font(DesignConstants.HANGUL_FONT,Font.BOLD,20));
-		title.setBounds(infoPanel.getWidth()/3,0,200,infoPanel.getHeight());
+		title.setBounds(0,0,infoPanel.getWidth(),infoPanel.getHeight());
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setVerticalAlignment(SwingConstants.CENTER);
 		infoPanel.add(title);
 		add(infoPanel);
 		
@@ -132,21 +140,31 @@ public class LectureListView extends JPanel {
 			table.getColumn(Constants.TABLE_HEADER[i]).setPreferredWidth(sizes[i]);
 		table.setDefaultRenderer(Object.class, newCellRenderer);
 	}
+
+	//JTable에 Renderer를 연결하고 사이즈를 조정하는 메소드
+	public void setMyColumnSize(JTable table) {
+		CellRenderer newCellRenderer = LLC.connectCellRenderer();
+		newCellRenderer.setHorizontalAlignment(JLabel.CENTER);
+		int sizes[] = {30,50,50,20,3,100,5,2,2,100,5,5};
+		for(int i = 0 ; i < 12; i ++)
+			table.getColumn(Constants.MYTABLE_HEADER[i]).setPreferredWidth(sizes[i]);
+		table.setDefaultRenderer(Object.class, newCellRenderer);
+	}
 	
 	//DTM이 최신화 될때마다 바꿔주는 메소드
 	public void changeMyLectureDTM(ArrayList<LectureDTO> lectureData) {
 		if(myLecturePane != null)
 			myLecturePanel.remove(myLecturePane);
-		myLectureDTM = new DefaultTableModel(makeInsertData(lectureData),Constants.TABLE_HEADER);
+		myLectureDTM = new DefaultTableModel(makeInsertData(lectureData),Constants.MYTABLE_HEADER);
 		
 		myLectureTable = new JTable(myLectureDTM);
 		myLecturePane = new JScrollPane(myLectureTable);
 		myLecturePane.setBounds(0,0,myLecturePanel.getWidth(),myLecturePanel.getHeight());
-		setColumnSize(myLectureTable);
+		setMyColumnSize(myLectureTable);
 		
 		//버튼을 연결한다.
-		myLectureTable.getColumnModel().getColumn(0).setCellRenderer(new TableCell(Constants.DELETE_TXT));
-        myLectureTable.getColumnModel().getColumn(0).setCellEditor(new TableCell(Constants.DELETE_TXT));
+		myLectureTable.getColumnModel().getColumn(0).setCellRenderer(new TableCell(Constants.CANCEL_TXT));
+        myLectureTable.getColumnModel().getColumn(0).setCellEditor(new TableCell(Constants.CANCEL_TXT));
 
 		myLecturePanel.add(myLecturePane);	
 	} //public void changeMyLectureDTM();
@@ -191,6 +209,10 @@ public class LectureListView extends JPanel {
 	public void setLectureList(JSONObject jsonObject){
 		ArrayList<LectureDTO> lectureData = ClassManager.getInstance().getDAO().getFilterLecture(jsonObject);
 		changeSearchDTM(lectureData);
+		ArrayList<LectureDTO> myData = ClassManager.getInstance().getDAO().getMyLecture(ClassManager.getInstance().getMainMenuView().getUser());
+		LLC.setMyLecture(myData);
+		changeMyLectureDTM(myData);
+		LLC.setScore();
 	}
 
 	//View를 조종할 리스너.

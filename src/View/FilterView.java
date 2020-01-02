@@ -65,7 +65,7 @@ public class FilterView extends JPanel {
 
         btnExit = new JButton(Constants.EXIT_TXT);
         btnExit.setFont(new Font(DesignConstants.HANGUL_FONT,Font.PLAIN, 14));
-        btnExit.setBounds(0,0,(int)(standardNum*1.5),height);
+        btnExit.setBounds(0,0,(int)(standardNum*2),height);
         btnExit.setBackground(Color.white);
         btnExit.setBorderPainted(false);
         titlePanel.add(btnExit);

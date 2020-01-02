@@ -33,8 +33,8 @@ public class MainMenuController implements ActionListener, MouseListener {
 			case Constants.CALCUL_TXT:
 				selectedView = ClassManager.getInstance().getCalculatorView();
 				break;
-			case Constants.END_TXT:
-				System.exit(0);
+			case Constants.LOGOUT_TXT:
+				selectedView = ClassManager.getInstance().getLoginView();
 				break;
 		}
 		ClassManager.getInstance().getMain().changePanel(selectedView);
