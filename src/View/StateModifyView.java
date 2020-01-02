@@ -154,8 +154,9 @@ public class StateModifyView extends JPanel{
 
 	private void setUserData(){
 		UserDTO temp = ClassManager.getInstance().getMainMenuView().getUser();
+		System.out.println(temp.getId()+" "+temp.getPhone());
 		idTextField.setText(temp.getId());
-		pwTextField.setText(temp.getPassword());
+		//pwTextField.setText(temp.getPassword());
 		nameTextField.setText(temp.getName());
 		phoneTextField.setText(temp.getPhone());
 		dobTextField.setText(temp.getBirth());

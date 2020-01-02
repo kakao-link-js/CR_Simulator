@@ -29,14 +29,13 @@ public class LectureListController implements ActionListener {
 		return new CellRenderer();
 	} //public CellRenderer connectCellRenderer() 
 	
-	//검색된 값을 LectureListView에 뿌리는 메소드
-	private void setSearchListAtLectureListView(ArrayList<LectureDTO> searchList) {
-		LLV.changeMyLectureDTM(searchList); //JTable 값을 초기화 한다.
-		LLV.changeSearchDTM();
-		for(int i = 0 ; i < searchList.size(); i++) //검색 된 값을 JTable에 추가한다.
-			LLV.getSearchListDTM().addRow(searchList.get(i).makeStringArray());
-		setScore();
-	} //public setSearchListatlectureListView(ArrayList<LectureVO> searchList;
+//	//검색된 값을 LectureListView에 뿌리는 메소드
+//	private void setSearchListAtLectureListView(ArrayList<LectureDTO> searchList) {
+//		LLV.changeSearchDTM(searchList);
+//		for(int i = 0 ; i < searchList.size(); i++) //검색 된 값을 JTable에 추가한다.
+//			LLV.getSearchListDTM().addRow(searchList.get(i).makeStringArray());
+//		setScore();
+//	} //public setSearchListatlectureListView(ArrayList<LectureVO> searchList;
 	
 	//신청 학점을 설정하는 메소드
 	private void setScore() {
@@ -187,15 +186,15 @@ public class LectureListController implements ActionListener {
 				break;
 			case Constants.DELETE_TXT:
 				if(isGoodinMyTable()) {
-					/*
+
 //            			for(int i = 0; i < ClassManager.getInstance().getReal().size(); i++)
 //            				if(ClassManager.getInstance().getReal().get(i).courseNum  //학수번호를 들고온다.
 //									== getLLV().getMyLectureDTM().getValueAt(getLLV().getMyLectureTable().getSelectedRow(),3))
 //            					ClassManager.getInstance().getReal().remove(i); //배열에서 지운다.
 					LLV.getMyLectureDTM().removeRow(LLV.getMyLectureTable().getSelectedRow()); //테이블에서 지운다.
-					SetScore();
+					setScore();
 					LLV.getSearchListTable().repaint();
-					*/
+
 				}
 				break;
 			case Constants.BACK_TXT:

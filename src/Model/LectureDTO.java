@@ -58,12 +58,12 @@ public class LectureDTO {
 		this.classNum 	= (String) jsonObject.get(Constants.CLASSNUM_TXT);
 		this.className 	= (String) jsonObject.get(Constants.CLASSNAME_TXT);
 		this.completion = (String) jsonObject.get(Constants.COMPLETION_TXT);
-		this.grade		= (float) jsonObject.get(Constants.GRADE_TXT);
-		this.score		= (float) jsonObject.get(Constants.SCORE_TXT);
+		this.grade		= Float.parseFloat(jsonObject.get(Constants.GRADE_TXT).toString());
+		this.score		= Float.parseFloat(jsonObject.get(Constants.SCORE_TXT).toString());
 		this.time		= (String) jsonObject.get(Constants.TIME_TXT);
 		this.classRoom  = (String) jsonObject.get(Constants.CLASSROOM_TXT);
 		this.professor	= (String) jsonObject.get(Constants.PROFESSOR_TXT);
-		this.numberOfPeople = (int) jsonObject.get(Constants.NUMBER_TXT);
+		this.numberOfPeople = Integer.parseInt(jsonObject.get(Constants.NUMBER_TXT).toString());
 	}
 
 	// 문장 배열로 반환하는 메소드

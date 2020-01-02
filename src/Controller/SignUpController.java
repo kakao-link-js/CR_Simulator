@@ -56,8 +56,8 @@ public class SignUpController implements ActionListener{
                 showMessege("입력 되지 않은 값이 있습니다.");
                 return;
             }
-            //if(!checkException(temp))
-            //    return;
+            if(!checkException(temp))
+                return;
             if(ClassManager.getInstance().getDAO().signUp(temp)){
                 showMessege("회원 등록 성공");
                 ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLoginView());
@@ -71,6 +71,10 @@ public class SignUpController implements ActionListener{
     }
 
     private boolean checkException(UserDTO user){
+        if(user.getPassword() == null){
+            showMessege("비밀번호가 빈값입니다.");
+            return false;
+        }
         if(!ExceptionHandling.isOnlyKorean(user.getName())) {
             showMessege("이름이 한글이 아닙니다.");
             return false;

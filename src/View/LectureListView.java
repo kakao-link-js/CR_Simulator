@@ -93,7 +93,7 @@ public class LectureListView extends JPanel {
 		searchListPanel.setBackground(Color.WHITE);
 		searchListPanel.setLayout(null);
 		add(searchListPanel);
-		changeSearchDTM();
+		changeSearchDTM(null);
 	} //setLectureListPanel()
 	
 	public void setStatusPanel() {
@@ -119,6 +119,7 @@ public class LectureListView extends JPanel {
 		myLecturePanel.setBounds(X,Y,width,height);
 		myLecturePanel.setBackground(Color.CYAN);
 		myLecturePanel.setLayout(null);
+		changeMyLectureDTM(null);
 		add(myLecturePanel);
 	} //setMyLecturePanel()
 	
@@ -126,8 +127,8 @@ public class LectureListView extends JPanel {
 	public void setColumnSize(JTable table) {
 		CellRenderer newCellRenderer = LLC.connectCellRenderer();
 		newCellRenderer.setHorizontalAlignment(JLabel.CENTER);
-		int sizes[] = {30,50,50,50,3,100,5,5,5,100,50,50};
-		for(int i = 0 ; i < 12; i ++)
+		int sizes[] = {30,50,50,20,3,100,5,2,2,100,5,5,5};
+		for(int i = 0 ; i < 13; i ++)
 			table.getColumn(Constants.TABLE_HEADER[i]).setPreferredWidth(sizes[i]);
 		table.setDefaultRenderer(Object.class, newCellRenderer);
 	}
@@ -151,10 +152,10 @@ public class LectureListView extends JPanel {
 	} //public void changeMyLectureDTM();
 	
 	//DTM이 최신화 될때마다 바꿔주는 메소드
-	public void changeSearchDTM() {
+	public void changeSearchDTM(ArrayList<LectureDTO> lectureData) {
 		if(searchListPane != null)
 			searchListPanel.remove(searchListPane);
-		searchListDTM = new DefaultTableModel(null,Constants.TABLE_HEADER);
+		searchListDTM = new DefaultTableModel(makeInsertData(lectureData),Constants.TABLE_HEADER);
 		
 		searchListTable = new JTable(searchListDTM);
 		searchListPane = new JScrollPane(searchListTable);
@@ -179,7 +180,7 @@ public class LectureListView extends JPanel {
 		if(lists == null)
 			return null;
 		int sizes = lists.size();
-		String output[][] = new String[sizes][12];
+		String output[][] = new String[sizes][13];
 		for(int i = 0 ; i < lists.size();i++) {
 			output[i] = lists.get(i).makeStringArray();
 		}
@@ -188,8 +189,8 @@ public class LectureListView extends JPanel {
 
 	//jsonObject로 table을 구성하게 하는 메소드
 	public void setLectureList(JSONObject jsonObject){
-		ArrayList<LectureDTO> lectureData = ClassManager.getInstance().getDAO().getfilterLecture(jsonObject);
-		changeMyLectureDTM(lectureData);
+		ArrayList<LectureDTO> lectureData = ClassManager.getInstance().getDAO().getFilterLecture(jsonObject);
+		changeSearchDTM(lectureData);
 	}
 
 	//View를 조종할 리스너.

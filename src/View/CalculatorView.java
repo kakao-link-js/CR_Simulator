@@ -103,9 +103,9 @@ public class CalculatorView extends JPanel {
 		int width = (int)((this.width - margin * 2) * 0.45);
 		int height = (int)(this.height * 0.6* 0.05);
 
-		JLabel title1 = new JLabel(Constants.CLASSNAME_TXT);
-		JLabel title2 = new JLabel(Constants.SCORE_TXT);
-		JLabel title3 = new JLabel(Constants.MYSCORE_TXT);
+		JLabel title1 = new JLabel(Constants.CLASSNAMEKOR_TXT);
+		JLabel title2 = new JLabel(Constants.SCOREKOR_TXT);
+		JLabel title3 = new JLabel(Constants.MYSCOREKOR_TXT);
 		
 		title1.setBounds(x, y, width, height);
 		title2.setBounds(margin+width, y, width / 2, height);

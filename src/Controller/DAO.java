@@ -6,12 +6,9 @@ import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -31,12 +28,12 @@ public class DAO {
         jsonObject.put(Constants.ID_TXT,id);
         jsonObject.put(Constants.PASSWORD_TXT,pw);
 
-        jsonObject = post(Constants.BASE_URL+route,jsonObject.toString());
+        jsonObject = sendPost(Constants.BASE_URL+route,jsonObject.toString());
 
         // 결과 처리
         if(jsonObject == null)
             return false;
-
+        System.out.println("isCorrectID : " + jsonObject.toString());
         if(jsonObject.get(Constants.SUCCESS_TXT).equals(Constants.TRUE_TXT))
             return true;
         return false;
@@ -44,19 +41,19 @@ public class DAO {
 
     // 이름과 전화번호를 통해 아이디를 돌려줌
     public String getID(String name, String phone){
+        String route = "user/find/phone";
         JSONObject jsonObject = new JSONObject();
         if(name == null || phone == null) return null;
         jsonObject.put(Constants.NAME_TXT,name);
         jsonObject.put(Constants.PHONE_TXT,phone);
 
-        // 네트워크 처리 비동기화
-        //resultData = new NetworkProcessor().execute(jsonObject).get();
+        jsonObject = sendPost(Constants.BASE_URL+route,jsonObject.toString());
 
         // 결과 처리
-        if(resultData == null)
+        if(jsonObject == null)
             return null;
+        System.out.println("getID : " + jsonObject.toString());
 
-        jsonObject = (JSONObject)resultData.get(0);
         if(jsonObject.get(Constants.SUCCESS_TXT).equals(Constants.TRUE_TXT))
             return (String) jsonObject.get(Constants.ID_TXT);
         return null;
@@ -65,7 +62,7 @@ public class DAO {
 
     //아이디 중복 체크
     public boolean isDuplicateID(String id) {
-        String route = "signup?student_id=";
+        String route = "signup/";
 
         if(id == null) return false;
 
@@ -74,6 +71,8 @@ public class DAO {
         // 결과 처리
         if(jsonObject == null)
             return false;
+
+        System.out.println("isDuplicateID : " + jsonObject.toString());
 
         if(jsonObject.get(Constants.SUCCESS_TXT).equals(Constants.TRUE_TXT)) //true면 굿.
             return true;
@@ -91,29 +90,33 @@ public class DAO {
         jsonObject.put(Constants.PASSWORD_TXT,user.getPassword());
         jsonObject.put(Constants.NAME_TXT,user.getName());
         jsonObject.put(Constants.PHONE_TXT,user.getPhone());
-        jsonObject.put(Constants.BIRTH_TXT,user.getBirth());
+        //jsonObject.put(Constants.BIRTH_TXT,user.getBirth());
+        jsonObject.put("email","ab2C@naver.com");
 
-        jsonObject = post(Constants.BASE_URL+router,jsonObject.toString());
+        jsonObject = sendPost(Constants.BASE_URL+router,jsonObject.toString());
 
         // 결과 처리
         if(jsonObject == null)
             return false;
-
+        System.out.println("signUp : " + jsonObject.toString());
         if(jsonObject.get(Constants.SUCCESS_TXT).equals(Constants.TRUE_TXT))
             return true;
         return false;
     }
 
     // 필터링한 결과 과목들 반환
-    public ArrayList<LectureDTO> getfilterLecture(JSONObject jsonObject){
+    public ArrayList<LectureDTO> getFilterLecture(JSONObject jsonObject){
+        String route = "timetable";
         ArrayList<LectureDTO> lectureData = null;
 
-        // 네트워크 처리 비동기화
-        //resultData = new NetworkProcessor().execute(jsonObject).get();
+        resultData = sendPostAtArray(Constants.BASE_URL+route,jsonObject.toString());
 
         // 결과 처리
         if(resultData == null)
             return null;
+
+        System.out.println("getFilterLecture : " + resultData.get(0).toString());
+
         lectureData = new ArrayList<LectureDTO>();
         for(int i = 0 ; i < resultData.size();i++){
             lectureData.add(new LectureDTO((JSONObject)resultData.get(i)));
@@ -123,21 +126,22 @@ public class DAO {
 
     // 내가 신청한 과목들을 반환
     public ArrayList<LectureDTO> getMyLecture(UserDTO user){
-        ArrayList<LectureDTO> lectureData = null;
-        if(user == null) return null;
-        //처리 설정
+        String route = "reg/"+user.getId();
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(Constants.ID_TXT,user.getId());
+        ArrayList<LectureDTO> lectureData = new ArrayList<LectureDTO>();
+        if(user == null) return null;
 
-        // 네트워크 처리 비동기화
-        //resultData = new NetworkProcessor().execute(jsonObject).get();
+        //jsonObject = sendGet(Constants.BASE_URL+route);
 
         // 결과 처리
-        if(resultData == null)
+        if(jsonObject == null)
             return null;
-        lectureData = new ArrayList<LectureDTO>();
-        for(int i = 0 ; i < resultData.size();i++)
-            lectureData.add(new LectureDTO((JSONObject)resultData.get(i)));
+
+        System.out.println("getMyLecture : "+jsonObject.toString());
+
+        //lectureData = new ArrayList<LectureDTO>();
+        //for(int i = 0 ; i < resultData.size();i++)
+            //lectureData.add(new LectureDTO((JSONObject)resultData.get(i)));
         return lectureData;
     }
 
@@ -146,8 +150,8 @@ public class DAO {
         JSONObject jsonObject = new JSONObject();
         if(user == null || lecture == null) return false;
         jsonObject.put(Constants.ID_TXT,user.getId());
-        jsonObject.put(Constants.COURSENUM_TXT,lecture.getCourseNum());
-        jsonObject.put(Constants.CLASSNUM_TXT,lecture.getClassNum());
+        jsonObject.put(Constants.COURSENUMKOR_TXT,lecture.getCourseNum());
+        jsonObject.put(Constants.CLASSNUMKOR_TXT,lecture.getClassNum());
 
         // 네트워크 처리 비동기화
         //resultData = new NetworkProcessor().execute(jsonObject).get();
@@ -167,8 +171,8 @@ public class DAO {
         JSONObject jsonObject = new JSONObject();
         if(user == null || lecture == null) return false;
         jsonObject.put(Constants.ID_TXT,user.getId());
-        jsonObject.put(Constants.COURSENUM_TXT,lecture.getCourseNum());
-        jsonObject.put(Constants.CLASSNUM_TXT,lecture.getClassNum());
+        jsonObject.put(Constants.COURSENUMKOR_TXT,lecture.getCourseNum());
+        jsonObject.put(Constants.CLASSNUMKOR_TXT,lecture.getClassNum());
 
         // 네트워크 처리 비동기화
         //resultData = new NetworkProcessor().execute(jsonObject).get();
@@ -192,40 +196,44 @@ public class DAO {
         jsonObject.put(Constants.PASSWORD_TXT,user.getPassword());
         jsonObject.put(Constants.NAME_TXT,user.getName());
         jsonObject.put(Constants.PHONE_TXT,user.getPhone());
-        jsonObject.put(Constants.BIRTH_TXT,user.getBirth());
+        //jsonObject.put(Constants.BIRTH_TXT,user.getBirth());
+        jsonObject.put("email","csafa@fadfg.ds");
 
-        jsonObject = post(Constants.BASE_URL+route,jsonObject.toString());
+        jsonObject = sendPut(Constants.BASE_URL+route,jsonObject.toString());
 
         // 결과 처리
         if(jsonObject == null)
             return false;
-
+        System.out.println("modify : " + jsonObject.toString());
         if(jsonObject.get(Constants.SUCCESS_TXT).equals(Constants.TRUE_TXT))
             return true;
         return false;
     }
 
     public UserDTO getUserData(String userId){
-        String route = "user?student_id=";
+        String route = "user/";
         JSONObject jsonObject;
         if(userId == null) return null;
 
-        jsonObject = sendGet(route+userId);
+        jsonObject = sendGet(Constants.BASE_URL+route+userId);
 
         // 결과 처리
         if(jsonObject == null)
             return null;
-        UserDTO user = new UserDTO();
+        System.out.println("getUserData : " + jsonObject.toString());
+        jsonObject = (JSONObject)jsonObject.get("user");
+        System.out.println("getUserData : " + jsonObject.toString());
 
-        user.setId((String) jsonObject.get(Constants.ID_TXT));
-        user.setPassword((String) jsonObject.get(Constants.PASSWORD_TXT));
-        user.setName((String) jsonObject.get(Constants.NAME_TXT));
-        user.setPhone((String) jsonObject.get(Constants.PHONE_TXT));
-        user.setBirth((String) jsonObject.get(Constants.BIRTH_TXT));
+        UserDTO user = new UserDTO();
+        user.setId(jsonObject.get(Constants.ID_TXT).toString());
+        user.setPassword(jsonObject.get(Constants.PASSWORD_TXT).toString());
+        user.setName(jsonObject.get(Constants.NAME_TXT).toString());
+        user.setPhone(jsonObject.get(Constants.PHONE_TXT).toString());
+        //`user.setBirth(jsonObject.get(Constants.BIRTH_TXT).toString());
         return user;
     }
 
-    public JSONObject post(String strUrl, String jsonMessage){
+    public JSONObject sendPost(String strUrl, String jsonMessage){
         try {
             JSONObject output = new JSONObject();
             JSONParser parser = new JSONParser();
@@ -246,13 +254,51 @@ public class DAO {
             wr.write(jsonMessage); //json 형식의 message 전달
             wr.flush();
 
-            StringBuilder sb = new StringBuilder();
             //Stream을 처리해줘야 하는 귀찮음이 있음.
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
             String line;
             while ((line = br.readLine()) != null) {
+                System.out.println(line);
                 output = (JSONObject) parser.parse(line);
             }
+
+            br.close();
+            return output;
+        } catch (Exception e){
+            System.err.println(e.toString());
+            return null;
+        }
+    }
+
+    public JSONArray sendPostAtArray(String strUrl, String jsonMessage){
+        try {
+            JSONArray output = new JSONArray();
+            JSONParser parser = new JSONParser();
+            url = new URL(strUrl);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5000); //서버에 연결되는 Timeout 시간 설정
+            conn.setReadTimeout(5000); // InputStream 읽어 오는 Timeout 시간 설정
+            conn.setRequestMethod("POST");
+
+            //json으로 message를 전달하고자 할 때
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoInput(true);
+            conn.setDoOutput(true); //POST 데이터를 OutputStream으로 넘겨 주겠다는 설정
+            conn.setUseCaches(false);
+            conn.setDefaultUseCaches(false);
+
+            wr = new OutputStreamWriter(conn.getOutputStream());
+            wr.write(jsonMessage); //json 형식의 message 전달
+            wr.flush();
+
+            //Stream을 처리해줘야 하는 귀찮음이 있음.
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                output = (JSONArray) parser.parse(line);
+            }
+
             br.close();
             return output;
         } catch (Exception e){
@@ -278,6 +324,41 @@ public class DAO {
             br.close(); // print result
             return output;
         } catch (Exception e) {
+            System.err.println(e.toString());
+            return null;
+        }
+    }
+
+    public JSONObject sendPut(String strUrl, String jsonMessage){
+        try {
+            JSONObject output = new JSONObject();
+            JSONParser parser = new JSONParser();
+            url = new URL(strUrl);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5000); //서버에 연결되는 Timeout 시간 설정
+            conn.setReadTimeout(5000); // InputStream 읽어 오는 Timeout 시간 설정
+            conn.setRequestMethod("PUT");
+
+            //json으로 message를 전달하고자 할 때
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoInput(true);
+            conn.setDoOutput(true); //POST 데이터를 OutputStream으로 넘겨 주겠다는 설정
+            conn.setUseCaches(false);
+            conn.setDefaultUseCaches(false);
+
+            wr = new OutputStreamWriter(conn.getOutputStream());
+            wr.write(jsonMessage); //json 형식의 message 전달
+            wr.flush();
+
+            //Stream을 처리해줘야 하는 귀찮음이 있음.
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                output = (JSONObject) parser.parse(line);
+            }
+            br.close();
+            return output;
+        } catch (Exception e){
             System.err.println(e.toString());
             return null;
         }

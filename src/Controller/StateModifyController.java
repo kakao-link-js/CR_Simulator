@@ -26,7 +26,7 @@ public class StateModifyController implements ActionListener{
                 modify();
                 break;
             case Constants.EXIT_TXT:
-                ClassManager.getInstance().getMain().changePanel(ClassManager.getInstance().getLoginView());
+                ClassManager.getInstance().getMain().comeToMain();
                 break;
         }
     }
@@ -44,6 +44,10 @@ public class StateModifyController implements ActionListener{
     }
 
     private boolean checkException(UserDTO user){
+        if(user.getPassword() == null){
+            showMessege("비밀번호가 빈값입니다.");
+            return false;
+        }
         if(!ExceptionHandling.isOnlyKorean(user.getName())) {
             showMessege("이름이 한글이 아닙니다.");
             return false;
