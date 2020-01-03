@@ -12,6 +12,11 @@ import common.ClassManager;
 import common.Constants;
 import common.DesignConstants;
 
+/**
+ * CalculatorView Class
+ * 학점계산기 View를 갖는 Class 비즈니스 로직은 없다.
+ */
+
 public class CalculatorView extends JPanel {
 	
 	private JPanel titlePanel, infoPanel, calculPanel; //타이틀, 정보, 계산 패널

@@ -9,6 +9,10 @@ import common.DesignConstants;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * StateModifyView Class
+ * 내정보변경 View를 갖는 Class 로 비즈니스 로직은 없다.
+ */
 
 public class StateModifyView extends JPanel{
 	//회원가입 창을 위한 Instance

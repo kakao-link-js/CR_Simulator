@@ -5,6 +5,11 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * LectureDTO Class
+ * 강의의 정보를 갖고 전달하기 위해 만들어진 Class
+ */
+
 public class LectureDTO {
 
 	private String openUniv;		//개설대학

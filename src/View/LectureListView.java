@@ -13,6 +13,11 @@ import common.Constants;
 import common.DesignConstants;
 import org.json.simple.JSONObject;
 
+/**
+ * LectureListView Class
+ * 수강신청 View를 갖는 Class 로 비즈니스 로직은 없다.
+ */
+
 public class LectureListView extends JPanel {
 	LectureListController LLC;
 	

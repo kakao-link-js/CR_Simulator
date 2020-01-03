@@ -3,11 +3,15 @@ package Controller;
 import common.ClassManager;
 import View.FindIdView;
 import common.Constants;
-import common.ExceptionHandling;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+/**
+ * FindIdController Class
+ * 아이디 찾기를 담당하는 Controller
+ */
 
 public class FindIdController implements ActionListener {
 
@@ -31,6 +35,7 @@ public class FindIdController implements ActionListener {
         }
     }
 
+    //ID 찾기 메소드
     private void findId(){
         String name = findIdView.getName();
         String email = findIdView.getEmail();

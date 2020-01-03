@@ -7,6 +7,10 @@ import common.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * MainMenuController Class
+ * 메인메뉴 Class로 여러 View로 이동을 담당한다.
+ */
 
 public class MainMenuController implements ActionListener, MouseListener {
 	MainMenuView menuView;

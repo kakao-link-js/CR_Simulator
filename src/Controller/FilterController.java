@@ -9,6 +9,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * FilterController Class
+ * Filter후 강의를 출력하는 클래스입니다.
+ */
+
 public class FilterController implements ActionListener {
     private FilterView filterView;
 
@@ -30,6 +35,7 @@ public class FilterController implements ActionListener {
         }
     }
 
+    //필터를 정리 후 서치를 하는 메소드
     private void searchFunction(){
         JSONObject jsonObject = new JSONObject();
         if(!filterView.getMajor().isEmpty())

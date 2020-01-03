@@ -7,6 +7,11 @@ import common.DesignConstants;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * FindIdView Class
+ * 아이디 찾기 View를 갖는 Class 로 비즈니스 로직은 없다.
+ */
+
 public class FindIdView extends JPanel {
     private int width = 510, height = 220;
     private JTextField nameTextField; //이름

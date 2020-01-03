@@ -16,6 +16,11 @@ import Model.*;
 import common.Constants;
 import common.DesignConstants;
 
+/**
+ * LoginView Class
+ * 로그인 View를 갖는 Class 로 비즈니스 로직은 없다.
+ */
+
 public class LoginView extends JPanel{
 	JPanel imagePanel; //상단에 삽입할 이미지 패널
 	JPanel loginPanel; //하단에 삽입할 로그인 패널

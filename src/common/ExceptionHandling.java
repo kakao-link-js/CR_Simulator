@@ -1,5 +1,10 @@
 package common;
 
+/**
+ * ExceptionHandling Class
+ * 예외처리를 위한 클래스 입니다.
+ */
+
 public class ExceptionHandling {
 
     public static boolean isOnlyKorean(String name){

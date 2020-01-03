@@ -13,6 +13,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * DAO Class
+ * 서버와 통신을 담당하는 기능을 하는 Class입니다.
+ */
+
 public class DAO {
     private JSONArray resultData = null; //결과값을 받기 위한 변수
     private URL url = null;
@@ -40,7 +45,7 @@ public class DAO {
         return false;
     }
 
-    // 이름과 전화번호를 통해 아이디를 돌려줌
+    // 이름과 이메일을 통해 아이디를 돌려줌
     public String getID(String name, String email){
         String route = "user/find/email";
         JSONObject jsonObject = new JSONObject();
@@ -209,6 +214,7 @@ public class DAO {
         return false;
     }
 
+    //유저 정보 받기
     public UserDTO getUserData(String userId){
         String route = "user/";
         JSONObject jsonObject;
@@ -232,6 +238,7 @@ public class DAO {
         return user;
     }
 
+    //서버에 리퀘스트를 보낸 후 받는 메소드
     public JSONObject sendRequest(String strUrl, String jsonMessage, String quary){
         try {
             JSONObject output = new JSONObject();
@@ -269,6 +276,7 @@ public class DAO {
         }
     }
 
+    //POST 메소드 리퀘스트 후 Array로 받는 메소드
     public JSONArray sendPostAtArray(String strUrl, String jsonMessage){
         try {
             JSONArray output = new JSONArray();
@@ -306,6 +314,7 @@ public class DAO {
         }
     }
 
+    //GET메소드 리퀘스트
     private JSONObject sendGet(String targetUrl){
         try {
             JSONObject output = new JSONObject();
@@ -328,6 +337,7 @@ public class DAO {
         }
     }
 
+    //GET메소드 Array 반환 리퀘스트
     private JSONArray sendGetAtArray(String targetUrl){
         try {
             JSONArray output = new JSONArray();

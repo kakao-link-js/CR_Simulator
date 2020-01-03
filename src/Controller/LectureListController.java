@@ -15,6 +15,11 @@ import View.LectureListView;
 import common.Constants;
 import org.json.simple.JSONObject;
 
+/**
+ * LectureListController Class
+ * 수강신청을 담당하는 클래스
+ */
+
 public class LectureListController implements ActionListener {
 
 	LectureListView LLV;
@@ -23,7 +28,7 @@ public class LectureListController implements ActionListener {
 	//생성자
 	public LectureListController(LectureListView LLV) {
 		this.LLV = LLV;
-	}
+	} //public LectureListController(LectureListView LLV)
 	
 	//Renderer를 연결하는 메소드
 	public CellRenderer connectCellRenderer() {

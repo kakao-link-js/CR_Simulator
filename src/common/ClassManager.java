@@ -5,8 +5,8 @@ import View.*;
 import org.json.simple.JSONObject;
 
 /**
- * 싱글턴 기법 ClassManagement
- * 사용법 : ClassManagement.GetInstance().~
+ * 싱글턴 기법 ClassManager
+ * 사용법 : ClassManager.GetInstance().~
  */
 public class ClassManager {
 	private static ClassManager s_instance;

@@ -1,5 +1,10 @@
 package Model;
 
+/**
+ * UserDTO Class
+ * 유저의 정보를 저장하는 Class
+ */
+
 public class UserDTO {
     private String id;
     private String password;

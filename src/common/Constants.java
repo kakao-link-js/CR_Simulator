@@ -1,7 +1,9 @@
 package common;
 
-import javax.swing.*;
-
+/**
+ * Constants Class
+ * 상수를 저장해 둔 Class 입니다.
+ */
 public class Constants {
     public static final String SCORES[] ={"NONE","A+","A","B+","B","C+","C","D+","D","F"};
     public static final String MENU[] = {"수강신청", "내 시간표", "학점 계산기","내 정보 수정", "로그아웃"};

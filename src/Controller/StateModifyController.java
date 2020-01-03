@@ -10,6 +10,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * StateModifyController Class
+ * 상태를 변경을 담당하는 Class
+ */
+
 public class StateModifyController implements ActionListener{
 
     StateModifyView stateModifyView;
@@ -43,6 +48,7 @@ public class StateModifyController implements ActionListener{
         }
     }
 
+    //예외처리 메소드
     private boolean checkException(UserDTO user){
         if(user.getPassword() == null){
             showMessege("비밀번호가 빈값입니다.");

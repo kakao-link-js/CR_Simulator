@@ -40,6 +40,7 @@ public class ClassRegistrationSimulator {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2 - 410/2, dim.height/2 - 615/2);
     } // setLocationScreenCenter()
+
     //패널을 교체하는 메소드
     public void changePanel(JPanel view) {
         frame.getContentPane().removeAll();

@@ -3,12 +3,15 @@ package View;
 import java.awt.*;
 import javax.swing.*;
 
-//import org.apache.commons.math3.analysis.function.Add;
-
 import Controller.SignUpController;
 import Model.*;
 import common.Constants;
 import common.DesignConstants;
+
+/**
+ * SignUpView Class
+ * 회원가입 View를 갖는 Class 로 비즈니스 로직은 없다.
+ */
 
 public class SignUpView extends JPanel{
 	//회원가입 창을 위한 Instance

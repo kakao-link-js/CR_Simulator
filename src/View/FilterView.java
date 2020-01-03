@@ -6,6 +6,11 @@ import common.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * FilterView Class
+ * Filter View를 갖는 Class 비즈니스 로직은 없다.
+ */
+
 public class FilterView extends JPanel {
     FilterController filterController;
 

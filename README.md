@@ -2,7 +2,7 @@
 
 ------
 
-## ![imge](https://img.shields.io/badge/ProjectType-TeamProject-green) ![imge](https://img.shields.io/badge/Language-Jav-yellow) ![imge](https://img.shields.io/badge/Tools-Eclipse-blue)
+## ![imge](https://img.shields.io/badge/ProjectType-TeamProject-green) ![imge](https://img.shields.io/badge/Language-Java-yellow) ![imge](https://img.shields.io/badge/Tools-intelliJ-blue)
 
 ## 프로그램 소개 :thumbsup:
 
@@ -10,7 +10,7 @@
 - 검색 구분의 범위가 넓어 원하는 강의에 한번에 접근하기 어려운 것과 겹치는 시간대를 일일이 확인해야하는 불편함등 다양한 불편함을 해결하였습니다.
 - 서버와 연결되어 Stand-alone 모델에서 Sever-Client모델로 기능이 분리되어있습니다.  
 - 사전 설정
-  - libs의 mail.jar, activation.jar, additionnal.jar, json_simple-1.1.jar을 라이브러리에 추가해야 사용이 가능합니다.
+  - libs의 **mail.jar, activation.jar, additionnal.jar, json_simple-1.1.jar**을 라이브러리에 추가해야 사용이 가능합니다.
   - Controller의 SignUpController의 130번 줄과 131번 줄에 자신 이메일의 ID와 PW를 입력해야 사용이 가능합니다. (보안 설정은 따로 하셔야합니다.)
 
 ## 주요 기술 요소

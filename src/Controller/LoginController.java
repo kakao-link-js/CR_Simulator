@@ -1,14 +1,17 @@
 package Controller;
 
 import common.ClassManager;
-import View.FindIdView;
-import View.LoginView;
-import View.SignUpView;
+import View.*;
 import common.Constants;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+/**
+ * LoginController Class
+ * Login을 담당하는 Class
+ */
 
 public class LoginController implements ActionListener {
 
@@ -34,6 +37,7 @@ public class LoginController implements ActionListener {
         }
     }
 
+    //아이디와 비밀번호를 확인 후 로그인 하는 메소드
     private void login(){
         String id = loginView.getIdTextField();
         String password = loginView.getPwTextField();
@@ -46,11 +50,13 @@ public class LoginController implements ActionListener {
         }
     }
 
+    //회원가입 View로 이동하는 메소드
     private void signUp(){
         SignUpView signUpView = ClassManager.getInstance().getSignUpView();
         ClassManager.getInstance().getMain().changePanel(signUpView);
     }
 
+    //아이디 찾기 View로 이동하는 메소드
     private void idSearch(){
         FindIdView findIdView = ClassManager.getInstance().getFindIdView();
        ClassManager.getInstance().getMain().changePanel(findIdView);

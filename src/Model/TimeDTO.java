@@ -1,5 +1,10 @@
 package Model;
 
+/**
+ * TimeDTO Class
+ * 시간을 비교하기위해 만들어진 클래스
+ */
+
 public class TimeDTO {
 	
 	public String Day;

@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**
+ * MainMenu Class
+ * 메인메뉴 View를 갖는 Class 로 비즈니스 로직은 없다.
+ */
+
 public class MainMenuView extends JPanel {
     MainMenuController MMC;
     UserDTO user;

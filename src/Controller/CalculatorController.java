@@ -6,6 +6,11 @@ import java.awt.event.ActionListener;
 import common.ClassManager;
 import View.*;
 
+/**
+ * CalculatorController Class
+ * 학점계산 클래스의 비즈니스 로직을 갖고 있는 클래스 입니다.
+ */
+
 public class CalculatorController implements ActionListener {
 
     CalculatorView calculatorPanelView;
@@ -36,6 +41,7 @@ public class CalculatorController implements ActionListener {
         }
     } //public void ActionPerformed(ActionEvent e)
 
+    // 성적을 환산한느 클래스입니다.
     private double ChangeGrade(String s) {
         switch(s) { //성적을 구분한다.
             case "A+" : return 4.5;
