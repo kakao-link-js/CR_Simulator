@@ -8,6 +8,7 @@
 
 - 대학 생활을 하면서 느낀 수강신청의 불편함을 해결하기 위해 만든 수강신청 시뮬레이터 입니다.
 - 검색 구분의 범위가 넓어 원하는 강의에 한번에 접근하기 어려운 것과 겹치는 시간대를 일일이 확인해야하는 불편함등 다양한 불편함을 해결하였습니다.
+- 서버와 연결되어 Stand-alone 모델에서 Sever-Client모델로 기능이 분리되어있습니다.  
 
 ## 주요 기술 요소
 
@@ -26,13 +27,13 @@
 
 ## 전체 시스템 구조도
 
-![시스템구조도](https://user-images.githubusercontent.com/37828448/71608901-bbf36c00-2bc7-11ea-87b2-d34d20598744.png)
+![시스템구조도](https://user-images.githubusercontent.com/37828448/71703519-4df1b380-2e18-11ea-8115-805fc0ee20b6.png)
 
 ------
 
 ## 프로그램 UML :building_construction:
 
-![UML](https://user-images.githubusercontent.com/37828448/71608859-8babcd80-2bc7-11ea-923f-585557da03bc.png)
+![UML](https://user-images.githubusercontent.com/37828448/71703577-ad4fc380-2e18-11ea-85d5-8a154ab9c1f3.png)
 
 
 
